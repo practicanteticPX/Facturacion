@@ -1,0 +1,29 @@
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../src/generated/client2"
+  previewFeatures = ["multiSchema"]
+  binaryTargets   = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL_2")
+  schemas  = ["public"]
+}
+
+// Tabla de proveedores en esquema public de DB_QPREX (SOLO LECTURA)
+model Proveedor {
+  id                  Int     @id @default(autoincrement())
+  Cia                 String? @db.Char(2)
+  Nit                 String? @db.VarChar(15)
+  DigitoVerificacion  String? @db.Char(1)
+  Nombre              String? @db.VarChar(30)
+  Direccion           String? @db.VarChar(30)
+  Ciudad              String? @db.VarChar(15)
+  Telefono            String? @db.VarChar(7)
+  IdentificadorCC_NIT String? @map("IdentificadorCC-NIT") @db.Char(1)
+  CodigoPais          String? @db.VarChar(3)
+
+  @@map("T_Dim_Cedulas_Nits")
+  @@schema("public")
+}

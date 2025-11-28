@@ -36,7 +36,15 @@ const startServer = async () => {
     app.use(
       '/graphql',
       cors({
-        origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+        origin: (origin, callback) => {
+          const isLocalNetwork = !origin ||
+            origin.includes('localhost') ||
+            origin.match(/^http:\/\/192\.168\.\d{1,3}\.\d{1,3}:\d+$/) ||
+            origin.match(/^http:\/\/10\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d+$/) ||
+            origin.match(/^http:\/\/172\.(1[6-9]|2[0-9]|3[0-1])\.\d{1,3}\.\d{1,3}:\d+$/);
+
+          callback(null, isLocalNetwork);
+        },
         credentials: true
       }),
       bodyParser.json(),
@@ -51,8 +59,9 @@ const startServer = async () => {
       res.json({ status: 'OK', message: 'Backend operativo' });
     });
 
-    app.listen(PORT, () => {
-      console.log(`🚀 Servidor GraphQL corriendo en http://localhost:${PORT}/graphql`);
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`🚀 Servidor GraphQL corriendo en http://0.0.0.0:${PORT}/graphql`);
+      console.log(`📡 Accesible desde la red local en http://<TU_IP>:${PORT}/graphql`);
     });
 
     process.on('SIGINT', async () => {

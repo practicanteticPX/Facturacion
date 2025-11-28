@@ -179,6 +179,95 @@ Para detener los contenedores:
 docker-compose down
 ```
 
+## Acceso desde Red Local
+
+El sistema está configurado para ser accesible desde cualquier equipo en la red local. Sigue estos pasos:
+
+### 1. Obtener la IP Local del Servidor
+
+Primero, necesitas conocer la dirección IP local del equipo donde está corriendo el servidor:
+
+**Windows:**
+```bash
+ipconfig
+```
+Busca la línea "Dirección IPv4" (ejemplo: `192.168.0.100`)
+
+**Linux/Mac:**
+```bash
+ifconfig
+# o
+ip addr
+```
+Busca la línea que contiene `inet` (ejemplo: `192.168.0.100`)
+
+### 2. Configurar Variables de Entorno
+
+Edita el archivo [.env](.env) y actualiza la variable `REACT_APP_GRAPHQL_URL` con tu IP local:
+
+```env
+# Cambia esto:
+REACT_APP_GRAPHQL_URL=http://localhost:4000/graphql
+
+# Por esto (usando tu IP local):
+REACT_APP_GRAPHQL_URL=http://192.168.0.100:4000/graphql
+```
+
+También puedes actualizar `FRONTEND_URL` si es necesario:
+```env
+FRONTEND_URL=http://192.168.0.100:3000
+```
+
+### 3. Reiniciar los Servicios
+
+**Sin Docker:**
+Detén y vuelve a iniciar ambos servicios (backend y frontend)
+
+**Con Docker:**
+```bash
+docker-compose down
+docker-compose up --build
+```
+
+### 4. Acceder desde Otros Equipos
+
+Una vez configurado, otros equipos en la red local pueden acceder a:
+
+- **Frontend**: `http://<IP_DEL_SERVIDOR>:3000`
+- **Backend GraphQL**: `http://<IP_DEL_SERVIDOR>:4000/graphql`
+
+Ejemplo con IP `192.168.0.100`:
+- Frontend: [http://192.168.0.100:3000](http://192.168.0.100:3000)
+- Backend: [http://192.168.0.100:4000/graphql](http://192.168.0.100:4000/graphql)
+
+### 5. Verificar Configuración de Red
+
+Asegúrate de que:
+- El firewall permita conexiones en los puertos 3000 y 4000
+- Los equipos estén en la misma red local
+- No haya restricciones de red empresarial
+
+**Windows - Permitir en el Firewall:**
+```bash
+# PowerShell como Administrador
+New-NetFirewallRule -DisplayName "React App" -Direction Inbound -LocalPort 3000 -Protocol TCP -Action Allow
+New-NetFirewallRule -DisplayName "GraphQL Backend" -Direction Inbound -LocalPort 4000 -Protocol TCP -Action Allow
+```
+
+**Linux - Permitir en el Firewall:**
+```bash
+sudo ufw allow 3000/tcp
+sudo ufw allow 4000/tcp
+```
+
+### Redes Soportadas
+
+El CORS del backend está configurado para aceptar conexiones desde:
+- localhost (127.0.0.1)
+- Redes privadas clase C: `192.168.x.x`
+- Redes privadas clase A: `10.x.x.x`
+- Redes privadas clase B: `172.16.x.x - 172.31.x.x`
+
 ## Funcionalidades
 
 ### 1. Inscripción de Facturas

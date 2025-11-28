@@ -135,14 +135,15 @@ Para que un usuario pueda acceder al sistema:
 
 ## Mensajes de Error
 
-### "Usuario no encontrado en Active Directory"
-El nombre de usuario no existe en AD.
-
 ### "Usuario o contraseña incorrectos"
-La contraseña es incorrecta.
+Este mensaje aparece cuando:
+- El nombre de usuario no existe en AD
+- La contraseña es incorrecta
 
-### "No tiene permisos para acceder a este sistema"
-El usuario existe pero NO tiene "Ad y Finan" en el campo Descripción.
+**Nota de seguridad:** Por razones de seguridad, no se distingue entre "usuario no existe" y "contraseña incorrecta" para evitar revelar información sobre qué usuarios existen en el sistema.
+
+### "No estas autorizado para acceder a este sistema"
+El usuario existe y la contraseña es correcta, pero NO tiene "Ad y Finan" en el campo Descripción de Active Directory.
 
 ### "Error al conectar con Active Directory"
 Problemas de conexión con el servidor LDAP. Verificar:

@@ -75,7 +75,7 @@ class AuthService {
           searchRes.on('end', (result) => {
             if (!userEntry) {
               client.unbind();
-              reject(new Error('Usuario no encontrado en Active Directory'));
+              reject(new Error('Usuario o contraseña incorrectos'));
               return;
             }
 
@@ -92,7 +92,7 @@ class AuthService {
               console.warn(`   Descripción encontrada: "${description}"`);
               console.warn(`   Descripción esperada: "${ALLOWED_DESCRIPTION}"`);
               client.unbind();
-              reject(new Error('No tiene permisos para acceder a este sistema. Contacte al administrador.'));
+              reject(new Error('No estas autorizado para acceder a este sistema'));
               return;
             }
 

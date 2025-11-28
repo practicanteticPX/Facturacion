@@ -77,6 +77,24 @@ export const typeDefs = gql`
     numeroControl: String
   }
 
+  type User {
+    username: String!
+    displayName: String!
+    email: String
+    description: String!
+  }
+
+  type AuthResponse {
+    success: Boolean!
+    token: String!
+    user: User!
+  }
+
+  input LoginInput {
+    username: String!
+    password: String!
+  }
+
   type Query {
     facturas(filtros: FiltrosFacturaInput): [Factura!]!
     factura(id: Int!): Factura
@@ -88,6 +106,7 @@ export const typeDefs = gql`
   }
 
   type Mutation {
+    login(input: LoginInput!): AuthResponse!
     crearFactura(input: CrearFacturaInput!): Factura!
     actualizarFactura(id: Int!, input: ActualizarFacturaInput!): Factura!
   }

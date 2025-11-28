@@ -2,6 +2,7 @@ import facturaService from '../services/facturaService.js';
 import personaService from '../services/personaService.js';
 import proveedorService from '../services/proveedorService.js';
 import companiaService from '../services/companiaService.js';
+import authService from '../services/authService.js';
 import { OPCIONES_PLANTILLA, OBSERVACIONES } from '../utils/constants.js';
 
 export const resolvers = {
@@ -37,6 +38,15 @@ export const resolvers = {
   },
 
   Mutation: {
+    login: async (_, { input }) => {
+      try {
+        const result = await authService.login(input.username, input.password);
+        return result;
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    },
+
     crearFactura: async (_, { input }) => {
       return await facturaService.crearFactura(input);
     },

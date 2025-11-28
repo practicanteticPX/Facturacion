@@ -10,6 +10,15 @@ services:
       - DATABASE_URL_2=${DATABASE_URL_2}
       - PORT=4000
       - FRONTEND_URL=${FRONTEND_URL}
+      - AD_PROTOCOL=${AD_PROTOCOL}
+      - AD_HOSTNAME=${AD_HOSTNAME}
+      - AD_PORT=${AD_PORT}
+      - AD_BASE_DN=${AD_BASE_DN}
+      - AD_SEARCH_BASE=${AD_SEARCH_BASE}
+      - AD_BIND_USER=${AD_BIND_USER}
+      - AD_BIND_PASS=${AD_BIND_PASS}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN}
     volumes:
       - ./backend:/app
       - /app/node_modules

@@ -16,7 +16,10 @@
       "Bash(docker-compose down:*)",
       "Bash(docker-compose logs:*)",
       "Bash(docker-compose restart:*)",
-      "Bash(ipconfig:*)"
+      "Bash(ipconfig:*)",
+      "Bash(npm install:*)",
+      "Bash(node test-ad-simple.js:*)",
+      "Bash(npm run test:ad:*)"
     ],
     "deny": [],
     "ask": []

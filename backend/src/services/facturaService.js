@@ -17,6 +17,28 @@ class FacturaService {
     };
   }
 
+  async obtenerProximoNumeroControl() {
+    try {
+      const ultimaFactura = await prismaServ.factura.findFirst({
+        orderBy: {
+          numeroControl: 'desc'
+        },
+        select: {
+          numeroControl: true
+        }
+      });
+
+      const proximoNumeroControl = ultimaFactura
+        ? (parseInt(ultimaFactura.numeroControl) + 1).toString()
+        : '1';
+
+      return proximoNumeroControl;
+    } catch (error) {
+      console.error('Error obteniendo próximo número de control:', error);
+      throw error;
+    }
+  }
+
   async crearFactura(datos) {
     try {
       const camposRequeridos = [
@@ -36,18 +58,7 @@ class FacturaService {
         await personaService.validarPersonaExiste(datos.entregadaA);
       }
 
-      const ultimaFactura = await prismaServ.factura.findFirst({
-        orderBy: {
-          numeroControl: 'desc'
-        },
-        select: {
-          numeroControl: true
-        }
-      });
-
-      const nuevoNumeroControl = ultimaFactura
-        ? (parseInt(ultimaFactura.numeroControl) + 1).toString()
-        : '1';
+      const nuevoNumeroControl = await this.obtenerProximoNumeroControl();
 
       const ciaNit = proveedorService.generarCiaNit(datos.cia, datos.nit);
 

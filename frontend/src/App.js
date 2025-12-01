@@ -48,7 +48,7 @@ function App() {
       <div className="App">
         <nav className="navbar">
           <div className="container">
-            <h1 className="navbar-title">Sistema de Control de Facturas</h1>
+            <h1 className="navbar-title">Recepción Facturación</h1>
             <div className="navbar-links">
               <Link to="/" className="nav-link">Nueva Factura</Link>
               <Link to="/facturas" className="nav-link">Ver Facturas</Link>

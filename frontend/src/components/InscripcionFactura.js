@@ -6,7 +6,8 @@ import {
   GET_PERSONAS,
   GET_COMPANIAS,
   GET_PROVEEDOR,
-  GET_FACTURAS
+  GET_FACTURAS,
+  GET_PROXIMO_NUMERO_CONTROL
 } from '../apollo/queries';
 import './InscripcionFactura.css';
 
@@ -38,6 +39,7 @@ function InscripcionFactura() {
 
   const { data: personasData } = useQuery(GET_PERSONAS);
   const { data: companiasData } = useQuery(GET_COMPANIAS);
+  const { data: numeroControlData } = useQuery(GET_PROXIMO_NUMERO_CONTROL);
 
   const [buscarProveedor, { loading: loadingProveedor }] = useLazyQuery(GET_PROVEEDOR, {
     onCompleted: (data) => {
@@ -85,9 +87,20 @@ function InscripcionFactura() {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+
+    // Convertir valores Si/No a boolean para los campos específicos
+    const booleanFields = ['facturaCredito', 'acuseReciboSCI', 'legalizaAnticipo'];
+    let finalValue = value;
+
+    if (booleanFields.includes(name)) {
+      finalValue = value === 'Si';
+    } else if (type === 'checkbox') {
+      finalValue = checked;
+    }
+
     setFormData(prev => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: finalValue
     }));
   };
 
@@ -159,7 +172,18 @@ function InscripcionFactura() {
       <form onSubmit={handleSubmit} className="inscripcion-form">
         <div className="inscripcion-form-grid">
           <div className="inscripcion-form-group">
-            <label className="inscripcion-label inscripcion-label-required">Compañía</label>
+            <label className="inscripcion-label">No. de Control</label>
+            <input
+              type="text"
+              value={numeroControlData?.proximoNumeroControl || 'Cargando...'}
+              className="inscripcion-input"
+              disabled
+            />
+            <p className="inscripcion-info-text">Se asigna automáticamente</p>
+          </div>
+
+          <div className="inscripcion-form-group">
+            <label className="inscripcion-label inscripcion-label-required">Cia</label>
             <select
               name="cia"
               value={formData.cia}
@@ -167,7 +191,7 @@ function InscripcionFactura() {
               className="inscripcion-select"
               required
             >
-              <option value="">Seleccione una compañía</option>
+              <option value="">Seleccione</option>
               {companiasData?.companias?.map(cia => (
                 <option key={cia} value={cia}>{cia}</option>
               ))}
@@ -248,43 +272,43 @@ function InscripcionFactura() {
           </div>
 
           <div className="inscripcion-form-group">
-            <label className="inscripcion-label inscripcion-checkbox-wrapper">
-              <input
-                type="checkbox"
-                name="facturaCredito"
-                checked={formData.facturaCredito}
-                onChange={handleChange}
-                className="inscripcion-checkbox"
-              />
-              Factura a Crédito
-            </label>
+            <label className="inscripcion-label">Factura a Crédito</label>
+            <select
+              name="facturaCredito"
+              value={formData.facturaCredito ? 'Si' : 'No'}
+              onChange={handleChange}
+              className="inscripcion-select"
+            >
+              <option value="No">No</option>
+              <option value="Si">Si</option>
+            </select>
           </div>
 
           <div className="inscripcion-form-group">
-            <label className="inscripcion-label inscripcion-checkbox-wrapper">
-              <input
-                type="checkbox"
-                name="acuseReciboSCI"
-                checked={formData.acuseReciboSCI}
-                onChange={handleChange}
-                className="inscripcion-checkbox"
-              />
-              Acuse Recibo SCI
-            </label>
+            <label className="inscripcion-label">Acuse Recibo SCI</label>
+            <select
+              name="acuseReciboSCI"
+              value={formData.acuseReciboSCI ? 'Si' : 'No'}
+              onChange={handleChange}
+              className="inscripcion-select"
+            >
+              <option value="No">No</option>
+              <option value="Si">Si</option>
+            </select>
             <p className="inscripcion-info-text">Aplica desde el 13 de julio de 2022</p>
           </div>
 
           <div className="inscripcion-form-group">
-            <label className="inscripcion-label inscripcion-checkbox-wrapper">
-              <input
-                type="checkbox"
-                name="legalizaAnticipo"
-                checked={formData.legalizaAnticipo}
-                onChange={handleChange}
-                className="inscripcion-checkbox"
-              />
-              ¿Legaliza anticipo?
-            </label>
+            <label className="inscripcion-label">¿Legaliza anticipo?</label>
+            <select
+              name="legalizaAnticipo"
+              value={formData.legalizaAnticipo ? 'Si' : 'No'}
+              onChange={handleChange}
+              className="inscripcion-select"
+            >
+              <option value="No">No</option>
+              <option value="Si">Si</option>
+            </select>
           </div>
 
           <div className="inscripcion-form-group">

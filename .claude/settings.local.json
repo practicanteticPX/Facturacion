@@ -30,7 +30,8 @@
       "Bash(node scripts/add-legaliza-anticipo.js:*)",
       "Bash(timeout /t 5)",
       "Bash(timeout /t 2)",
-      "Bash(npm uninstall:*)"
+      "Bash(npm uninstall:*)",
+      "Bash(npm run test:smtp:*)"
     ],
     "deny": [],
     "ask": []

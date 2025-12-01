@@ -122,9 +122,20 @@ function EditarFactura() {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+
+    // Convertir valores Si/No a boolean para los campos específicos
+    const booleanFields = ['facturaCredito', 'acuseReciboSCI', 'legalizaAnticipo'];
+    let finalValue = value;
+
+    if (booleanFields.includes(name)) {
+      finalValue = value === 'Si';
+    } else if (type === 'checkbox') {
+      finalValue = checked;
+    }
+
     setFormData(prev => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: finalValue
     }));
   };
 
@@ -169,19 +180,19 @@ function EditarFactura() {
           <h3 className="editar-section-title">Información Básica</h3>
           <div className="editar-form-grid">
             <div className="editar-form-group">
-              <label className="editar-label editar-label-required">Nº. Control</label>
+              <label className="editar-label">No. de Control</label>
               <input
                 type="text"
                 name="numeroControl"
                 value={formData.numeroControl}
-                onChange={handleChange}
                 className="editar-input"
-                required
+                disabled
               />
+              <p className="editar-info-text">No se puede modificar</p>
             </div>
 
             <div className="editar-form-group">
-              <label className="editar-label editar-label-required">Compañía</label>
+              <label className="editar-label editar-label-required">Cia</label>
               <select
                 name="cia"
                 value={formData.cia}
@@ -189,7 +200,7 @@ function EditarFactura() {
                 className="editar-select"
                 required
               >
-                <option value="">Seleccione una compañía</option>
+                <option value="">Seleccione</option>
                 {companiasData?.companias?.map(cia => (
                   <option key={cia} value={cia}>{cia}</option>
                 ))}
@@ -265,29 +276,29 @@ function EditarFactura() {
             </div>
 
             <div className="editar-form-group">
-              <label className="editar-label">
-                <input
-                  type="checkbox"
-                  name="facturaCredito"
-                  checked={formData.facturaCredito}
-                  onChange={handleChange}
-                  className="editar-checkbox"
-                />
-                Factura a Crédito
-              </label>
+              <label className="editar-label">Factura a Crédito</label>
+              <select
+                name="facturaCredito"
+                value={formData.facturaCredito ? 'Si' : 'No'}
+                onChange={handleChange}
+                className="editar-select"
+              >
+                <option value="No">No</option>
+                <option value="Si">Si</option>
+              </select>
             </div>
 
             <div className="editar-form-group">
-              <label className="editar-label">
-                <input
-                  type="checkbox"
-                  name="acuseReciboSCI"
-                  checked={formData.acuseReciboSCI}
-                  onChange={handleChange}
-                  className="editar-checkbox"
-                />
-                Acuse Recibo SCI
-              </label>
+              <label className="editar-label">Acuse Recibo SCI</label>
+              <select
+                name="acuseReciboSCI"
+                value={formData.acuseReciboSCI ? 'Si' : 'No'}
+                onChange={handleChange}
+                className="editar-select"
+              >
+                <option value="No">No</option>
+                <option value="Si">Si</option>
+              </select>
             </div>
 
             <div className="editar-form-group">
@@ -319,16 +330,16 @@ function EditarFactura() {
             </div>
 
             <div className="editar-form-group">
-              <label className="editar-label editar-checkbox-wrapper">
-                <input
-                  type="checkbox"
-                  name="legalizaAnticipo"
-                  checked={formData.legalizaAnticipo}
-                  onChange={handleChange}
-                  className="editar-checkbox"
-                />
-                ¿Legaliza anticipo?
-              </label>
+              <label className="editar-label">¿Legaliza anticipo?</label>
+              <select
+                name="legalizaAnticipo"
+                value={formData.legalizaAnticipo ? 'Si' : 'No'}
+                onChange={handleChange}
+                className="editar-select"
+              >
+                <option value="No">No</option>
+                <option value="Si">Si</option>
+              </select>
             </div>
           </div>
         </div>

@@ -83,6 +83,12 @@ export const GET_COMPANIAS = gql`
   }
 `;
 
+export const GET_PROXIMO_NUMERO_CONTROL = gql`
+  query GetProximoNumeroControl {
+    proximoNumeroControl
+  }
+`;
+
 export const GET_OPCIONES_PLANTILLA = gql`
   query GetOpcionesPlantilla {
     opcionesPlantilla

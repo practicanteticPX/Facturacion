@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
 import { typeDefs } from './graphql/schema.js';
 import { resolvers } from './graphql/resolvers.js';
 import { connectDatabases, disconnectDatabases } from './config/database.js';
+import emailService from './services/emailService.js';
 
 dotenv.config();
 
@@ -30,6 +31,9 @@ const server = new ApolloServer({
 const startServer = async () => {
   try {
     await connectDatabases();
+
+    // Verificar conexión SMTP
+    await emailService.verificarConexion();
 
     await server.start();
 

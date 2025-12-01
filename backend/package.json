@@ -10,7 +10,8 @@
     "prisma:generate": "prisma generate",
     "prisma:db:pull": "prisma db pull",
     "test:ad": "node test-ad-simple.js",
-    "test:ad:user": "node test-ad-connection.js"
+    "test:ad:user": "node test-ad-connection.js",
+    "test:smtp": "node test-smtp.js"
   },
   "dependencies": {
     "@apollo/server": "^4.10.0",
@@ -23,7 +24,8 @@
     "graphql": "^16.8.1",
     "graphql-tag": "^2.12.6",
     "jsonwebtoken": "^9.0.2",
-    "ldapjs": "^3.0.7"
+    "ldapjs": "^3.0.7",
+    "nodemailer": "^6.9.8"
   },
   "devDependencies": {
     "nodemon": "^3.0.3",

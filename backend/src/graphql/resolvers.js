@@ -15,6 +15,10 @@ export const resolvers = {
       return await facturaService.obtenerFacturaCompleta(id);
     },
 
+    proximoNumeroControl: async () => {
+      return await facturaService.obtenerProximoNumeroControl();
+    },
+
     personas: async () => {
       return await personaService.obtenerTodasLasPersonas();
     },

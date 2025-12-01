@@ -97,6 +97,7 @@ export const typeDefs = gql`
   type Query {
     facturas(filtros: FiltrosFacturaInput): [Factura!]!
     factura(id: Int!): Factura
+    proximoNumeroControl: String!
     personas: [Persona!]!
     proveedor(nit: String!): Proveedor
     companias: [String!]!

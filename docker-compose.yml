@@ -4,26 +4,24 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     ports:
-      - "4000:4000"
+      - "192.168.0.93:4000:4000"
     environment:
-      - DATABASE_URL=${DATABASE_URL}
-      - DATABASE_URL_2=${DATABASE_URL_2}
+      - DATABASE_URL=postgresql://admin:$$40M1n*!!2023@192.168.0.254:5432/SERV_QPREX
+      - DATABASE_URL_2=postgresql://admin:$$40M1n*!!2023@192.168.0.254:5432/DB_QPREX
       - PORT=4000
-      - FRONTEND_URL=${FRONTEND_URL}
-      - AD_PROTOCOL=${AD_PROTOCOL}
-      - AD_HOSTNAME=${AD_HOSTNAME}
-      - AD_PORT=${AD_PORT}
-      - AD_BASE_DN=${AD_BASE_DN}
-      - AD_SEARCH_BASE=${AD_SEARCH_BASE}
-      - AD_BIND_USER=${AD_BIND_USER}
-      - AD_BIND_PASS=${AD_BIND_PASS}
-      - JWT_SECRET=${JWT_SECRET}
-      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN}
+      - FRONTEND_URL=http://192.168.0.93:3000
+      - AD_PROTOCOL=ldap
+      - AD_HOSTNAME=192.168.0.253
+      - AD_PORT=389
+      - AD_BASE_DN=DC=prexxa,DC=local
+      - AD_SEARCH_BASE=DC=prexxa,DC=local
+      - AD_BIND_USER=glpi.sync@prexxa.local
+      - AD_BIND_PASS=adminPre8909
+      - JWT_SECRET=prexxa-facturas-secret-2024-change-in-production
+      - JWT_EXPIRES_IN=8h
     volumes:
       - ./backend:/app
       - /app/node_modules
-    networks:
-      - app-network
     restart: unless-stopped
 
   frontend:
@@ -31,19 +29,13 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "192.168.0.93:3000:3000"
     environment:
-      - REACT_APP_GRAPHQL_URL=${REACT_APP_GRAPHQL_URL:-http://localhost:4000/graphql}
+      - REACT_APP_GRAPHQL_URL=http://192.168.0.93:4000/graphql
       - HOST=0.0.0.0
     volumes:
       - ./frontend:/app
       - /app/node_modules
-    networks:
-      - app-network
     depends_on:
       - backend
     restart: unless-stopped
-
-networks:
-  app-network:
-    driver: bridge

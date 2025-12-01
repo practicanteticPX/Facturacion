@@ -19,7 +19,10 @@
       "Bash(ipconfig:*)",
       "Bash(npm install:*)",
       "Bash(node test-ad-simple.js:*)",
-      "Bash(npm run test:ad:*)"
+      "Bash(npm run test:ad:*)",
+      "Bash(docker-compose ps:*)",
+      "Bash(docker-compose exec:*)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []

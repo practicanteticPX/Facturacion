@@ -38,7 +38,7 @@ const startServer = async () => {
       cors({
         origin: (origin, callback) => {
           const isLocalNetwork = !origin ||
-            origin.includes('localhost') ||
+            origin.includes('192.168.0.93') ||
             origin.match(/^http:\/\/192\.168\.\d{1,3}\.\d{1,3}:\d+$/) ||
             origin.match(/^http:\/\/10\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d+$/) ||
             origin.match(/^http:\/\/172\.(1[6-9]|2[0-9]|3[0-1])\.\d{1,3}\.\d{1,3}:\d+$/);

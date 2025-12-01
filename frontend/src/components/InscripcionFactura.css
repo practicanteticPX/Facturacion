@@ -1,0 +1,175 @@
+/**
+ * InscripcionFactura Component Styles
+ * Todas las clases prefijadas con .inscripcion-* para evitar conflictos
+ */
+
+.inscripcion-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 2rem;
+}
+
+.inscripcion-title {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 0.5rem;
+}
+
+.inscripcion-alert {
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+}
+
+.inscripcion-alert-success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.inscripcion-alert-error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.inscripcion-form {
+  width: 100%;
+}
+
+.inscripcion-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.inscripcion-form-group {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.inscripcion-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 0.95rem;
+}
+
+.inscripcion-label-required::after {
+  content: " *";
+  color: #e74c3c;
+}
+
+.inscripcion-input,
+.inscripcion-select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.inscripcion-input:focus,
+.inscripcion-select:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.inscripcion-input:disabled,
+.inscripcion-select:disabled {
+  background-color: #ecf0f1;
+  cursor: not-allowed;
+}
+
+.inscripcion-checkbox-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.inscripcion-checkbox {
+  margin-right: 0.5rem;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.inscripcion-info-text {
+  color: #7f8c8d;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.inscripcion-button-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.inscripcion-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.inscripcion-btn-primary {
+  background-color: #3498db;
+  color: white;
+}
+
+.inscripcion-btn-primary:hover {
+  background-color: #2980b9;
+}
+
+.inscripcion-btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.inscripcion-btn-secondary {
+  background-color: #95a5a6;
+  color: white;
+}
+
+.inscripcion-btn-secondary:hover {
+  background-color: #7f8c8d;
+}
+
+.inscripcion-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-top: 2px;
+}
+
+.inscripcion-suggestion-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.15s;
+}
+
+.inscripcion-suggestion-item:hover {
+  background-color: #f5f5f5;
+}
+
+.inscripcion-suggestion-item:last-child {
+  border-bottom: none;
+}

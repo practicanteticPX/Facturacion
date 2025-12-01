@@ -22,7 +22,8 @@
       "Bash(npm run test:ad:*)",
       "Bash(docker-compose ps:*)",
       "Bash(docker-compose exec:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(npm run build:*)"
     ],
     "deny": [],
     "ask": []

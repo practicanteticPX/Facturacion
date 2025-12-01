@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import { GET_FACTURAS, GET_COMPANIAS } from '../apollo/queries';
+import './ListaFacturas.css';
 
+/**
+ * ListaFacturas Component
+ * Muestra una tabla con todas las facturas y permite filtrarlas
+ */
 function ListaFacturas() {
   const navigate = useNavigate();
   const [filtros, setFiltros] = useState({
@@ -38,23 +43,23 @@ function ListaFacturas() {
     return new Date(fecha).toLocaleDateString('es-CO');
   };
 
-  if (loading) return <div className="loading">Cargando facturas...</div>;
-  if (error) return <div className="alert alert-error">Error: {error.message}</div>;
+  if (loading) return <div className="lista-loading">Cargando facturas...</div>;
+  if (error) return <div className="lista-alert lista-alert-error">Error: {error.message}</div>;
 
   return (
-    <div className="card">
-      <h2 className="card-title">Lista de Facturas</h2>
+    <div className="lista-card">
+      <h2 className="lista-title">Lista de Facturas</h2>
 
-      <div className="section">
-        <h3 className="section-title">Filtros</h3>
-        <div className="form-grid">
-          <div className="form-group">
-            <label className="form-label">Compañía</label>
+      <div className="lista-section">
+        <h3 className="lista-section-title">Filtros</h3>
+        <div className="lista-form-grid">
+          <div className="lista-form-group">
+            <label className="lista-label">Compañía</label>
             <select
               name="cia"
               value={filtros.cia}
               onChange={handleFiltroChange}
-              className="form-select"
+              className="lista-select"
             >
               <option value="">Todas</option>
               {companiasData?.companias?.map(cia => (
@@ -63,44 +68,44 @@ function ListaFacturas() {
             </select>
           </div>
 
-          <div className="form-group">
-            <label className="form-label">NIT</label>
+          <div className="lista-form-group">
+            <label className="lista-label">NIT</label>
             <input
               type="text"
               name="nit"
               value={filtros.nit}
               onChange={handleFiltroChange}
-              className="form-input"
+              className="lista-input"
               placeholder="Buscar por NIT"
             />
           </div>
 
-          <div className="form-group">
-            <label className="form-label">Nº. Control</label>
+          <div className="lista-form-group">
+            <label className="lista-label">Nº. Control</label>
             <input
               type="text"
               name="numeroControl"
               value={filtros.numeroControl}
               onChange={handleFiltroChange}
-              className="form-input"
+              className="lista-input"
               placeholder="Buscar por número de control"
             />
           </div>
         </div>
 
-        <div className="button-group">
-          <button onClick={aplicarFiltros} className="btn btn-primary btn-small">
+        <div className="lista-button-group">
+          <button onClick={aplicarFiltros} className="lista-btn lista-btn-primary">
             Aplicar Filtros
           </button>
-          <button onClick={limpiarFiltros} className="btn btn-secondary btn-small">
+          <button onClick={limpiarFiltros} className="lista-btn lista-btn-secondary">
             Limpiar Filtros
           </button>
         </div>
       </div>
 
-      <div className="table-container">
-        <p className="info-text">Total de facturas: {data?.facturas?.length || 0}</p>
-        <table className="table">
+      <div className="lista-table-container">
+        <p className="lista-info-text">Total de facturas: {data?.facturas?.length || 0}</p>
+        <table className="lista-table">
           <thead>
             <tr>
               <th>Nº Control</th>
@@ -119,7 +124,7 @@ function ListaFacturas() {
           <tbody>
             {data?.facturas?.length === 0 ? (
               <tr>
-                <td colSpan="11" style={{ textAlign: 'center', padding: '2rem' }}>
+                <td colSpan="11" className="lista-table-empty">
                   No se encontraron facturas
                 </td>
               </tr>
@@ -137,10 +142,10 @@ function ListaFacturas() {
                   <td>{factura.entregadaA || '-'}</td>
                   <td>{factura.observaciones || '-'}</td>
                   <td>
-                    <div className="table-actions">
+                    <div className="lista-table-actions">
                       <button
                         onClick={() => navigate(`/facturas/${factura.id}`)}
-                        className="btn btn-primary btn-small"
+                        className="lista-btn lista-btn-primary"
                       >
                         Editar
                       </button>

@@ -18,6 +18,11 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
+/**
+ * Login Component
+ * @param {Object} props
+ * @param {Function} props.onLoginSuccess - Callback ejecutado al autenticarse exitosamente
+ */
 function Login({ onLoginSuccess }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -74,13 +79,13 @@ function Login({ onLoginSuccess }) {
             <img src={logoPrexxa} alt="Prexxa" />
           </div>
           <form onSubmit={handleSubmit} className="login-form">
-            <div className="form-group">
+            <div className="login-form-group">
               <label htmlFor="username">Usuario</label>
-              <div className="input-wrapper">
+              <div className="login-input-wrapper">
                 <input
                   type="text"
                   id="username"
-                  className="form-input"
+                  className="login-input"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="Usuario"
@@ -91,13 +96,13 @@ function Login({ onLoginSuccess }) {
               </div>
             </div>
 
-            <div className="form-group">
+            <div className="login-form-group">
               <label htmlFor="password">Contraseña</label>
-              <div className="input-wrapper">
+              <div className="login-input-wrapper">
                 <input
                   type={showPassword ? "text" : "password"}
                   id="password"
-                  className="form-input"
+                  className="login-input"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Contraseña"
@@ -106,7 +111,7 @@ function Login({ onLoginSuccess }) {
                 />
                 <button
                   type="button"
-                  className="password-toggle"
+                  className="login-password-toggle"
                   onClick={() => setShowPassword(!showPassword)}
                   tabIndex={-1}
                 >
@@ -126,7 +131,7 @@ function Login({ onLoginSuccess }) {
             </div>
 
             {error && (
-              <div className="error-message">
+              <div className="login-error-message">
                 <svg viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                 </svg>
@@ -136,12 +141,12 @@ function Login({ onLoginSuccess }) {
 
             <button
               type="submit"
-              className="submit-button"
+              className="login-submit-button"
               disabled={loading}
             >
               {loading ? (
                 <>
-                  <div className="button-spinner"></div>
+                  <div className="login-button-spinner"></div>
                   Iniciando sesión...
                 </>
               ) : (

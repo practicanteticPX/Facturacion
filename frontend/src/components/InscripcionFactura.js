@@ -9,7 +9,12 @@ import {
   GET_PROVEEDOR,
   GET_FACTURAS
 } from '../apollo/queries';
+import './InscripcionFactura.css';
 
+/**
+ * InscripcionFactura Component
+ * Formulario para crear nuevas facturas en el sistema
+ */
 function InscripcionFactura() {
   const navigate = useNavigate();
 
@@ -146,37 +151,37 @@ function InscripcionFactura() {
   };
 
   return (
-    <div className="card">
-      <h2 className="card-title">Inscripción de Nueva Factura</h2>
+    <div className="inscripcion-card">
+      <h2 className="inscripcion-title">Inscripción de Nueva Factura</h2>
 
       {mensaje.texto && (
-        <div className={`alert alert-${mensaje.tipo}`}>
+        <div className={`inscripcion-alert inscripcion-alert-${mensaje.tipo}`}>
           {mensaje.texto}
         </div>
       )}
 
-      <form onSubmit={handleSubmit}>
-        <div className="form-grid">
-          <div className="form-group">
-            <label className="form-label required">Nº. Control</label>
+      <form onSubmit={handleSubmit} className="inscripcion-form">
+        <div className="inscripcion-form-grid">
+          <div className="inscripcion-form-group">
+            <label className="inscripcion-label inscripcion-label-required">Nº. Control</label>
             <input
               type="text"
               name="numeroControl"
               value={formData.numeroControl}
               onChange={handleChange}
-              className="form-input"
+              className="inscripcion-input"
               required
             />
-            <p className="info-text">Consecutivo asignado por el auxiliar administrativo</p>
+            <p className="inscripcion-info-text">Consecutivo asignado por el auxiliar administrativo</p>
           </div>
 
-          <div className="form-group">
-            <label className="form-label required">Compañía</label>
+          <div className="inscripcion-form-group">
+            <label className="inscripcion-label inscripcion-label-required">Compañía</label>
             <select
               name="cia"
               value={formData.cia}
               onChange={handleChange}
-              className="form-select"
+              className="inscripcion-select"
               required
             >
               <option value="">Seleccione una compañía</option>
@@ -186,108 +191,108 @@ function InscripcionFactura() {
             </select>
           </div>
 
-          <div className="form-group">
-            <label className="form-label">Compañía + NIT</label>
+          <div className="inscripcion-form-group">
+            <label className="inscripcion-label">Compañía + NIT</label>
             <input
               type="text"
               value={ciaNit}
-              className="form-input"
+              className="inscripcion-input"
               disabled
             />
-            <p className="info-text">Se genera automáticamente</p>
+            <p className="inscripcion-info-text">Se genera automáticamente</p>
           </div>
 
-          <div className="form-group">
-            <label className="form-label required">NIT</label>
+          <div className="inscripcion-form-group">
+            <label className="inscripcion-label inscripcion-label-required">NIT</label>
             <input
               type="text"
               name="nit"
               value={formData.nit}
               onChange={handleChange}
-              className="form-input"
+              className="inscripcion-input"
               required
             />
-            <p className="info-text">Código del proveedor</p>
+            <p className="inscripcion-info-text">Código del proveedor</p>
           </div>
 
-          <div className="form-group">
-            <label className="form-label">Proveedor</label>
+          <div className="inscripcion-form-group">
+            <label className="inscripcion-label">Proveedor</label>
             <input
               type="text"
               value={loadingProveedor ? 'Buscando...' : proveedorNombre}
-              className="form-input"
+              className="inscripcion-input"
               disabled
             />
-            <p className="info-text">Se busca automáticamente según el NIT</p>
+            <p className="inscripcion-info-text">Se busca automáticamente según el NIT</p>
           </div>
 
-          <div className="form-group">
-            <label className="form-label required">No. Factura</label>
+          <div className="inscripcion-form-group">
+            <label className="inscripcion-label inscripcion-label-required">No. Factura</label>
             <input
               type="text"
               name="numeroFactura"
               value={formData.numeroFactura}
               onChange={handleChange}
-              className="form-input"
+              className="inscripcion-input"
               required
             />
           </div>
 
-          <div className="form-group">
-            <label className="form-label required">Fecha Radicado</label>
+          <div className="inscripcion-form-group">
+            <label className="inscripcion-label inscripcion-label-required">Fecha Radicado</label>
             <input
               type="date"
               name="fechaRadicado"
               value={formData.fechaRadicado}
               onChange={handleChange}
-              className="form-input"
+              className="inscripcion-input"
               required
             />
-            <p className="info-text">Fecha en que se realiza el radicado</p>
+            <p className="inscripcion-info-text">Fecha en que se realiza el radicado</p>
           </div>
 
-          <div className="form-group">
-            <label className="form-label required">Fecha Factura</label>
+          <div className="inscripcion-form-group">
+            <label className="inscripcion-label inscripcion-label-required">Fecha Factura</label>
             <input
               type="date"
               name="fechaFactura"
               value={formData.fechaFactura}
               onChange={handleChange}
-              className="form-input"
+              className="inscripcion-input"
               required
             />
-            <p className="info-text">Fecha de emisión de la factura</p>
+            <p className="inscripcion-info-text">Fecha de emisión de la factura</p>
           </div>
 
-          <div className="form-group">
-            <label className="form-label">
+          <div className="inscripcion-form-group">
+            <label className="inscripcion-label inscripcion-checkbox-wrapper">
               <input
                 type="checkbox"
                 name="facturaCredito"
                 checked={formData.facturaCredito}
                 onChange={handleChange}
-                className="form-checkbox"
+                className="inscripcion-checkbox"
               />
               Factura a Crédito
             </label>
           </div>
 
-          <div className="form-group">
-            <label className="form-label">
+          <div className="inscripcion-form-group">
+            <label className="inscripcion-label inscripcion-checkbox-wrapper">
               <input
                 type="checkbox"
                 name="acuseReciboSCI"
                 checked={formData.acuseReciboSCI}
                 onChange={handleChange}
-                className="form-checkbox"
+                className="inscripcion-checkbox"
               />
               Acuse Recibo SCI
             </label>
-            <p className="info-text">Aplica desde el 13 de julio de 2022</p>
+            <p className="inscripcion-info-text">Aplica desde el 13 de julio de 2022</p>
           </div>
 
-          <div className="form-group" style={{ position: 'relative' }}>
-            <label className="form-label">Entregada a</label>
+          <div className="inscripcion-form-group">
+            <label className="inscripcion-label">Entregada a</label>
             <input
               type="text"
               name="entregadaA"
@@ -303,62 +308,44 @@ function InscripcionFactura() {
                 }
               }}
               onBlur={() => setTimeout(() => setMostrarSugerencias(false), 200)}
-              className="form-input"
+              className="inscripcion-input"
               placeholder="Escriba para buscar..."
               autoComplete="off"
             />
             {mostrarSugerencias && personasFiltradas.length > 0 && (
-              <div style={{
-                position: 'absolute',
-                top: '100%',
-                left: 0,
-                right: 0,
-                backgroundColor: 'white',
-                border: '1px solid #ddd',
-                borderRadius: '4px',
-                maxHeight: '200px',
-                overflowY: 'auto',
-                zIndex: 1000,
-                boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-              }}>
+              <div className="inscripcion-suggestions">
                 {personasFiltradas.map(persona => (
                   <div
                     key={persona.id}
                     onClick={() => seleccionarPersona(persona.nombre)}
-                    style={{
-                      padding: '8px 12px',
-                      cursor: 'pointer',
-                      borderBottom: '1px solid #f0f0f0'
-                    }}
-                    onMouseEnter={(e) => e.target.style.backgroundColor = '#f5f5f5'}
-                    onMouseLeave={(e) => e.target.style.backgroundColor = 'white'}
+                    className="inscripcion-suggestion-item"
                   >
                     {persona.nombre}
                   </div>
                 ))}
               </div>
             )}
-            <p className="info-text">Busque por nombre o apellido en cualquier orden (ej: "Lopez Esteban" encuentra "Zuluaga Lopez Esteban")</p>
+            <p className="inscripcion-info-text">Busque por nombre o apellido en cualquier orden (ej: "Lopez Esteban" encuentra "Zuluaga Lopez Esteban")</p>
           </div>
 
-          <div className="form-group">
-            <label className="form-label">Fecha de Entrega</label>
+          <div className="inscripcion-form-group">
+            <label className="inscripcion-label">Fecha de Entrega</label>
             <input
               type="date"
               name="fechaEntrega"
               value={formData.fechaEntrega}
               onChange={handleChange}
-              className="form-input"
+              className="inscripcion-input"
             />
           </div>
 
-          <div className="form-group">
-            <label className="form-label">Elaboró Plantilla</label>
+          <div className="inscripcion-form-group">
+            <label className="inscripcion-label">Elaboró Plantilla</label>
             <select
               name="elaboroPlantilla"
               value={formData.elaboroPlantilla}
               onChange={handleChange}
-              className="form-select"
+              className="inscripcion-select"
             >
               {opcionesPlantillaData?.opcionesPlantilla?.map((opcion, idx) => (
                 <option key={idx} value={opcion}>
@@ -369,10 +356,10 @@ function InscripcionFactura() {
           </div>
         </div>
 
-        <div className="button-group">
+        <div className="inscripcion-button-group">
           <button
             type="submit"
-            className="btn btn-primary"
+            className="inscripcion-btn inscripcion-btn-primary"
             disabled={loadingCrear}
           >
             {loadingCrear ? 'Creando...' : 'Crear Factura'}
@@ -380,7 +367,7 @@ function InscripcionFactura() {
           <button
             type="button"
             onClick={() => navigate('/facturas')}
-            className="btn btn-secondary"
+            className="inscripcion-btn inscripcion-btn-secondary"
           >
             Cancelar
           </button>

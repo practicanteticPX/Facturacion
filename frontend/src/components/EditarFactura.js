@@ -11,7 +11,12 @@ import {
   GET_PROVEEDOR,
   GET_FACTURAS
 } from '../apollo/queries';
+import './EditarFactura.css';
 
+/**
+ * EditarFactura Component
+ * Formulario para editar facturas existentes en el sistema
+ */
 function EditarFactura() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -149,41 +154,41 @@ function EditarFactura() {
     }
   };
 
-  if (loadingFactura) return <div className="loading">Cargando factura...</div>;
+  if (loadingFactura) return <div className="editar-loading">Cargando factura...</div>;
 
   return (
-    <div className="card">
-      <h2 className="card-title">Editar Factura #{id}</h2>
+    <div className="editar-card">
+      <h2 className="editar-title">Editar Factura #{id}</h2>
 
       {mensaje.texto && (
-        <div className={`alert alert-${mensaje.tipo}`}>
+        <div className={`editar-alert editar-alert-${mensaje.tipo}`}>
           {mensaje.texto}
         </div>
       )}
 
       <form onSubmit={handleSubmit}>
-        <div className="section">
-          <h3 className="section-title">Información Básica</h3>
-          <div className="form-grid">
-            <div className="form-group">
-              <label className="form-label required">Nº. Control</label>
+        <div className="editar-section">
+          <h3 className="editar-section-title">Información Básica</h3>
+          <div className="editar-form-grid">
+            <div className="editar-form-group">
+              <label className="editar-label editar-label-required">Nº. Control</label>
               <input
                 type="text"
                 name="numeroControl"
                 value={formData.numeroControl}
                 onChange={handleChange}
-                className="form-input"
+                className="editar-input"
                 required
               />
             </div>
 
-            <div className="form-group">
-              <label className="form-label required">Compañía</label>
+            <div className="editar-form-group">
+              <label className="editar-label editar-label-required">Compañía</label>
               <select
                 name="cia"
                 value={formData.cia}
                 onChange={handleChange}
-                className="form-select"
+                className="editar-select"
                 required
               >
                 <option value="">Seleccione una compañía</option>
@@ -193,107 +198,107 @@ function EditarFactura() {
               </select>
             </div>
 
-            <div className="form-group">
-              <label className="form-label">Compañía + NIT</label>
+            <div className="editar-form-group">
+              <label className="editar-label">Compañía + NIT</label>
               <input
                 type="text"
                 value={ciaNit}
-                className="form-input"
+                className="editar-input"
                 disabled
               />
             </div>
 
-            <div className="form-group">
-              <label className="form-label required">NIT</label>
+            <div className="editar-form-group">
+              <label className="editar-label editar-label-required">NIT</label>
               <input
                 type="text"
                 name="nit"
                 value={formData.nit}
                 onChange={handleChange}
-                className="form-input"
+                className="editar-input"
                 required
               />
             </div>
 
-            <div className="form-group">
-              <label className="form-label">Proveedor</label>
+            <div className="editar-form-group">
+              <label className="editar-label">Proveedor</label>
               <input
                 type="text"
                 value={loadingProveedor ? 'Buscando...' : proveedorNombre}
-                className="form-input"
+                className="editar-input"
                 disabled
               />
             </div>
 
-            <div className="form-group">
-              <label className="form-label required">No. Factura</label>
+            <div className="editar-form-group">
+              <label className="editar-label editar-label-required">No. Factura</label>
               <input
                 type="text"
                 name="numeroFactura"
                 value={formData.numeroFactura}
                 onChange={handleChange}
-                className="form-input"
+                className="editar-input"
                 required
               />
             </div>
 
-            <div className="form-group">
-              <label className="form-label required">Fecha Radicado</label>
+            <div className="editar-form-group">
+              <label className="editar-label editar-label-required">Fecha Radicado</label>
               <input
                 type="date"
                 name="fechaRadicado"
                 value={formData.fechaRadicado}
                 onChange={handleChange}
-                className="form-input"
+                className="editar-input"
                 required
               />
             </div>
 
-            <div className="form-group">
-              <label className="form-label required">Fecha Factura</label>
+            <div className="editar-form-group">
+              <label className="editar-label editar-label-required">Fecha Factura</label>
               <input
                 type="date"
                 name="fechaFactura"
                 value={formData.fechaFactura}
                 onChange={handleChange}
-                className="form-input"
+                className="editar-input"
                 required
               />
             </div>
 
-            <div className="form-group">
-              <label className="form-label">
+            <div className="editar-form-group">
+              <label className="editar-label">
                 <input
                   type="checkbox"
                   name="facturaCredito"
                   checked={formData.facturaCredito}
                   onChange={handleChange}
-                  className="form-checkbox"
+                  className="editar-checkbox"
                 />
                 Factura a Crédito
               </label>
             </div>
 
-            <div className="form-group">
-              <label className="form-label">
+            <div className="editar-form-group">
+              <label className="editar-label">
                 <input
                   type="checkbox"
                   name="acuseReciboSCI"
                   checked={formData.acuseReciboSCI}
                   onChange={handleChange}
-                  className="form-checkbox"
+                  className="editar-checkbox"
                 />
                 Acuse Recibo SCI
               </label>
             </div>
 
-            <div className="form-group">
-              <label className="form-label">Entregada a</label>
+            <div className="editar-form-group">
+              <label className="editar-label">Entregada a</label>
               <select
                 name="entregadaA"
                 value={formData.entregadaA}
                 onChange={handleChange}
-                className="form-select"
+                className="editar-select"
               >
                 <option value="">Seleccione una persona</option>
                 {personasData?.personas?.map(persona => (
@@ -304,24 +309,24 @@ function EditarFactura() {
               </select>
             </div>
 
-            <div className="form-group">
-              <label className="form-label">Fecha de Entrega</label>
+            <div className="editar-form-group">
+              <label className="editar-label">Fecha de Entrega</label>
               <input
                 type="date"
                 name="fechaEntrega"
                 value={formData.fechaEntrega}
                 onChange={handleChange}
-                className="form-input"
+                className="editar-input"
               />
             </div>
 
-            <div className="form-group">
-              <label className="form-label">Elaboró Plantilla</label>
+            <div className="editar-form-group">
+              <label className="editar-label">Elaboró Plantilla</label>
               <select
                 name="elaboroPlantilla"
                 value={formData.elaboroPlantilla}
                 onChange={handleChange}
-                className="form-select"
+                className="editar-select"
               >
                 {opcionesPlantillaData?.opcionesPlantilla?.map((opcion, idx) => (
                   <option key={idx} value={opcion}>
@@ -333,30 +338,30 @@ function EditarFactura() {
           </div>
         </div>
 
-        <div className="section">
-          <h3 className="section-title">Información de Causación</h3>
-          <p className="info-text" style={{ marginBottom: '1rem' }}>
+        <div className="editar-section">
+          <h3 className="editar-section-title">Información de Causación</h3>
+          <p className="editar-info-text" style={{ marginBottom: '1rem' }}>
             Estos campos se completan después de la creación inicial
           </p>
-          <div className="form-grid">
-            <div className="form-group">
-              <label className="form-label">Fecha Recepción Causación</label>
+          <div className="editar-form-grid">
+            <div className="editar-form-group">
+              <label className="editar-label">Fecha Recepción Causación</label>
               <input
                 type="date"
                 name="fechaRecepcionCausacion"
                 value={formData.fechaRecepcionCausacion}
                 onChange={handleChange}
-                className="form-input"
+                className="editar-input"
               />
             </div>
 
-            <div className="form-group">
-              <label className="form-label">Recibida por</label>
+            <div className="editar-form-group">
+              <label className="editar-label">Recibida por</label>
               <select
                 name="recibidaPor"
                 value={formData.recibidaPor}
                 onChange={handleChange}
-                className="form-select"
+                className="editar-select"
               >
                 <option value="">Seleccione una persona</option>
                 {personasData?.personas?.map(persona => (
@@ -367,46 +372,46 @@ function EditarFactura() {
               </select>
             </div>
 
-            <div className="form-group">
-              <label className="form-label">Fecha Revisión Causación</label>
+            <div className="editar-form-group">
+              <label className="editar-label">Fecha Revisión Causación</label>
               <input
                 type="date"
                 name="fechaRevisionCausacion"
                 value={formData.fechaRevisionCausacion}
                 onChange={handleChange}
-                className="form-input"
+                className="editar-input"
               />
             </div>
 
-            <div className="form-group">
-              <label className="form-label">No. Causación</label>
+            <div className="editar-form-group">
+              <label className="editar-label">No. Causación</label>
               <input
                 type="text"
                 name="numeroCausacion"
                 value={formData.numeroCausacion}
                 onChange={handleChange}
-                className="form-input"
+                className="editar-input"
               />
             </div>
 
-            <div className="form-group">
-              <label className="form-label">Fecha Causación</label>
+            <div className="editar-form-group">
+              <label className="editar-label">Fecha Causación</label>
               <input
                 type="date"
                 name="fechaCausacion"
                 value={formData.fechaCausacion}
                 onChange={handleChange}
-                className="form-input"
+                className="editar-input"
               />
             </div>
 
-            <div className="form-group">
-              <label className="form-label">Observaciones</label>
+            <div className="editar-form-group">
+              <label className="editar-label">Observaciones</label>
               <select
                 name="observaciones"
                 value={formData.observaciones}
                 onChange={handleChange}
-                className="form-select"
+                className="editar-select"
               >
                 <option value="">Seleccione una observación</option>
                 {opcionesObservacionesData?.opcionesObservaciones?.map((obs, idx) => (
@@ -419,10 +424,10 @@ function EditarFactura() {
           </div>
         </div>
 
-        <div className="button-group">
+        <div className="editar-button-group">
           <button
             type="submit"
-            className="btn btn-success"
+            className="editar-btn editar-btn-success"
             disabled={loadingActualizar}
           >
             {loadingActualizar ? 'Guardando...' : 'Guardar Cambios'}
@@ -430,7 +435,7 @@ function EditarFactura() {
           <button
             type="button"
             onClick={() => navigate('/facturas')}
-            className="btn btn-secondary"
+            className="editar-btn editar-btn-secondary"
           >
             Cancelar
           </button>

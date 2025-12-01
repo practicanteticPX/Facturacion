@@ -9,6 +9,7 @@ import {
   GET_FACTURAS,
   GET_PROXIMO_NUMERO_CONTROL
 } from '../apollo/queries';
+import FileUpload from './FileUpload';
 import './InscripcionFactura.css';
 
 /**
@@ -36,6 +37,7 @@ function InscripcionFactura() {
   const [mensaje, setMensaje] = useState({ tipo: '', texto: '' });
   const [mostrarSugerencias, setMostrarSugerencias] = useState(false);
   const [personasFiltradas, setPersonasFiltradas] = useState([]);
+  const [archivosAdjuntos, setArchivosAdjuntos] = useState([]);
 
   const { data: personasData } = useQuery(GET_PERSONAS);
   const { data: companiasData } = useQuery(GET_COMPANIAS);
@@ -132,6 +134,11 @@ function InscripcionFactura() {
     setFormData(prev => ({ ...prev, entregadaA: nombre }));
     setMostrarSugerencias(false);
     setPersonasFiltradas([]);
+  };
+
+  const handleFilesChange = (files) => {
+    setArchivosAdjuntos(files);
+    console.log('Archivos adjuntos:', files);
   };
 
   const handleSubmit = async (e) => {
@@ -355,6 +362,15 @@ function InscripcionFactura() {
               value={formData.fechaEntrega}
               onChange={handleChange}
               className="inscripcion-input"
+            />
+          </div>
+
+          <div className="inscripcion-form-group">
+            <FileUpload
+              onFilesChange={handleFilesChange}
+              acceptedTypes=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx"
+              maxSizeMB={10}
+              multiple={true}
             />
           </div>
         </div>

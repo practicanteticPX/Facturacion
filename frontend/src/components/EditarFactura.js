@@ -6,7 +6,6 @@ import {
   ACTUALIZAR_FACTURA,
   GET_PERSONAS,
   GET_COMPANIAS,
-  GET_OPCIONES_PLANTILLA,
   GET_OPCIONES_OBSERVACIONES,
   GET_PROVEEDOR,
   GET_FACTURAS
@@ -30,9 +29,9 @@ function EditarFactura() {
     fechaFactura: '',
     facturaCredito: false,
     acuseReciboSCI: false,
+    legalizaAnticipo: false,
     entregadaA: '',
     fechaEntrega: '',
-    elaboroPlantilla: '',
     fechaRecepcionCausacion: '',
     recibidaPor: '',
     fechaRevisionCausacion: '',
@@ -47,7 +46,6 @@ function EditarFactura() {
 
   const { data: personasData } = useQuery(GET_PERSONAS);
   const { data: companiasData } = useQuery(GET_COMPANIAS);
-  const { data: opcionesPlantillaData } = useQuery(GET_OPCIONES_PLANTILLA);
   const { data: opcionesObservacionesData } = useQuery(GET_OPCIONES_OBSERVACIONES);
 
   const { data: facturaData, loading: loadingFactura } = useQuery(GET_FACTURA, {
@@ -64,9 +62,9 @@ function EditarFactura() {
           fechaFactura: factura.fechaFactura ? factura.fechaFactura.split('T')[0] : '',
           facturaCredito: factura.facturaCredito || false,
           acuseReciboSCI: factura.acuseReciboSCI || false,
+          legalizaAnticipo: factura.legalizaAnticipo || false,
           entregadaA: factura.entregadaA || '',
           fechaEntrega: factura.fechaEntrega ? factura.fechaEntrega.split('T')[0] : '',
-          elaboroPlantilla: factura.elaboroPlantilla || '',
           fechaRecepcionCausacion: factura.fechaRecepcionCausacion ? factura.fechaRecepcionCausacion.split('T')[0] : '',
           recibidaPor: factura.recibidaPor || '',
           fechaRevisionCausacion: factura.fechaRevisionCausacion ? factura.fechaRevisionCausacion.split('T')[0] : '',
@@ -321,19 +319,16 @@ function EditarFactura() {
             </div>
 
             <div className="editar-form-group">
-              <label className="editar-label">Elaboró Plantilla</label>
-              <select
-                name="elaboroPlantilla"
-                value={formData.elaboroPlantilla}
-                onChange={handleChange}
-                className="editar-select"
-              >
-                {opcionesPlantillaData?.opcionesPlantilla?.map((opcion, idx) => (
-                  <option key={idx} value={opcion}>
-                    {opcion || '(Vacío)'}
-                  </option>
-                ))}
-              </select>
+              <label className="editar-label editar-checkbox-wrapper">
+                <input
+                  type="checkbox"
+                  name="legalizaAnticipo"
+                  checked={formData.legalizaAnticipo}
+                  onChange={handleChange}
+                  className="editar-checkbox"
+                />
+                ¿Legaliza anticipo?
+              </label>
             </div>
           </div>
         </div>

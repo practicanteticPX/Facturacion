@@ -1923,9 +1923,9 @@ export namespace Prisma {
     fechaFactura: Date | null
     facturaCredito: string | null
     acuseReciboSCI: string | null
+    legalizaAnticipo: string | null
     entregadaA: string | null
     fechaEntrega: Date | null
-    elaboroPlantilla: string | null
     fechaRecepcionCausacion: Date | null
     recibidaPor: string | null
     fechaRevisionCausacion: Date | null
@@ -1948,9 +1948,9 @@ export namespace Prisma {
     fechaFactura: Date | null
     facturaCredito: string | null
     acuseReciboSCI: string | null
+    legalizaAnticipo: string | null
     entregadaA: string | null
     fechaEntrega: Date | null
-    elaboroPlantilla: string | null
     fechaRecepcionCausacion: Date | null
     recibidaPor: string | null
     fechaRevisionCausacion: Date | null
@@ -1973,9 +1973,9 @@ export namespace Prisma {
     fechaFactura: number
     facturaCredito: number
     acuseReciboSCI: number
+    legalizaAnticipo: number
     entregadaA: number
     fechaEntrega: number
-    elaboroPlantilla: number
     fechaRecepcionCausacion: number
     recibidaPor: number
     fechaRevisionCausacion: number
@@ -2008,9 +2008,9 @@ export namespace Prisma {
     fechaFactura?: true
     facturaCredito?: true
     acuseReciboSCI?: true
+    legalizaAnticipo?: true
     entregadaA?: true
     fechaEntrega?: true
-    elaboroPlantilla?: true
     fechaRecepcionCausacion?: true
     recibidaPor?: true
     fechaRevisionCausacion?: true
@@ -2033,9 +2033,9 @@ export namespace Prisma {
     fechaFactura?: true
     facturaCredito?: true
     acuseReciboSCI?: true
+    legalizaAnticipo?: true
     entregadaA?: true
     fechaEntrega?: true
-    elaboroPlantilla?: true
     fechaRecepcionCausacion?: true
     recibidaPor?: true
     fechaRevisionCausacion?: true
@@ -2058,9 +2058,9 @@ export namespace Prisma {
     fechaFactura?: true
     facturaCredito?: true
     acuseReciboSCI?: true
+    legalizaAnticipo?: true
     entregadaA?: true
     fechaEntrega?: true
-    elaboroPlantilla?: true
     fechaRecepcionCausacion?: true
     recibidaPor?: true
     fechaRevisionCausacion?: true
@@ -2170,9 +2170,9 @@ export namespace Prisma {
     fechaFactura: Date
     facturaCredito: string
     acuseReciboSCI: string
+    legalizaAnticipo: string
     entregadaA: string
     fechaEntrega: Date
-    elaboroPlantilla: string | null
     fechaRecepcionCausacion: Date | null
     recibidaPor: string | null
     fechaRevisionCausacion: Date | null
@@ -2214,9 +2214,9 @@ export namespace Prisma {
     fechaFactura?: boolean
     facturaCredito?: boolean
     acuseReciboSCI?: boolean
+    legalizaAnticipo?: boolean
     entregadaA?: boolean
     fechaEntrega?: boolean
-    elaboroPlantilla?: boolean
     fechaRecepcionCausacion?: boolean
     recibidaPor?: boolean
     fechaRevisionCausacion?: boolean
@@ -2239,9 +2239,9 @@ export namespace Prisma {
     fechaFactura?: boolean
     facturaCredito?: boolean
     acuseReciboSCI?: boolean
+    legalizaAnticipo?: boolean
     entregadaA?: boolean
     fechaEntrega?: boolean
-    elaboroPlantilla?: boolean
     fechaRecepcionCausacion?: boolean
     recibidaPor?: boolean
     fechaRevisionCausacion?: boolean
@@ -2264,9 +2264,9 @@ export namespace Prisma {
     fechaFactura?: boolean
     facturaCredito?: boolean
     acuseReciboSCI?: boolean
+    legalizaAnticipo?: boolean
     entregadaA?: boolean
     fechaEntrega?: boolean
-    elaboroPlantilla?: boolean
     fechaRecepcionCausacion?: boolean
     recibidaPor?: boolean
     fechaRevisionCausacion?: boolean
@@ -2293,9 +2293,9 @@ export namespace Prisma {
       fechaFactura: Date
       facturaCredito: string
       acuseReciboSCI: string
+      legalizaAnticipo: string
       entregadaA: string
       fechaEntrega: Date
-      elaboroPlantilla: string | null
       fechaRecepcionCausacion: Date | null
       recibidaPor: string | null
       fechaRevisionCausacion: Date | null
@@ -2708,9 +2708,9 @@ export namespace Prisma {
     readonly fechaFactura: FieldRef<"Factura", 'DateTime'>
     readonly facturaCredito: FieldRef<"Factura", 'String'>
     readonly acuseReciboSCI: FieldRef<"Factura", 'String'>
+    readonly legalizaAnticipo: FieldRef<"Factura", 'String'>
     readonly entregadaA: FieldRef<"Factura", 'String'>
     readonly fechaEntrega: FieldRef<"Factura", 'DateTime'>
-    readonly elaboroPlantilla: FieldRef<"Factura", 'String'>
     readonly fechaRecepcionCausacion: FieldRef<"Factura", 'DateTime'>
     readonly recibidaPor: FieldRef<"Factura", 'String'>
     readonly fechaRevisionCausacion: FieldRef<"Factura", 'DateTime'>
@@ -3917,9 +3917,9 @@ export namespace Prisma {
     fechaFactura: 'fechaFactura',
     facturaCredito: 'facturaCredito',
     acuseReciboSCI: 'acuseReciboSCI',
+    legalizaAnticipo: 'legalizaAnticipo',
     entregadaA: 'entregadaA',
     fechaEntrega: 'fechaEntrega',
-    elaboroPlantilla: 'elaboroPlantilla',
     fechaRecepcionCausacion: 'fechaRecepcionCausacion',
     recibidaPor: 'recibidaPor',
     fechaRevisionCausacion: 'fechaRevisionCausacion',
@@ -4083,9 +4083,9 @@ export namespace Prisma {
     fechaFactura?: DateTimeFilter<"Factura"> | Date | string
     facturaCredito?: StringFilter<"Factura"> | string
     acuseReciboSCI?: StringFilter<"Factura"> | string
+    legalizaAnticipo?: StringFilter<"Factura"> | string
     entregadaA?: StringFilter<"Factura"> | string
     fechaEntrega?: DateTimeFilter<"Factura"> | Date | string
-    elaboroPlantilla?: StringNullableFilter<"Factura"> | string | null
     fechaRecepcionCausacion?: DateTimeNullableFilter<"Factura"> | Date | string | null
     recibidaPor?: StringNullableFilter<"Factura"> | string | null
     fechaRevisionCausacion?: DateTimeNullableFilter<"Factura"> | Date | string | null
@@ -4108,9 +4108,9 @@ export namespace Prisma {
     fechaFactura?: SortOrder
     facturaCredito?: SortOrder
     acuseReciboSCI?: SortOrder
+    legalizaAnticipo?: SortOrder
     entregadaA?: SortOrder
     fechaEntrega?: SortOrder
-    elaboroPlantilla?: SortOrderInput | SortOrder
     fechaRecepcionCausacion?: SortOrderInput | SortOrder
     recibidaPor?: SortOrderInput | SortOrder
     fechaRevisionCausacion?: SortOrderInput | SortOrder
@@ -4136,9 +4136,9 @@ export namespace Prisma {
     fechaFactura?: DateTimeFilter<"Factura"> | Date | string
     facturaCredito?: StringFilter<"Factura"> | string
     acuseReciboSCI?: StringFilter<"Factura"> | string
+    legalizaAnticipo?: StringFilter<"Factura"> | string
     entregadaA?: StringFilter<"Factura"> | string
     fechaEntrega?: DateTimeFilter<"Factura"> | Date | string
-    elaboroPlantilla?: StringNullableFilter<"Factura"> | string | null
     fechaRecepcionCausacion?: DateTimeNullableFilter<"Factura"> | Date | string | null
     recibidaPor?: StringNullableFilter<"Factura"> | string | null
     fechaRevisionCausacion?: DateTimeNullableFilter<"Factura"> | Date | string | null
@@ -4161,9 +4161,9 @@ export namespace Prisma {
     fechaFactura?: SortOrder
     facturaCredito?: SortOrder
     acuseReciboSCI?: SortOrder
+    legalizaAnticipo?: SortOrder
     entregadaA?: SortOrder
     fechaEntrega?: SortOrder
-    elaboroPlantilla?: SortOrderInput | SortOrder
     fechaRecepcionCausacion?: SortOrderInput | SortOrder
     recibidaPor?: SortOrderInput | SortOrder
     fechaRevisionCausacion?: SortOrderInput | SortOrder
@@ -4194,9 +4194,9 @@ export namespace Prisma {
     fechaFactura?: DateTimeWithAggregatesFilter<"Factura"> | Date | string
     facturaCredito?: StringWithAggregatesFilter<"Factura"> | string
     acuseReciboSCI?: StringWithAggregatesFilter<"Factura"> | string
+    legalizaAnticipo?: StringWithAggregatesFilter<"Factura"> | string
     entregadaA?: StringWithAggregatesFilter<"Factura"> | string
     fechaEntrega?: DateTimeWithAggregatesFilter<"Factura"> | Date | string
-    elaboroPlantilla?: StringNullableWithAggregatesFilter<"Factura"> | string | null
     fechaRecepcionCausacion?: DateTimeNullableWithAggregatesFilter<"Factura"> | Date | string | null
     recibidaPor?: StringNullableWithAggregatesFilter<"Factura"> | string | null
     fechaRevisionCausacion?: DateTimeNullableWithAggregatesFilter<"Factura"> | Date | string | null
@@ -4290,9 +4290,9 @@ export namespace Prisma {
     fechaFactura: Date | string
     facturaCredito: string
     acuseReciboSCI: string
+    legalizaAnticipo?: string
     entregadaA: string
     fechaEntrega: Date | string
-    elaboroPlantilla?: string | null
     fechaRecepcionCausacion?: Date | string | null
     recibidaPor?: string | null
     fechaRevisionCausacion?: Date | string | null
@@ -4315,9 +4315,9 @@ export namespace Prisma {
     fechaFactura: Date | string
     facturaCredito: string
     acuseReciboSCI: string
+    legalizaAnticipo?: string
     entregadaA: string
     fechaEntrega: Date | string
-    elaboroPlantilla?: string | null
     fechaRecepcionCausacion?: Date | string | null
     recibidaPor?: string | null
     fechaRevisionCausacion?: Date | string | null
@@ -4339,9 +4339,9 @@ export namespace Prisma {
     fechaFactura?: DateTimeFieldUpdateOperationsInput | Date | string
     facturaCredito?: StringFieldUpdateOperationsInput | string
     acuseReciboSCI?: StringFieldUpdateOperationsInput | string
+    legalizaAnticipo?: StringFieldUpdateOperationsInput | string
     entregadaA?: StringFieldUpdateOperationsInput | string
     fechaEntrega?: DateTimeFieldUpdateOperationsInput | Date | string
-    elaboroPlantilla?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRecepcionCausacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     recibidaPor?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRevisionCausacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4364,9 +4364,9 @@ export namespace Prisma {
     fechaFactura?: DateTimeFieldUpdateOperationsInput | Date | string
     facturaCredito?: StringFieldUpdateOperationsInput | string
     acuseReciboSCI?: StringFieldUpdateOperationsInput | string
+    legalizaAnticipo?: StringFieldUpdateOperationsInput | string
     entregadaA?: StringFieldUpdateOperationsInput | string
     fechaEntrega?: DateTimeFieldUpdateOperationsInput | Date | string
-    elaboroPlantilla?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRecepcionCausacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     recibidaPor?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRevisionCausacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4389,9 +4389,9 @@ export namespace Prisma {
     fechaFactura: Date | string
     facturaCredito: string
     acuseReciboSCI: string
+    legalizaAnticipo?: string
     entregadaA: string
     fechaEntrega: Date | string
-    elaboroPlantilla?: string | null
     fechaRecepcionCausacion?: Date | string | null
     recibidaPor?: string | null
     fechaRevisionCausacion?: Date | string | null
@@ -4413,9 +4413,9 @@ export namespace Prisma {
     fechaFactura?: DateTimeFieldUpdateOperationsInput | Date | string
     facturaCredito?: StringFieldUpdateOperationsInput | string
     acuseReciboSCI?: StringFieldUpdateOperationsInput | string
+    legalizaAnticipo?: StringFieldUpdateOperationsInput | string
     entregadaA?: StringFieldUpdateOperationsInput | string
     fechaEntrega?: DateTimeFieldUpdateOperationsInput | Date | string
-    elaboroPlantilla?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRecepcionCausacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     recibidaPor?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRevisionCausacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4438,9 +4438,9 @@ export namespace Prisma {
     fechaFactura?: DateTimeFieldUpdateOperationsInput | Date | string
     facturaCredito?: StringFieldUpdateOperationsInput | string
     acuseReciboSCI?: StringFieldUpdateOperationsInput | string
+    legalizaAnticipo?: StringFieldUpdateOperationsInput | string
     entregadaA?: StringFieldUpdateOperationsInput | string
     fechaEntrega?: DateTimeFieldUpdateOperationsInput | Date | string
-    elaboroPlantilla?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRecepcionCausacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     recibidaPor?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRevisionCausacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4621,9 +4621,9 @@ export namespace Prisma {
     fechaFactura?: SortOrder
     facturaCredito?: SortOrder
     acuseReciboSCI?: SortOrder
+    legalizaAnticipo?: SortOrder
     entregadaA?: SortOrder
     fechaEntrega?: SortOrder
-    elaboroPlantilla?: SortOrder
     fechaRecepcionCausacion?: SortOrder
     recibidaPor?: SortOrder
     fechaRevisionCausacion?: SortOrder
@@ -4650,9 +4650,9 @@ export namespace Prisma {
     fechaFactura?: SortOrder
     facturaCredito?: SortOrder
     acuseReciboSCI?: SortOrder
+    legalizaAnticipo?: SortOrder
     entregadaA?: SortOrder
     fechaEntrega?: SortOrder
-    elaboroPlantilla?: SortOrder
     fechaRecepcionCausacion?: SortOrder
     recibidaPor?: SortOrder
     fechaRevisionCausacion?: SortOrder
@@ -4675,9 +4675,9 @@ export namespace Prisma {
     fechaFactura?: SortOrder
     facturaCredito?: SortOrder
     acuseReciboSCI?: SortOrder
+    legalizaAnticipo?: SortOrder
     entregadaA?: SortOrder
     fechaEntrega?: SortOrder
-    elaboroPlantilla?: SortOrder
     fechaRecepcionCausacion?: SortOrder
     recibidaPor?: SortOrder
     fechaRevisionCausacion?: SortOrder

@@ -13,9 +13,9 @@ export const typeDefs = gql`
     fechaFactura: String!
     facturaCredito: Boolean!
     acuseReciboSCI: Boolean!
+    legalizaAnticipo: Boolean!
     entregadaA: String
     fechaEntrega: String
-    elaboroPlantilla: String
     fechaRecepcionCausacion: String
     recibidaPor: String
     fechaRevisionCausacion: String
@@ -38,7 +38,6 @@ export const typeDefs = gql`
   }
 
   input CrearFacturaInput {
-    numeroControl: String!
     cia: String!
     nit: String!
     numeroFactura: String!
@@ -46,9 +45,9 @@ export const typeDefs = gql`
     fechaFactura: String!
     facturaCredito: Boolean
     acuseReciboSCI: Boolean
+    legalizaAnticipo: Boolean
     entregadaA: String
     fechaEntrega: String
-    elaboroPlantilla: String
   }
 
   input ActualizarFacturaInput {
@@ -60,9 +59,9 @@ export const typeDefs = gql`
     fechaFactura: String
     facturaCredito: Boolean
     acuseReciboSCI: Boolean
+    legalizaAnticipo: Boolean
     entregadaA: String
     fechaEntrega: String
-    elaboroPlantilla: String
     fechaRecepcionCausacion: String
     recibidaPor: String
     fechaRevisionCausacion: String

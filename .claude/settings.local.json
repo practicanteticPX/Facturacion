@@ -23,7 +23,13 @@
       "Bash(docker-compose ps:*)",
       "Bash(docker-compose exec:*)",
       "Bash(cat:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(npx prisma migrate dev:*)",
+      "Bash(tasklist:*)",
+      "Bash(PGPASSWORD='$40M1n*!!2023' psql -h 192.168.0.254 -U admin -d SERV_QPREX -f prisma/migrations/alter_t_facturas_add_legaliza_anticipo.sql)",
+      "Bash(node scripts/add-legaliza-anticipo.js:*)",
+      "Bash(timeout /t 5)",
+      "Bash(timeout /t 2)"
     ],
     "deny": [],
     "ask": []

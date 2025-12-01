@@ -14,9 +14,9 @@ export const GET_FACTURAS = gql`
       fechaFactura
       facturaCredito
       acuseReciboSCI
+      legalizaAnticipo
       entregadaA
       fechaEntrega
-      elaboroPlantilla
       fechaRecepcionCausacion
       recibidaPor
       fechaRevisionCausacion
@@ -43,9 +43,9 @@ export const GET_FACTURA = gql`
       fechaFactura
       facturaCredito
       acuseReciboSCI
+      legalizaAnticipo
       entregadaA
       fechaEntrega
-      elaboroPlantilla
       fechaRecepcionCausacion
       recibidaPor
       fechaRevisionCausacion
@@ -109,9 +109,9 @@ export const CREAR_FACTURA = gql`
       fechaFactura
       facturaCredito
       acuseReciboSCI
+      legalizaAnticipo
       entregadaA
       fechaEntrega
-      elaboroPlantilla
     }
   }
 `;
@@ -130,9 +130,9 @@ export const ACTUALIZAR_FACTURA = gql`
       fechaFactura
       facturaCredito
       acuseReciboSCI
+      legalizaAnticipo
       entregadaA
       fechaEntrega
-      elaboroPlantilla
       fechaRecepcionCausacion
       recibidaPor
       fechaRevisionCausacion

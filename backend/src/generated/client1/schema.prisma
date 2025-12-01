@@ -32,9 +32,9 @@ model Factura {
   fechaFactura            DateTime  @map("fecha_factura") @db.Date
   facturaCredito          String    @map("factura_credito") @db.VarChar(2)
   acuseReciboSCI          String    @map("acuse_recibo_sci") @db.VarChar(2)
+  legalizaAnticipo        String    @default("No") @map("legaliza_anticipo") @db.VarChar(2)
   entregadaA              String    @map("entregada_a") @db.VarChar(255)
   fechaEntrega            DateTime  @map("fecha_entrega") @db.Date
-  elaboroPlantilla        String?   @default("") @map("elaboro_plantilla") @db.VarChar(10)
   fechaRecepcionCausacion DateTime? @map("fecha_recepcion_causacion") @db.Date
   recibidaPor             String?   @map("recibida_por") @db.VarChar(255)
   fechaRevisionCausacion  DateTime? @map("fecha_revision_causacion") @db.Date

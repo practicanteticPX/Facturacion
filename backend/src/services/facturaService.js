@@ -3,16 +3,23 @@ import proveedorService from './proveedorService.js';
 import personaService from './personaService.js';
 import companiaService from './companiaService.js';
 import {
-  validarElaboroPlantilla,
   validarObservaciones,
   validarCamposRequeridos
 } from '../utils/validators.js';
 
 class FacturaService {
+  convertirBooleanos(factura) {
+    return {
+      ...factura,
+      facturaCredito: factura.facturaCredito === 'Si',
+      acuseReciboSCI: factura.acuseReciboSCI === 'Si',
+      legalizaAnticipo: factura.legalizaAnticipo === 'Si'
+    };
+  }
+
   async crearFactura(datos) {
     try {
       const camposRequeridos = [
-        'numeroControl',
         'cia',
         'nit',
         'numeroFactura',
@@ -23,29 +30,42 @@ class FacturaService {
 
       await companiaService.validarCompaniaExiste(datos.cia);
 
-      await proveedorService.validarYObtenerNombreProveedor(datos.nit);
+      const nombreProveedor = await proveedorService.validarYObtenerNombreProveedor(datos.nit);
 
       if (datos.entregadaA) {
         await personaService.validarPersonaExiste(datos.entregadaA);
       }
 
-      if (datos.elaboroPlantilla) {
-        validarElaboroPlantilla(datos.elaboroPlantilla);
-      }
+      const ultimaFactura = await prismaServ.factura.findFirst({
+        orderBy: {
+          numeroControl: 'desc'
+        },
+        select: {
+          numeroControl: true
+        }
+      });
+
+      const nuevoNumeroControl = ultimaFactura
+        ? (parseInt(ultimaFactura.numeroControl) + 1).toString()
+        : '1';
+
+      const ciaNit = proveedorService.generarCiaNit(datos.cia, datos.nit);
 
       const factura = await prismaServ.factura.create({
         data: {
-          numeroControl: datos.numeroControl,
+          numeroControl: nuevoNumeroControl,
           cia: datos.cia,
+          ciaNit: ciaNit,
           nit: datos.nit,
+          proveedor: nombreProveedor,
           numeroFactura: datos.numeroFactura,
           fechaRadicado: new Date(datos.fechaRadicado),
           fechaFactura: new Date(datos.fechaFactura),
-          facturaCredito: datos.facturaCredito || false,
-          acuseReciboSCI: datos.acuseReciboSCI || false,
-          entregadaA: datos.entregadaA || null,
-          fechaEntrega: datos.fechaEntrega ? new Date(datos.fechaEntrega) : null,
-          elaboroPlantilla: datos.elaboroPlantilla || null
+          facturaCredito: datos.facturaCredito ? 'Si' : 'No',
+          acuseReciboSCI: datos.acuseReciboSCI ? 'Si' : 'No',
+          legalizaAnticipo: datos.legalizaAnticipo ? 'Si' : 'No',
+          entregadaA: datos.entregadaA || '',
+          fechaEntrega: datos.fechaEntrega ? new Date(datos.fechaEntrega) : new Date()
         }
       });
 
@@ -72,11 +92,11 @@ class FacturaService {
       console.warn(`Proveedor no encontrado para NIT ${factura.nit}`);
     }
 
-    return {
+    return this.convertirBooleanos({
       ...factura,
       ciaNit: proveedorService.generarCiaNit(factura.cia, factura.nit),
       proveedor: proveedor ? proveedor.Nombre : 'Proveedor no encontrado'
-    };
+    });
   }
 
   async obtenerTodasLasFacturas(filtros = {}) {
@@ -111,11 +131,11 @@ class FacturaService {
             console.warn(`Proveedor no encontrado para NIT ${factura.nit}`);
           }
 
-          return {
+          return this.convertirBooleanos({
             ...factura,
             ciaNit: proveedorService.generarCiaNit(factura.cia, factura.nit),
             proveedor: proveedor ? proveedor.Nombre : 'Proveedor no encontrado'
-          };
+          });
         })
       );
 
@@ -140,8 +160,9 @@ class FacturaService {
         await companiaService.validarCompaniaExiste(datos.cia);
       }
 
+      let nombreProveedor = null;
       if (datos.nit) {
-        await proveedorService.validarYObtenerNombreProveedor(datos.nit);
+        nombreProveedor = await proveedorService.validarYObtenerNombreProveedor(datos.nit);
       }
 
       if (datos.entregadaA) {
@@ -152,10 +173,6 @@ class FacturaService {
         await personaService.validarPersonaExiste(datos.recibidaPor);
       }
 
-      if (datos.elaboroPlantilla) {
-        validarElaboroPlantilla(datos.elaboroPlantilla);
-      }
-
       if (datos.observaciones) {
         validarObservaciones(datos.observaciones);
       }
@@ -164,7 +181,7 @@ class FacturaService {
 
       const camposPermitidos = [
         'numeroControl', 'cia', 'nit', 'numeroFactura', 'fechaRadicado', 'fechaFactura',
-        'facturaCredito', 'acuseReciboSCI', 'entregadaA', 'fechaEntrega', 'elaboroPlantilla',
+        'facturaCredito', 'acuseReciboSCI', 'legalizaAnticipo', 'entregadaA', 'fechaEntrega',
         'fechaRecepcionCausacion', 'recibidaPor', 'fechaRevisionCausacion',
         'numeroCausacion', 'fechaCausacion', 'observaciones'
       ];
@@ -178,6 +195,16 @@ class FacturaService {
           }
         }
       });
+
+      if (datos.cia || datos.nit) {
+        const ciaFinal = datos.cia || facturaExistente.cia;
+        const nitFinal = datos.nit || facturaExistente.nit;
+        datosActualizacion.ciaNit = proveedorService.generarCiaNit(ciaFinal, nitFinal);
+      }
+
+      if (nombreProveedor) {
+        datosActualizacion.proveedor = nombreProveedor;
+      }
 
       const facturaActualizada = await prismaServ.factura.update({
         where: { id },

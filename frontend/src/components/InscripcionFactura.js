@@ -5,7 +5,6 @@ import {
   CREAR_FACTURA,
   GET_PERSONAS,
   GET_COMPANIAS,
-  GET_OPCIONES_PLANTILLA,
   GET_PROVEEDOR,
   GET_FACTURAS
 } from '../apollo/queries';
@@ -19,7 +18,6 @@ function InscripcionFactura() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    numeroControl: '',
     cia: '',
     nit: '',
     numeroFactura: '',
@@ -27,9 +25,9 @@ function InscripcionFactura() {
     fechaFactura: '',
     facturaCredito: false,
     acuseReciboSCI: false,
+    legalizaAnticipo: false,
     entregadaA: '',
-    fechaEntrega: '',
-    elaboroPlantilla: ''
+    fechaEntrega: ''
   });
 
   const [proveedorNombre, setProveedorNombre] = useState('');
@@ -40,7 +38,6 @@ function InscripcionFactura() {
 
   const { data: personasData } = useQuery(GET_PERSONAS);
   const { data: companiasData } = useQuery(GET_COMPANIAS);
-  const { data: opcionesPlantillaData } = useQuery(GET_OPCIONES_PLANTILLA);
 
   const [buscarProveedor, { loading: loadingProveedor }] = useLazyQuery(GET_PROVEEDOR, {
     onCompleted: (data) => {
@@ -130,7 +127,6 @@ function InscripcionFactura() {
 
     try {
       const input = {
-        numeroControl: formData.numeroControl,
         cia: formData.cia,
         nit: formData.nit,
         numeroFactura: formData.numeroFactura,
@@ -138,11 +134,11 @@ function InscripcionFactura() {
         fechaFactura: formData.fechaFactura,
         facturaCredito: formData.facturaCredito,
         acuseReciboSCI: formData.acuseReciboSCI,
+        legalizaAnticipo: formData.legalizaAnticipo,
       };
 
       if (formData.entregadaA) input.entregadaA = formData.entregadaA;
       if (formData.fechaEntrega) input.fechaEntrega = formData.fechaEntrega;
-      if (formData.elaboroPlantilla) input.elaboroPlantilla = formData.elaboroPlantilla;
 
       await crearFactura({ variables: { input } });
     } catch (error) {
@@ -162,19 +158,6 @@ function InscripcionFactura() {
 
       <form onSubmit={handleSubmit} className="inscripcion-form">
         <div className="inscripcion-form-grid">
-          <div className="inscripcion-form-group">
-            <label className="inscripcion-label inscripcion-label-required">Nº. Control</label>
-            <input
-              type="text"
-              name="numeroControl"
-              value={formData.numeroControl}
-              onChange={handleChange}
-              className="inscripcion-input"
-              required
-            />
-            <p className="inscripcion-info-text">Consecutivo asignado por el auxiliar administrativo</p>
-          </div>
-
           <div className="inscripcion-form-group">
             <label className="inscripcion-label inscripcion-label-required">Compañía</label>
             <select
@@ -292,6 +275,19 @@ function InscripcionFactura() {
           </div>
 
           <div className="inscripcion-form-group">
+            <label className="inscripcion-label inscripcion-checkbox-wrapper">
+              <input
+                type="checkbox"
+                name="legalizaAnticipo"
+                checked={formData.legalizaAnticipo}
+                onChange={handleChange}
+                className="inscripcion-checkbox"
+              />
+              ¿Legaliza anticipo?
+            </label>
+          </div>
+
+          <div className="inscripcion-form-group">
             <label className="inscripcion-label">Entregada a</label>
             <input
               type="text"
@@ -325,7 +321,6 @@ function InscripcionFactura() {
                 ))}
               </div>
             )}
-            <p className="inscripcion-info-text">Busque por nombre o apellido en cualquier orden (ej: "Lopez Esteban" encuentra "Zuluaga Lopez Esteban")</p>
           </div>
 
           <div className="inscripcion-form-group">
@@ -337,22 +332,6 @@ function InscripcionFactura() {
               onChange={handleChange}
               className="inscripcion-input"
             />
-          </div>
-
-          <div className="inscripcion-form-group">
-            <label className="inscripcion-label">Elaboró Plantilla</label>
-            <select
-              name="elaboroPlantilla"
-              value={formData.elaboroPlantilla}
-              onChange={handleChange}
-              className="inscripcion-select"
-            >
-              {opcionesPlantillaData?.opcionesPlantilla?.map((opcion, idx) => (
-                <option key={idx} value={opcion}>
-                  {opcion || '(Vacío)'}
-                </option>
-              ))}
-            </select>
           </div>
         </div>
 

@@ -133,7 +133,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "D:\\crud_2\\backend\\src\\generated\\client2",
+      "value": "D:\\CRUD\\backend\\src\\generated\\client2",
       "fromEnvVar": null
     },
     "config": {
@@ -153,7 +153,7 @@ const config = {
     "previewFeatures": [
       "multiSchema"
     ],
-    "sourceFilePath": "D:\\crud_2\\backend\\prisma\\schema2.prisma",
+    "sourceFilePath": "D:\\CRUD\\backend\\prisma\\schema2.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

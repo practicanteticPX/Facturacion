@@ -63,6 +63,7 @@ export const GET_PERSONAS = gql`
     personas {
       id
       nombre
+      correo
     }
   }
 `;
@@ -102,8 +103,8 @@ export const GET_OPCIONES_OBSERVACIONES = gql`
 `;
 
 export const CREAR_FACTURA = gql`
-  mutation CrearFactura($input: CrearFacturaInput!) {
-    crearFactura(input: $input) {
+  mutation CrearFactura($input: CrearFacturaInput!, $archivo: Upload) {
+    crearFactura(input: $input, archivo: $archivo) {
       id
       numeroControl
       cia

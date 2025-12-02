@@ -4,6 +4,7 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
+import graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.mjs';
 import { typeDefs } from './graphql/schema.js';
 import { resolvers } from './graphql/resolvers.js';
 import { connectDatabases, disconnectDatabases } from './config/database.js';
@@ -51,6 +52,7 @@ const startServer = async () => {
         },
         credentials: true
       }),
+      graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 10 }),
       bodyParser.json(),
       expressMiddleware(server, {
         context: async ({ req }) => {

@@ -14,6 +14,34 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '.
 import './EditarFactura.css';
 
 /**
+ * Helper function para formatear fechas al formato YYYY-MM-DD
+ * Maneja diferentes formatos de fecha que pueden venir del backend
+ */
+const formatearFechaParaInput = (fecha) => {
+  if (!fecha) return '';
+
+  try {
+    // Crear objeto Date y validar
+    const fechaObj = new Date(fecha);
+
+    // Verificar si la fecha es válida
+    if (isNaN(fechaObj.getTime())) {
+      return '';
+    }
+
+    // Obtener componentes de la fecha en UTC para evitar problemas de timezone
+    const year = fechaObj.getUTCFullYear();
+    const month = String(fechaObj.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(fechaObj.getUTCDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+  } catch (error) {
+    console.error('Error formateando fecha:', fecha, error);
+    return '';
+  }
+};
+
+/**
  * EditarFactura Component
  * Formulario para editar facturas existentes en el sistema
  */
@@ -59,18 +87,18 @@ function EditarFactura() {
           cia: factura.cia || '',
           nit: factura.nit || '',
           numeroFactura: factura.numeroFactura || '',
-          fechaRadicado: factura.fechaRadicado ? factura.fechaRadicado.split('T')[0] : '',
-          fechaFactura: factura.fechaFactura ? factura.fechaFactura.split('T')[0] : '',
+          fechaRadicado: formatearFechaParaInput(factura.fechaRadicado),
+          fechaFactura: formatearFechaParaInput(factura.fechaFactura),
           facturaCredito: factura.facturaCredito || false,
           acuseReciboSCI: factura.acuseReciboSCI || false,
           legalizaAnticipo: factura.legalizaAnticipo || false,
           entregadaA: factura.entregadaA || '',
-          fechaEntrega: factura.fechaEntrega ? factura.fechaEntrega.split('T')[0] : '',
-          fechaRecepcionCausacion: factura.fechaRecepcionCausacion ? factura.fechaRecepcionCausacion.split('T')[0] : '',
+          fechaEntrega: formatearFechaParaInput(factura.fechaEntrega),
+          fechaRecepcionCausacion: formatearFechaParaInput(factura.fechaRecepcionCausacion),
           recibidaPor: factura.recibidaPor || '',
-          fechaRevisionCausacion: factura.fechaRevisionCausacion ? factura.fechaRevisionCausacion.split('T')[0] : '',
+          fechaRevisionCausacion: formatearFechaParaInput(factura.fechaRevisionCausacion),
           numeroCausacion: factura.numeroCausacion || '',
-          fechaCausacion: factura.fechaCausacion ? factura.fechaCausacion.split('T')[0] : '',
+          fechaCausacion: formatearFechaParaInput(factura.fechaCausacion),
           observaciones: factura.observaciones || ''
         });
         setProveedorNombre(factura.proveedor);
@@ -319,7 +347,6 @@ function EditarFactura() {
                   <SelectValue placeholder="Seleccione una persona" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Seleccione una persona</SelectItem>
                   {personasData?.personas?.map(persona => (
                     <SelectItem key={persona.id} value={persona.nombre}>
                       {persona.nombre}
@@ -385,7 +412,6 @@ function EditarFactura() {
                   <SelectValue placeholder="Seleccione una persona" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Seleccione una persona</SelectItem>
                   {personasData?.personas?.map(persona => (
                     <SelectItem key={persona.id} value={persona.nombre}>
                       {persona.nombre}
@@ -438,7 +464,6 @@ function EditarFactura() {
                   <SelectValue placeholder="Seleccione una observación" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Seleccione una observación</SelectItem>
                   {opcionesObservacionesData?.opcionesObservaciones?.map((obs, idx) => (
                     <SelectItem key={idx} value={obs}>
                       {obs}

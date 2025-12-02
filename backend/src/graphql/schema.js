@@ -1,6 +1,8 @@
 import gql from 'graphql-tag';
 
 export const typeDefs = gql`
+  scalar Upload
+
   type Factura {
     id: Int!
     numeroControl: String!
@@ -29,6 +31,7 @@ export const typeDefs = gql`
   type Persona {
     id: Int!
     nombre: String!
+    correo: String
   }
 
   type Proveedor {
@@ -107,7 +110,7 @@ export const typeDefs = gql`
 
   type Mutation {
     login(input: LoginInput!): AuthResponse!
-    crearFactura(input: CrearFacturaInput!): Factura!
+    crearFactura(input: CrearFacturaInput!, archivo: Upload): Factura!
     actualizarFactura(id: Int!, input: ActualizarFacturaInput!): Factura!
   }
 `;

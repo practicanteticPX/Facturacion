@@ -54,6 +54,7 @@ model Factura {
 model Persona {
   id     Int     @default(autoincrement())
   nombre String? @db.VarChar
+  correo String? @db.VarChar
 
   @@unique([id])
   @@map("T_Personas")

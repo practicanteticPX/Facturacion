@@ -32,7 +32,9 @@
       "Bash(timeout /t 2)",
       "Bash(npm uninstall:*)",
       "Bash(npm run test:smtp:*)",
-      "Bash(timeout /t 10)"
+      "Bash(timeout /t 10)",
+      "Bash(docker-compose build:*)",
+      "Bash(docker-compose stop:*)"
     ],
     "deny": [],
     "ask": []

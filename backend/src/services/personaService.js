@@ -26,6 +26,31 @@ class PersonaService {
 
     return true;
   }
+
+  async obtenerCorreoPorNombre(nombre) {
+    try {
+      const persona = await prismaServ.persona.findFirst({
+        where: { nombre },
+        select: {
+          correo: true,
+          nombre: true
+        }
+      });
+
+      if (!persona) {
+        throw new Error(`Persona ${nombre} no encontrada en la base de datos`);
+      }
+
+      if (!persona.correo) {
+        throw new Error(`La persona ${nombre} no tiene correo electrónico registrado`);
+      }
+
+      return persona.correo;
+    } catch (error) {
+      console.error('Error obteniendo correo de persona:', error);
+      throw error;
+    }
+  }
 }
 
 export default new PersonaService();

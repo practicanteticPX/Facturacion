@@ -2,6 +2,7 @@ import { prismaServ } from '../config/database.js';
 import proveedorService from './proveedorService.js';
 import personaService from './personaService.js';
 import companiaService from './companiaService.js';
+import emailService from './emailService.js';
 import {
   validarObservaciones,
   validarCamposRequeridos
@@ -39,7 +40,7 @@ class FacturaService {
     }
   }
 
-  async crearFactura(datos) {
+  async crearFactura(datos, archivo = null) {
     try {
       const camposRequeridos = [
         'cia',
@@ -79,6 +80,38 @@ class FacturaService {
           fechaEntrega: datos.fechaEntrega ? new Date(datos.fechaEntrega) : new Date()
         }
       });
+
+      // Enviar correo si hay destinatario y archivo adjunto
+      console.log('📧 Verificando envío de correo...');
+      console.log('📧 EntregadaA:', datos.entregadaA);
+      console.log('📧 Archivo:', archivo ? `SÍ (${archivo.filename})` : 'NO');
+
+      if (datos.entregadaA && archivo) {
+        try {
+          console.log('📧 Obteniendo correo de:', datos.entregadaA);
+          const correoDestinatario = await personaService.obtenerCorreoPorNombre(datos.entregadaA);
+          console.log('📧 Correo obtenido:', correoDestinatario);
+
+          console.log('📧 Enviando correo...');
+          await emailService.enviarCorreoFactura({
+            to: correoDestinatario,
+            numeroControl: nuevoNumeroControl,
+            numeroFactura: datos.numeroFactura,
+            proveedor: nombreProveedor,
+            archivo: archivo
+          });
+
+          console.log(`✅ Correo de factura enviado exitosamente a ${correoDestinatario}`);
+        } catch (emailError) {
+          console.error('❌ Error al enviar correo de factura (factura creada exitosamente):', emailError);
+          console.error('❌ Stack trace:', emailError.stack);
+          // No lanzamos el error para que la factura se cree aunque falle el correo
+        }
+      } else {
+        console.log('⚠️ No se enviará correo:',
+          !datos.entregadaA ? 'No hay destinatario' : 'No hay archivo adjunto'
+        );
+      }
 
       return await this.obtenerFacturaCompleta(factura.id);
     } catch (error) {

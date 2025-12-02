@@ -3030,16 +3030,19 @@ export namespace Prisma {
   export type PersonaMinAggregateOutputType = {
     id: number | null
     nombre: string | null
+    correo: string | null
   }
 
   export type PersonaMaxAggregateOutputType = {
     id: number | null
     nombre: string | null
+    correo: string | null
   }
 
   export type PersonaCountAggregateOutputType = {
     id: number
     nombre: number
+    correo: number
     _all: number
   }
 
@@ -3055,16 +3058,19 @@ export namespace Prisma {
   export type PersonaMinAggregateInputType = {
     id?: true
     nombre?: true
+    correo?: true
   }
 
   export type PersonaMaxAggregateInputType = {
     id?: true
     nombre?: true
+    correo?: true
   }
 
   export type PersonaCountAggregateInputType = {
     id?: true
     nombre?: true
+    correo?: true
     _all?: true
   }
 
@@ -3157,6 +3163,7 @@ export namespace Prisma {
   export type PersonaGroupByOutputType = {
     id: number
     nombre: string | null
+    correo: string | null
     _count: PersonaCountAggregateOutputType | null
     _avg: PersonaAvgAggregateOutputType | null
     _sum: PersonaSumAggregateOutputType | null
@@ -3181,16 +3188,19 @@ export namespace Prisma {
   export type PersonaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     nombre?: boolean
+    correo?: boolean
   }, ExtArgs["result"]["persona"]>
 
   export type PersonaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     nombre?: boolean
+    correo?: boolean
   }, ExtArgs["result"]["persona"]>
 
   export type PersonaSelectScalar = {
     id?: boolean
     nombre?: boolean
+    correo?: boolean
   }
 
 
@@ -3200,6 +3210,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       nombre: string | null
+      correo: string | null
     }, ExtArgs["result"]["persona"]>
     composites: {}
   }
@@ -3595,6 +3606,7 @@ export namespace Prisma {
   interface PersonaFieldRefs {
     readonly id: FieldRef<"Persona", 'Int'>
     readonly nombre: FieldRef<"Persona", 'String'>
+    readonly correo: FieldRef<"Persona", 'String'>
   }
     
 
@@ -3935,7 +3947,8 @@ export namespace Prisma {
 
   export const PersonaScalarFieldEnum: {
     id: 'id',
-    nombre: 'nombre'
+    nombre: 'nombre',
+    correo: 'correo'
   };
 
   export type PersonaScalarFieldEnum = (typeof PersonaScalarFieldEnum)[keyof typeof PersonaScalarFieldEnum]
@@ -4213,11 +4226,13 @@ export namespace Prisma {
     NOT?: PersonaWhereInput | PersonaWhereInput[]
     id?: IntFilter<"Persona"> | number
     nombre?: StringNullableFilter<"Persona"> | string | null
+    correo?: StringNullableFilter<"Persona"> | string | null
   }
 
   export type PersonaOrderByWithRelationInput = {
     id?: SortOrder
     nombre?: SortOrderInput | SortOrder
+    correo?: SortOrderInput | SortOrder
   }
 
   export type PersonaWhereUniqueInput = Prisma.AtLeast<{
@@ -4226,11 +4241,13 @@ export namespace Prisma {
     OR?: PersonaWhereInput[]
     NOT?: PersonaWhereInput | PersonaWhereInput[]
     nombre?: StringNullableFilter<"Persona"> | string | null
+    correo?: StringNullableFilter<"Persona"> | string | null
   }, "id">
 
   export type PersonaOrderByWithAggregationInput = {
     id?: SortOrder
     nombre?: SortOrderInput | SortOrder
+    correo?: SortOrderInput | SortOrder
     _count?: PersonaCountOrderByAggregateInput
     _avg?: PersonaAvgOrderByAggregateInput
     _max?: PersonaMaxOrderByAggregateInput
@@ -4244,6 +4261,7 @@ export namespace Prisma {
     NOT?: PersonaScalarWhereWithAggregatesInput | PersonaScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Persona"> | number
     nombre?: StringNullableWithAggregatesFilter<"Persona"> | string | null
+    correo?: StringNullableWithAggregatesFilter<"Persona"> | string | null
   }
 
   export type CompaniaCreateInput = {
@@ -4454,34 +4472,41 @@ export namespace Prisma {
   export type PersonaCreateInput = {
     id?: number
     nombre?: string | null
+    correo?: string | null
   }
 
   export type PersonaUncheckedCreateInput = {
     id?: number
     nombre?: string | null
+    correo?: string | null
   }
 
   export type PersonaUpdateInput = {
     nombre?: NullableStringFieldUpdateOperationsInput | string | null
+    correo?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PersonaUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     nombre?: NullableStringFieldUpdateOperationsInput | string | null
+    correo?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PersonaCreateManyInput = {
     id?: number
     nombre?: string | null
+    correo?: string | null
   }
 
   export type PersonaUpdateManyMutationInput = {
     nombre?: NullableStringFieldUpdateOperationsInput | string | null
+    correo?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PersonaUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     nombre?: NullableStringFieldUpdateOperationsInput | string | null
+    correo?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -4741,6 +4766,7 @@ export namespace Prisma {
   export type PersonaCountOrderByAggregateInput = {
     id?: SortOrder
     nombre?: SortOrder
+    correo?: SortOrder
   }
 
   export type PersonaAvgOrderByAggregateInput = {
@@ -4750,11 +4776,13 @@ export namespace Prisma {
   export type PersonaMaxOrderByAggregateInput = {
     id?: SortOrder
     nombre?: SortOrder
+    correo?: SortOrder
   }
 
   export type PersonaMinOrderByAggregateInput = {
     id?: SortOrder
     nombre?: SortOrder
+    correo?: SortOrder
   }
 
   export type PersonaSumOrderByAggregateInput = {

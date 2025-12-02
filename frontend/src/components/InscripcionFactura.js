@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
+import { useQuery, useLazyQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import {
   CREAR_FACTURA,
@@ -9,6 +9,7 @@ import {
   GET_FACTURAS,
   GET_PROXIMO_NUMERO_CONTROL
 } from '../apollo/queries';
+import { executeMutationWithFile } from '../apollo/client';
 import FileUpload from './FileUpload';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from './ui/select';
 import './InscripcionFactura.css';
@@ -56,18 +57,7 @@ function InscripcionFactura() {
     }
   });
 
-  const [crearFactura, { loading: loadingCrear }] = useMutation(CREAR_FACTURA, {
-    refetchQueries: [{ query: GET_FACTURAS }],
-    onCompleted: () => {
-      setMensaje({ tipo: 'success', texto: 'Factura creada exitosamente' });
-      setTimeout(() => {
-        navigate('/facturas');
-      }, 1500);
-    },
-    onError: (error) => {
-      setMensaje({ tipo: 'error', texto: error.message });
-    }
-  });
+  const [loadingCrear, setLoadingCrear] = useState(false);
 
   useEffect(() => {
     if (formData.cia && formData.nit) {
@@ -145,6 +135,7 @@ function InscripcionFactura() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMensaje({ tipo: '', texto: '' });
+    setLoadingCrear(true);
 
     try {
       const input = {
@@ -161,9 +152,23 @@ function InscripcionFactura() {
       if (formData.entregadaA) input.entregadaA = formData.entregadaA;
       if (formData.fechaEntrega) input.fechaEntrega = formData.fechaEntrega;
 
-      await crearFactura({ variables: { input } });
+      // Preparar variables con archivo si existe
+      const variables = { input };
+      if (archivosAdjuntos && archivosAdjuntos.length > 0) {
+        variables.archivo = archivosAdjuntos[0];
+      }
+
+      await executeMutationWithFile(CREAR_FACTURA, variables);
+
+      setMensaje({ tipo: 'success', texto: 'Factura creada exitosamente' });
+      setTimeout(() => {
+        navigate('/facturas');
+      }, 1500);
     } catch (error) {
       console.error('Error creando factura:', error);
+      setMensaje({ tipo: 'error', texto: error.message });
+    } finally {
+      setLoadingCrear(false);
     }
   };
 

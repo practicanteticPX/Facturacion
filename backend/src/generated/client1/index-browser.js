@@ -154,7 +154,8 @@ exports.Prisma.FacturaScalarFieldEnum = {
 
 exports.Prisma.PersonaScalarFieldEnum = {
   id: 'id',
-  nombre: 'nombre'
+  nombre: 'nombre',
+  correo: 'correo'
 };
 
 exports.Prisma.SortOrder = {

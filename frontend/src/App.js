@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
 import Login from './components/Login';
 import InscripcionFactura from './components/InscripcionFactura';
 import ListaFacturas from './components/ListaFacturas';
@@ -47,17 +47,28 @@ function App() {
     <Router>
       <div className="App">
         <nav className="navbar">
-          <div className="container">
+          <div className="navbar-container">
             <h1 className="navbar-title">Recepción Facturación</h1>
             <div className="navbar-links">
-              <Link to="/" className="nav-link">Nueva Factura</Link>
-              <Link to="/facturas" className="nav-link">Ver Facturas</Link>
-              <div className="user-info">
-                <span className="user-name">{currentUser?.displayName || currentUser?.username}</span>
-                <button onClick={handleLogout} className="logout-button">
-                  Cerrar Sesión
-                </button>
-              </div>
+              <NavLink
+                to="/"
+                end
+                className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+              >
+                Nueva Factura
+              </NavLink>
+              <NavLink
+                to="/facturas"
+                className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+              >
+                Ver Facturas
+              </NavLink>
+            </div>
+            <div className="user-info">
+              <span className="user-name">{currentUser?.displayName || currentUser?.username}</span>
+              <button onClick={handleLogout} className="logout-button">
+                Cerrar Sesión
+              </button>
             </div>
           </div>
         </nav>

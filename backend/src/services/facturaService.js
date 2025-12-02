@@ -260,6 +260,8 @@ class FacturaService {
         'numeroCausacion', 'fechaCausacion', 'observaciones'
       ];
 
+      const camposBooleanos = ['facturaCredito', 'acuseReciboSCI', 'legalizaAnticipo'];
+
       camposPermitidos.forEach(campo => {
         if (datos[campo] !== undefined) {
           if (campo.includes('fecha')) {
@@ -276,6 +278,9 @@ class FacturaService {
               // Si está vacía, establecer como null
               datosActualizacion[campo] = null;
             }
+          } else if (camposBooleanos.includes(campo)) {
+            // Convertir booleanos a "Si"/"No" para la BD
+            datosActualizacion[campo] = datos[campo] ? 'Si' : 'No';
           } else {
             datosActualizacion[campo] = datos[campo];
           }

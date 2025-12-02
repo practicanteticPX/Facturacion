@@ -178,6 +178,7 @@ function InscripcionFactura() {
 
       <form onSubmit={handleSubmit} className="inscripcion-form">
         <div className="inscripcion-form-grid">
+          {/* Fila 1 */}
           <div className="inscripcion-form-group">
             <label className="inscripcion-label">No. de Control</label>
             <input
@@ -205,7 +206,7 @@ function InscripcionFactura() {
             </select>
           </div>
 
-          <div className="inscripcion-form-group">
+          <div className="inscripcion-form-group inscripcion-form-group-span-2">
             <label className="inscripcion-label">Compañía + NIT</label>
             <input
               type="text"
@@ -214,6 +215,19 @@ function InscripcionFactura() {
               disabled
             />
             <p className="inscripcion-info-text">Se genera automáticamente</p>
+          </div>
+
+          {/* Fila 2 */}
+          <div className="inscripcion-form-group">
+            <label className="inscripcion-label inscripcion-label-required">No. Factura</label>
+            <input
+              type="text"
+              name="numeroFactura"
+              value={formData.numeroFactura}
+              onChange={handleChange}
+              className="inscripcion-input"
+              required
+            />
           </div>
 
           <div className="inscripcion-form-group">
@@ -229,7 +243,7 @@ function InscripcionFactura() {
             <p className="inscripcion-info-text">Código del proveedor</p>
           </div>
 
-          <div className="inscripcion-form-group">
+          <div className="inscripcion-form-group inscripcion-form-group-span-2">
             <label className="inscripcion-label">Proveedor</label>
             <input
               type="text"
@@ -240,18 +254,7 @@ function InscripcionFactura() {
             <p className="inscripcion-info-text">Se busca automáticamente según el NIT</p>
           </div>
 
-          <div className="inscripcion-form-group">
-            <label className="inscripcion-label inscripcion-label-required">No. Factura</label>
-            <input
-              type="text"
-              name="numeroFactura"
-              value={formData.numeroFactura}
-              onChange={handleChange}
-              className="inscripcion-input"
-              required
-            />
-          </div>
-
+          {/* Fila 3 */}
           <div className="inscripcion-form-group">
             <label className="inscripcion-label inscripcion-label-required">Fecha Radicado</label>
             <input
@@ -262,7 +265,6 @@ function InscripcionFactura() {
               className="inscripcion-input"
               required
             />
-            <p className="inscripcion-info-text">Fecha en que se realiza el radicado</p>
           </div>
 
           <div className="inscripcion-form-group">
@@ -275,47 +277,17 @@ function InscripcionFactura() {
               className="inscripcion-input"
               required
             />
-            <p className="inscripcion-info-text">Fecha de emisión de la factura</p>
           </div>
 
           <div className="inscripcion-form-group">
-            <label className="inscripcion-label">Factura a Crédito</label>
-            <select
-              name="facturaCredito"
-              value={formData.facturaCredito ? 'Si' : 'No'}
+            <label className="inscripcion-label">Fecha de Entrega</label>
+            <input
+              type="date"
+              name="fechaEntrega"
+              value={formData.fechaEntrega}
               onChange={handleChange}
-              className="inscripcion-select"
-            >
-              <option value="No">No</option>
-              <option value="Si">Si</option>
-            </select>
-          </div>
-
-          <div className="inscripcion-form-group">
-            <label className="inscripcion-label">Acuse Recibo SCI</label>
-            <select
-              name="acuseReciboSCI"
-              value={formData.acuseReciboSCI ? 'Si' : 'No'}
-              onChange={handleChange}
-              className="inscripcion-select"
-            >
-              <option value="No">No</option>
-              <option value="Si">Si</option>
-            </select>
-            <p className="inscripcion-info-text">Aplica desde el 13 de julio de 2022</p>
-          </div>
-
-          <div className="inscripcion-form-group">
-            <label className="inscripcion-label">¿Legaliza anticipo?</label>
-            <select
-              name="legalizaAnticipo"
-              value={formData.legalizaAnticipo ? 'Si' : 'No'}
-              onChange={handleChange}
-              className="inscripcion-select"
-            >
-              <option value="No">No</option>
-              <option value="Si">Si</option>
-            </select>
+              className="inscripcion-input"
+            />
           </div>
 
           <div className="inscripcion-form-group">
@@ -354,21 +326,51 @@ function InscripcionFactura() {
             )}
           </div>
 
+          {/* Fila 4 */}
           <div className="inscripcion-form-group">
-            <label className="inscripcion-label">Fecha de Entrega</label>
-            <input
-              type="date"
-              name="fechaEntrega"
-              value={formData.fechaEntrega}
+            <label className="inscripcion-label">Factura a Crédito</label>
+            <select
+              name="facturaCredito"
+              value={formData.facturaCredito ? 'Si' : 'No'}
               onChange={handleChange}
-              className="inscripcion-input"
-            />
+              className="inscripcion-select"
+            >
+              <option value="No">No</option>
+              <option value="Si">Si</option>
+            </select>
           </div>
 
           <div className="inscripcion-form-group">
+            <label className="inscripcion-label">Acuse Recibo SCI</label>
+            <select
+              name="acuseReciboSCI"
+              value={formData.acuseReciboSCI ? 'Si' : 'No'}
+              onChange={handleChange}
+              className="inscripcion-select"
+            >
+              <option value="No">No</option>
+              <option value="Si">Si</option>
+            </select>
+          </div>
+
+          <div className="inscripcion-form-group">
+            <label className="inscripcion-label">¿Legaliza anticipo?</label>
+            <select
+              name="legalizaAnticipo"
+              value={formData.legalizaAnticipo ? 'Si' : 'No'}
+              onChange={handleChange}
+              className="inscripcion-select"
+            >
+              <option value="No">No</option>
+              <option value="Si">Si</option>
+            </select>
+          </div>
+
+          <div className="inscripcion-form-group">
+            <label className="inscripcion-label">Adjuntar Factura</label>
             <FileUpload
               onFilesChange={handleFilesChange}
-              acceptedTypes=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx"
+              acceptedTypes=".pdf"
               maxSizeMB={10}
               multiple={true}
             />
@@ -377,18 +379,18 @@ function InscripcionFactura() {
 
         <div className="inscripcion-button-group">
           <button
-            type="submit"
-            className="inscripcion-btn inscripcion-btn-primary"
-            disabled={loadingCrear}
-          >
-            {loadingCrear ? 'Creando...' : 'Crear Factura'}
-          </button>
-          <button
             type="button"
             onClick={() => navigate('/facturas')}
             className="inscripcion-btn inscripcion-btn-secondary"
           >
             Cancelar
+          </button>
+          <button
+            type="submit"
+            className="inscripcion-btn inscripcion-btn-primary"
+            disabled={loadingCrear}
+          >
+            {loadingCrear ? 'Creando...' : 'Crear Factura'}
           </button>
         </div>
       </form>

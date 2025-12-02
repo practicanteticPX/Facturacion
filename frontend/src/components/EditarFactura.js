@@ -188,7 +188,6 @@ function EditarFactura() {
                 className="editar-input"
                 disabled
               />
-              <p className="editar-info-text">No se puede modificar</p>
             </div>
 
             <div className="editar-form-group">
@@ -432,18 +431,18 @@ function EditarFactura() {
 
         <div className="editar-button-group">
           <button
-            type="submit"
-            className="editar-btn editar-btn-success"
-            disabled={loadingActualizar}
-          >
-            {loadingActualizar ? 'Guardando...' : 'Guardar Cambios'}
-          </button>
-          <button
             type="button"
             onClick={() => navigate('/facturas')}
             className="editar-btn editar-btn-secondary"
           >
             Cancelar
+          </button>
+          <button
+            type="submit"
+            className="editar-btn editar-btn-success"
+            disabled={loadingActualizar}
+          >
+            {loadingActualizar ? 'Guardando...' : 'Guardar Cambios'}
           </button>
         </div>
       </form>

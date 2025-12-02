@@ -14,9 +14,17 @@ function FileUpload({ onFilesChange, acceptedTypes = '*', maxSizeMB = 10, multip
   const maxSizeBytes = maxSizeMB * 1024 * 1024;
 
   const validateFile = (file) => {
+    // Validar tipo de archivo
+    const fileExtension = file.name.split('.').pop().toLowerCase();
+    if (acceptedTypes !== '*' && !file.type.includes('pdf') && fileExtension !== 'pdf') {
+      return `Solo se permiten archivos PDF`;
+    }
+
+    // Validar tamaño
     if (file.size > maxSizeBytes) {
       return `El archivo ${file.name} excede el tamaño máximo de ${maxSizeMB}MB`;
     }
+
     return null;
   };
 
@@ -119,31 +127,10 @@ function FileUpload({ onFilesChange, acceptedTypes = '*', maxSizeMB = 10, multip
           style={{ display: 'none' }}
         />
 
-        <div className="file-upload-icon">
-          <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
-            <path
-              d="M32 12V40M32 12L22 22M32 12L42 22"
-              stroke="currentColor"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M12 40V48C12 50.2091 13.7909 52 16 52H48C50.2091 52 52 50.2091 52 48V40"
-              stroke="currentColor"
-              strokeWidth="3"
-              strokeLinecap="round"
-            />
-          </svg>
-        </div>
-
+        <div className="file-upload-icon">📄</div>
         <div className="file-upload-text">
-          <p className="file-upload-main-text">
-            {isDragging ? 'Suelta los archivos aquí' : 'Adjuntar Factura'}
-          </p>
-          <p className="file-upload-sub-text">
-            Arrastra archivos o haz clic (Máx. {maxSizeMB}MB)
-          </p>
+          <span className="file-upload-title">Adjuntar Factura</span>
+          <span className="file-upload-subtitle">PDF (Máx. 10MB)</span>
         </div>
       </div>
 
@@ -154,27 +141,26 @@ function FileUpload({ onFilesChange, acceptedTypes = '*', maxSizeMB = 10, multip
       )}
 
       {files.length > 0 && (
-        <div className="file-upload-list">
-          <h4 className="file-upload-list-title">Archivos seleccionados ({files.length})</h4>
-          {files.map((file, index) => (
-            <div key={index} className="file-upload-item">
-              <div className="file-upload-item-info">
-                <span className="file-upload-item-icon">{getFileIcon(file.name)}</span>
-                <div className="file-upload-item-details">
+        <div className="file-upload-list-wrapper">
+          <h4 className="file-upload-list-title">Archivos ({files.length})</h4>
+          <div className="file-upload-list">
+            {files.map((file, index) => (
+              <div key={index} className="file-upload-item">
+                <div className="file-upload-item-info">
                   <span className="file-upload-item-name">{file.name}</span>
                   <span className="file-upload-item-size">{formatFileSize(file.size)}</span>
                 </div>
+                <button
+                  type="button"
+                  onClick={() => removeFile(index)}
+                  className="file-upload-item-remove"
+                  title="Eliminar archivo"
+                >
+                  ✕
+                </button>
               </div>
-              <button
-                type="button"
-                onClick={() => removeFile(index)}
-                className="file-upload-item-remove"
-                title="Eliminar archivo"
-              >
-                ✕
-              </button>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       )}
     </div>

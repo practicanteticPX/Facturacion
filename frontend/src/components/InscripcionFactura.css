@@ -67,6 +67,10 @@
   flex-direction: column;
 }
 
+.inscripcion-form-group-span-2 {
+  grid-column: span 2;
+}
+
 .inscripcion-label {
   display: block;
   margin-bottom: 0.5rem;
@@ -144,6 +148,7 @@
   gap: 1rem;
   margin-top: 2.5rem;
   padding-top: 1.5rem;
+  justify-content: flex-end;
 }
 
 .inscripcion-btn {

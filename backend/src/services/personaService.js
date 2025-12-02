@@ -17,7 +17,12 @@ class PersonaService {
 
   async validarPersonaExiste(nombre) {
     const persona = await prismaServ.persona.findFirst({
-      where: { nombre }
+      where: {
+        nombre: {
+          equals: nombre,
+          mode: 'insensitive'
+        }
+      }
     });
 
     if (!persona) {
@@ -30,7 +35,12 @@ class PersonaService {
   async obtenerCorreoPorNombre(nombre) {
     try {
       const persona = await prismaServ.persona.findFirst({
-        where: { nombre },
+        where: {
+          nombre: {
+            equals: nombre,
+            mode: 'insensitive'
+          }
+        },
         select: {
           correo: true,
           nombre: true

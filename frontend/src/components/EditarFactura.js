@@ -11,6 +11,7 @@ import {
   GET_FACTURAS
 } from '../apollo/queries';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from './ui/select';
+import { DatePicker } from './ui/DatePicker';
 import './EditarFactura.css';
 
 /**
@@ -282,26 +283,24 @@ function EditarFactura() {
             </div>
 
             <div className="editar-form-group">
-              <label className="editar-label editar-label-required">Fecha Radicado</label>
-              <input
-                type="date"
+              <DatePicker
+                label="Fecha Radicado"
                 name="fechaRadicado"
                 value={formData.fechaRadicado}
                 onChange={handleChange}
-                className="editar-input"
                 required
+                id="fechaRadicado"
               />
             </div>
 
             <div className="editar-form-group">
-              <label className="editar-label editar-label-required">Fecha Factura</label>
-              <input
-                type="date"
+              <DatePicker
+                label="Fecha Factura"
                 name="fechaFactura"
                 value={formData.fechaFactura}
                 onChange={handleChange}
-                className="editar-input"
                 required
+                id="fechaFactura"
               />
             </div>
 
@@ -357,13 +356,12 @@ function EditarFactura() {
             </div>
 
             <div className="editar-form-group">
-              <label className="editar-label">Fecha de Entrega</label>
-              <input
-                type="date"
+              <DatePicker
+                label="Fecha de Entrega"
                 name="fechaEntrega"
                 value={formData.fechaEntrega}
                 onChange={handleChange}
-                className="editar-input"
+                id="fechaEntrega"
               />
             </div>
 
@@ -392,13 +390,12 @@ function EditarFactura() {
           </p>
           <div className="editar-form-grid">
             <div className="editar-form-group">
-              <label className="editar-label">Fecha Recepción Causación</label>
-              <input
-                type="date"
+              <DatePicker
+                label="Fecha Recepción Causación"
                 name="fechaRecepcionCausacion"
                 value={formData.fechaRecepcionCausacion}
                 onChange={handleChange}
-                className="editar-input"
+                id="fechaRecepcionCausacion"
               />
             </div>
 
@@ -422,13 +419,12 @@ function EditarFactura() {
             </div>
 
             <div className="editar-form-group">
-              <label className="editar-label">Fecha Revisión Causación</label>
-              <input
-                type="date"
+              <DatePicker
+                label="Fecha Revisión Causación"
                 name="fechaRevisionCausacion"
                 value={formData.fechaRevisionCausacion}
                 onChange={handleChange}
-                className="editar-input"
+                id="fechaRevisionCausacion"
               />
             </div>
 
@@ -444,13 +440,12 @@ function EditarFactura() {
             </div>
 
             <div className="editar-form-group">
-              <label className="editar-label">Fecha Causación</label>
-              <input
-                type="date"
+              <DatePicker
+                label="Fecha Causación"
                 name="fechaCausacion"
                 value={formData.fechaCausacion}
                 onChange={handleChange}
-                className="editar-input"
+                id="fechaCausacion"
               />
             </div>
 

@@ -50,20 +50,59 @@ class FacturaService {
 
   async obtenerProximoNumeroControl() {
     try {
-      const ultimaFactura = await prismaServ.factura.findFirst({
-        orderBy: {
-          numeroControl: 'desc'
-        },
+      // Obtener todos los números de control para encontrar el máximo correctamente
+      const facturas = await prismaServ.factura.findMany({
         select: {
           numeroControl: true
         }
       });
 
-      const proximoNumeroControl = ultimaFactura
-        ? (parseInt(ultimaFactura.numeroControl) + 1).toString()
-        : '1';
+      // Si no hay facturas, empezar desde 1
+      if (facturas.length === 0) {
+        return '1';
+      }
 
-      return proximoNumeroControl;
+      // Convertir todos los números de control a enteros y encontrar el máximo
+      const numerosControl = facturas
+        .map(f => parseInt(f.numeroControl))
+        .filter(n => !isNaN(n)); // Filtrar valores no numéricos
+
+      const maxNumero = numerosControl.length > 0
+        ? Math.max(...numerosControl)
+        : 0;
+
+      // El próximo número es el máximo + 1
+      const proximoNumero = maxNumero + 1;
+
+      // Verificar que el número no exista (seguridad adicional)
+      const existe = await prismaServ.factura.findFirst({
+        where: {
+          numeroControl: proximoNumero.toString()
+        }
+      });
+
+      // Si existe (caso extremo), buscar el siguiente disponible
+      if (existe) {
+        console.warn(`⚠️ Número de control ${proximoNumero} ya existe, buscando siguiente disponible...`);
+        let numeroDisponible = proximoNumero + 1;
+        let existeNumero = true;
+
+        while (existeNumero) {
+          existeNumero = await prismaServ.factura.findFirst({
+            where: {
+              numeroControl: numeroDisponible.toString()
+            }
+          });
+          if (existeNumero) {
+            numeroDisponible++;
+          }
+        }
+
+        return numeroDisponible.toString();
+      }
+
+      console.log(`✅ Próximo número de control: ${proximoNumero}`);
+      return proximoNumero.toString();
     } catch (error) {
       console.error('Error obteniendo próximo número de control:', error);
       throw error;

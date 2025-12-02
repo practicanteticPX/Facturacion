@@ -12,6 +12,7 @@ import {
 import { executeMutationWithFile } from '../apollo/client';
 import FileUpload from './FileUpload';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from './ui/select';
+import { DatePicker } from './ui/DatePicker';
 import './InscripcionFactura.css';
 
 /**
@@ -264,37 +265,34 @@ function InscripcionFactura() {
 
           {/* Fila 3 */}
           <div className="inscripcion-form-group">
-            <label className="inscripcion-label inscripcion-label-required">Fecha Radicado</label>
-            <input
-              type="date"
+            <DatePicker
+              label="Fecha Radicado"
               name="fechaRadicado"
               value={formData.fechaRadicado}
               onChange={handleChange}
-              className="inscripcion-input"
               required
+              id="fechaRadicado"
             />
           </div>
 
           <div className="inscripcion-form-group">
-            <label className="inscripcion-label inscripcion-label-required">Fecha Factura</label>
-            <input
-              type="date"
+            <DatePicker
+              label="Fecha Factura"
               name="fechaFactura"
               value={formData.fechaFactura}
               onChange={handleChange}
-              className="inscripcion-input"
               required
+              id="fechaFactura"
             />
           </div>
 
           <div className="inscripcion-form-group">
-            <label className="inscripcion-label">Fecha de Entrega</label>
-            <input
-              type="date"
+            <DatePicker
+              label="Fecha de Entrega"
               name="fechaEntrega"
               value={formData.fechaEntrega}
               onChange={handleChange}
-              className="inscripcion-input"
+              id="fechaEntrega"
             />
           </div>
 

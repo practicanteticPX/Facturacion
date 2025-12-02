@@ -1,0 +1,25 @@
+.field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.field-label {
+  display: block;
+  font-weight: 600;
+  color: #1a1a1a;
+  font-size: 0.875rem;
+}
+
+.field-label-required::after {
+  content: " *";
+  color: #dc3545;
+}
+
+.field-description {
+  color: #6b7280;
+  font-size: 0.8125rem;
+  margin: 0;
+  font-weight: 400;
+}

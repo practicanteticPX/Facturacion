@@ -10,6 +10,7 @@ import {
   GET_PROXIMO_NUMERO_CONTROL
 } from '../apollo/queries';
 import FileUpload from './FileUpload';
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from './ui/select';
 import './InscripcionFactura.css';
 
 /**
@@ -192,18 +193,20 @@ function InscripcionFactura() {
 
           <div className="inscripcion-form-group">
             <label className="inscripcion-label inscripcion-label-required">Cia</label>
-            <select
-              name="cia"
+            <Select
               value={formData.cia}
-              onChange={handleChange}
-              className="inscripcion-select"
+              onValueChange={(value) => handleChange({ target: { name: 'cia', value } })}
               required
             >
-              <option value="">Seleccione</option>
-              {companiasData?.companias?.map(cia => (
-                <option key={cia} value={cia}>{cia}</option>
-              ))}
-            </select>
+              <SelectTrigger>
+                <SelectValue placeholder="Seleccione" />
+              </SelectTrigger>
+              <SelectContent>
+                {companiasData?.companias?.map(cia => (
+                  <SelectItem key={cia} value={cia}>{cia}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="inscripcion-form-group inscripcion-form-group-span-2">
@@ -329,41 +332,50 @@ function InscripcionFactura() {
           {/* Fila 4 */}
           <div className="inscripcion-form-group">
             <label className="inscripcion-label">Factura a Crédito</label>
-            <select
-              name="facturaCredito"
+            <Select
               value={formData.facturaCredito ? 'Si' : 'No'}
-              onChange={handleChange}
-              className="inscripcion-select"
+              onValueChange={(value) => handleChange({ target: { name: 'facturaCredito', value } })}
             >
-              <option value="No">No</option>
-              <option value="Si">Si</option>
-            </select>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="No">No</SelectItem>
+                <SelectItem value="Si">Si</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="inscripcion-form-group">
             <label className="inscripcion-label">Acuse Recibo SCI</label>
-            <select
-              name="acuseReciboSCI"
+            <Select
               value={formData.acuseReciboSCI ? 'Si' : 'No'}
-              onChange={handleChange}
-              className="inscripcion-select"
+              onValueChange={(value) => handleChange({ target: { name: 'acuseReciboSCI', value } })}
             >
-              <option value="No">No</option>
-              <option value="Si">Si</option>
-            </select>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="No">No</SelectItem>
+                <SelectItem value="Si">Si</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="inscripcion-form-group">
             <label className="inscripcion-label">¿Legaliza anticipo?</label>
-            <select
-              name="legalizaAnticipo"
+            <Select
               value={formData.legalizaAnticipo ? 'Si' : 'No'}
-              onChange={handleChange}
-              className="inscripcion-select"
+              onValueChange={(value) => handleChange({ target: { name: 'legalizaAnticipo', value } })}
             >
-              <option value="No">No</option>
-              <option value="Si">Si</option>
-            </select>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="No">No</SelectItem>
+                <SelectItem value="Si">Si</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="inscripcion-form-group">

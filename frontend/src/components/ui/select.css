@@ -1,0 +1,128 @@
+.select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.9375rem;
+  background-color: white;
+  color: #1a1a1a;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  outline: none;
+}
+
+.select-trigger:hover {
+  border-color: #9ca3af;
+}
+
+.select-trigger:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.select-trigger[data-disabled] {
+  background-color: #f3f4f6;
+  color: #6b7280;
+  cursor: not-allowed;
+  border-color: #e5e7eb;
+}
+
+.select-trigger[data-placeholder] {
+  color: #9ca3af;
+}
+
+.select-icon {
+  margin-left: 0.5rem;
+  opacity: 0.5;
+  transition: transform 0.15s ease;
+}
+
+.select-trigger[data-state="open"] .select-icon {
+  transform: rotate(180deg);
+}
+
+.select-content {
+  overflow: hidden;
+  background-color: white;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  z-index: 50;
+  min-width: var(--radix-select-trigger-width);
+  max-height: var(--radix-select-content-available-height);
+}
+
+.select-content[data-state="open"] {
+  animation: fadeIn 0.15s ease-out;
+}
+
+.select-content[data-state="closed"] {
+  animation: fadeOut 0.1s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+.select-viewport {
+  padding: 0.25rem;
+}
+
+.select-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0.625rem 0.75rem 0.625rem 2rem;
+  border-radius: 4px;
+  font-size: 0.9375rem;
+  outline: none;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.1s ease;
+}
+
+.select-item:hover {
+  background-color: #f9fafb;
+}
+
+.select-item[data-state="checked"] {
+  background-color: #eff6ff;
+  color: #3b82f6;
+}
+
+.select-item[data-disabled] {
+  color: #9ca3af;
+  pointer-events: none;
+}
+
+.select-item-indicator {
+  position: absolute;
+  left: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+}

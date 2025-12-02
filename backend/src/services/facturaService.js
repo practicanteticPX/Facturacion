@@ -199,8 +199,20 @@ class FacturaService {
 
       camposPermitidos.forEach(campo => {
         if (datos[campo] !== undefined) {
-          if (campo.includes('fecha') && datos[campo]) {
-            datosActualizacion[campo] = new Date(datos[campo]);
+          if (campo.includes('fecha')) {
+            // Solo crear Date si la fecha no está vacía y es válida
+            if (datos[campo] && datos[campo].trim() !== '') {
+              const fecha = new Date(datos[campo]);
+              // Verificar que la fecha sea válida
+              if (!isNaN(fecha.getTime())) {
+                datosActualizacion[campo] = fecha;
+              } else {
+                datosActualizacion[campo] = null;
+              }
+            } else {
+              // Si está vacía, establecer como null
+              datosActualizacion[campo] = null;
+            }
           } else {
             datosActualizacion[campo] = datos[campo];
           }

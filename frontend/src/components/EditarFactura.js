@@ -10,6 +10,7 @@ import {
   GET_PROVEEDOR,
   GET_FACTURAS
 } from '../apollo/queries';
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from './ui/select';
 import './EditarFactura.css';
 
 /**
@@ -192,18 +193,20 @@ function EditarFactura() {
 
             <div className="editar-form-group">
               <label className="editar-label editar-label-required">Cia</label>
-              <select
-                name="cia"
+              <Select
                 value={formData.cia}
-                onChange={handleChange}
-                className="editar-select"
+                onValueChange={(value) => handleChange({ target: { name: 'cia', value } })}
                 required
               >
-                <option value="">Seleccione</option>
-                {companiasData?.companias?.map(cia => (
-                  <option key={cia} value={cia}>{cia}</option>
-                ))}
-              </select>
+                <SelectTrigger>
+                  <SelectValue placeholder="Seleccione" />
+                </SelectTrigger>
+                <SelectContent>
+                  {companiasData?.companias?.map(cia => (
+                    <SelectItem key={cia} value={cia}>{cia}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="editar-form-group">
@@ -276,45 +279,54 @@ function EditarFactura() {
 
             <div className="editar-form-group">
               <label className="editar-label">Factura a Crédito</label>
-              <select
-                name="facturaCredito"
+              <Select
                 value={formData.facturaCredito ? 'Si' : 'No'}
-                onChange={handleChange}
-                className="editar-select"
+                onValueChange={(value) => handleChange({ target: { name: 'facturaCredito', value } })}
               >
-                <option value="No">No</option>
-                <option value="Si">Si</option>
-              </select>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="No">No</SelectItem>
+                  <SelectItem value="Si">Si</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="editar-form-group">
               <label className="editar-label">Acuse Recibo SCI</label>
-              <select
-                name="acuseReciboSCI"
+              <Select
                 value={formData.acuseReciboSCI ? 'Si' : 'No'}
-                onChange={handleChange}
-                className="editar-select"
+                onValueChange={(value) => handleChange({ target: { name: 'acuseReciboSCI', value } })}
               >
-                <option value="No">No</option>
-                <option value="Si">Si</option>
-              </select>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="No">No</SelectItem>
+                  <SelectItem value="Si">Si</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="editar-form-group">
               <label className="editar-label">Entregada a</label>
-              <select
-                name="entregadaA"
+              <Select
                 value={formData.entregadaA}
-                onChange={handleChange}
-                className="editar-select"
+                onValueChange={(value) => handleChange({ target: { name: 'entregadaA', value } })}
               >
-                <option value="">Seleccione una persona</option>
-                {personasData?.personas?.map(persona => (
-                  <option key={persona.id} value={persona.nombre}>
-                    {persona.nombre}
-                  </option>
-                ))}
-              </select>
+                <SelectTrigger>
+                  <SelectValue placeholder="Seleccione una persona" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="">Seleccione una persona</SelectItem>
+                  {personasData?.personas?.map(persona => (
+                    <SelectItem key={persona.id} value={persona.nombre}>
+                      {persona.nombre}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="editar-form-group">
@@ -330,15 +342,18 @@ function EditarFactura() {
 
             <div className="editar-form-group">
               <label className="editar-label">¿Legaliza anticipo?</label>
-              <select
-                name="legalizaAnticipo"
+              <Select
                 value={formData.legalizaAnticipo ? 'Si' : 'No'}
-                onChange={handleChange}
-                className="editar-select"
+                onValueChange={(value) => handleChange({ target: { name: 'legalizaAnticipo', value } })}
               >
-                <option value="No">No</option>
-                <option value="Si">Si</option>
-              </select>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="No">No</SelectItem>
+                  <SelectItem value="Si">Si</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </div>
@@ -362,19 +377,22 @@ function EditarFactura() {
 
             <div className="editar-form-group">
               <label className="editar-label">Recibida por</label>
-              <select
-                name="recibidaPor"
+              <Select
                 value={formData.recibidaPor}
-                onChange={handleChange}
-                className="editar-select"
+                onValueChange={(value) => handleChange({ target: { name: 'recibidaPor', value } })}
               >
-                <option value="">Seleccione una persona</option>
-                {personasData?.personas?.map(persona => (
-                  <option key={persona.id} value={persona.nombre}>
-                    {persona.nombre}
-                  </option>
-                ))}
-              </select>
+                <SelectTrigger>
+                  <SelectValue placeholder="Seleccione una persona" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="">Seleccione una persona</SelectItem>
+                  {personasData?.personas?.map(persona => (
+                    <SelectItem key={persona.id} value={persona.nombre}>
+                      {persona.nombre}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="editar-form-group">
@@ -412,19 +430,22 @@ function EditarFactura() {
 
             <div className="editar-form-group">
               <label className="editar-label">Observaciones</label>
-              <select
-                name="observaciones"
+              <Select
                 value={formData.observaciones}
-                onChange={handleChange}
-                className="editar-select"
+                onValueChange={(value) => handleChange({ target: { name: 'observaciones', value } })}
               >
-                <option value="">Seleccione una observación</option>
-                {opcionesObservacionesData?.opcionesObservaciones?.map((obs, idx) => (
-                  <option key={idx} value={obs}>
-                    {obs}
-                  </option>
-                ))}
-              </select>
+                <SelectTrigger>
+                  <SelectValue placeholder="Seleccione una observación" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="">Seleccione una observación</SelectItem>
+                  {opcionesObservacionesData?.opcionesObservaciones?.map((obs, idx) => (
+                    <SelectItem key={idx} value={obs}>
+                      {obs}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </div>

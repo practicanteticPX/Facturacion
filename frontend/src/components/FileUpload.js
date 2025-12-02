@@ -127,7 +127,6 @@ function FileUpload({ onFilesChange, acceptedTypes = '*', maxSizeMB = 10, multip
           style={{ display: 'none' }}
         />
 
-        <div className="file-upload-icon">📄</div>
         <div className="file-upload-text">
           <span className="file-upload-title">Adjuntar Factura</span>
           <span className="file-upload-subtitle">PDF (Máx. 10MB)</span>

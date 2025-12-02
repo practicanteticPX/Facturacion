@@ -18,6 +18,36 @@ class FacturaService {
     };
   }
 
+  formatearFechaParaGraphQL(fecha) {
+    if (!fecha) return null;
+    if (typeof fecha === 'string') return fecha;
+
+    // Si es un objeto Date, convertir a formato YYYY-MM-DD
+    try {
+      const fechaObj = new Date(fecha);
+      if (isNaN(fechaObj.getTime())) return null;
+
+      return fechaObj.toISOString().split('T')[0];
+    } catch (error) {
+      console.error('Error formateando fecha:', error);
+      return null;
+    }
+  }
+
+  formatearFactura(factura) {
+    return this.convertirBooleanos({
+      ...factura,
+      fechaRadicado: this.formatearFechaParaGraphQL(factura.fechaRadicado),
+      fechaFactura: this.formatearFechaParaGraphQL(factura.fechaFactura),
+      fechaEntrega: this.formatearFechaParaGraphQL(factura.fechaEntrega),
+      fechaRecepcionCausacion: this.formatearFechaParaGraphQL(factura.fechaRecepcionCausacion),
+      fechaRevisionCausacion: this.formatearFechaParaGraphQL(factura.fechaRevisionCausacion),
+      fechaCausacion: this.formatearFechaParaGraphQL(factura.fechaCausacion),
+      creadoEn: factura.creadoEn ? factura.creadoEn.toISOString() : null,
+      actualizadoEn: factura.actualizadoEn ? factura.actualizadoEn.toISOString() : null
+    });
+  }
+
   async obtenerProximoNumeroControl() {
     try {
       const ultimaFactura = await prismaServ.factura.findFirst({
@@ -136,7 +166,7 @@ class FacturaService {
       console.warn(`Proveedor no encontrado para NIT ${factura.nit}`);
     }
 
-    return this.convertirBooleanos({
+    return this.formatearFactura({
       ...factura,
       ciaNit: proveedorService.generarCiaNit(factura.cia, factura.nit),
       proveedor: proveedor ? proveedor.Nombre : 'Proveedor no encontrado'
@@ -175,7 +205,7 @@ class FacturaService {
             console.warn(`Proveedor no encontrado para NIT ${factura.nit}`);
           }
 
-          return this.convertirBooleanos({
+          return this.formatearFactura({
             ...factura,
             ciaNit: proveedorService.generarCiaNit(factura.cia, factura.nit),
             proveedor: proveedor ? proveedor.Nombre : 'Proveedor no encontrado'

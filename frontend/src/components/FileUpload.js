@@ -74,6 +74,8 @@ function FileUpload({ onFilesChange, acceptedTypes = '*', maxSizeMB = 10, multip
     const selectedFiles = e.target.files;
     if (selectedFiles.length > 0) {
       handleFiles(selectedFiles);
+      // Resetear el input para permitir re-seleccionar el mismo archivo
+      e.target.value = '';
     }
   };
 
@@ -81,6 +83,11 @@ function FileUpload({ onFilesChange, acceptedTypes = '*', maxSizeMB = 10, multip
     const updatedFiles = files.filter((_, i) => i !== index);
     setFiles(updatedFiles);
     onFilesChange(updatedFiles);
+
+    // Resetear el input para permitir re-seleccionar el mismo archivo
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
   };
 
   const formatFileSize = (bytes) => {
@@ -139,29 +146,31 @@ function FileUpload({ onFilesChange, acceptedTypes = '*', maxSizeMB = 10, multip
         </div>
       )}
 
-      {files.length > 0 && (
-        <div className="file-upload-list-wrapper">
-          <h4 className="file-upload-list-title">Archivos ({files.length})</h4>
-          <div className="file-upload-list">
-            {files.map((file, index) => (
-              <div key={index} className="file-upload-item">
-                <div className="file-upload-item-info">
-                  <span className="file-upload-item-name">{file.name}</span>
-                  <span className="file-upload-item-size">{formatFileSize(file.size)}</span>
+      <div className="file-upload-list-wrapper">
+        {files.length > 0 && (
+          <>
+            <h4 className="file-upload-list-title">Archivos ({files.length})</h4>
+            <div className="file-upload-list">
+              {files.map((file, index) => (
+                <div key={index} className="file-upload-item">
+                  <div className="file-upload-item-info">
+                    <span className="file-upload-item-name">{file.name}</span>
+                    <span className="file-upload-item-size">{formatFileSize(file.size)}</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => removeFile(index)}
+                    className="file-upload-item-remove"
+                    title="Eliminar archivo"
+                  >
+                    ✕
+                  </button>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => removeFile(index)}
-                  className="file-upload-item-remove"
-                  title="Eliminar archivo"
-                >
-                  ✕
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+              ))}
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 }

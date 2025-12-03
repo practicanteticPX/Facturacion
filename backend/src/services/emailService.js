@@ -1,4 +1,10 @@
 import { createTransporter, defaultFrom } from '../config/smtp.js';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /**
  * Servicio para el envío de correos electrónicos
@@ -6,6 +12,25 @@ import { createTransporter, defaultFrom } from '../config/smtp.js';
 class EmailService {
   constructor() {
     this.transporter = createTransporter();
+  }
+
+  /**
+   * Obtener saludo según la hora de Bogotá
+   * @returns {string} - Saludo apropiado según la hora
+   */
+  obtenerSaludoSegunHora() {
+    // Obtener hora de Bogotá (UTC-5)
+    const ahora = new Date();
+    const opciones = { timeZone: 'America/Bogota', hour: 'numeric', hour12: false };
+    const horaBogota = parseInt(new Intl.DateTimeFormat('es-CO', opciones).format(ahora));
+
+    if (horaBogota < 12) {
+      return 'Buenos días';
+    } else if (horaBogota < 19) {
+      return 'Buenas tardes';
+    } else {
+      return 'Buenas noches';
+    }
   }
 
   /**
@@ -55,47 +80,97 @@ class EmailService {
    */
   async enviarCorreoFactura({ to, numeroControl, numeroFactura, proveedor, archivo }) {
     try {
-      const subject = `${numeroControl} - ${numeroFactura} - ${proveedor}`;
+      // Asunto: Factura - Proveedor - #NumeroFactura
+      const subject = `Factura - ${proveedor} - #${numeroFactura}`;
 
+      // Obtener saludo según la hora
+      const saludo = this.obtenerSaludoSegunHora();
+
+      // Construir HTML con el nuevo formato
       const html = `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #374050;">Nueva Factura Registrada</h2>
-          <p>Se ha registrado una nueva factura con los siguientes datos:</p>
-          <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
-            <tr style="background-color: #f8f9fa;">
-              <td style="padding: 10px; border: 1px solid #dee2e6; font-weight: bold;">Consecutivo:</td>
-              <td style="padding: 10px; border: 1px solid #dee2e6;">${numeroControl}</td>
-            </tr>
-            <tr>
-              <td style="padding: 10px; border: 1px solid #dee2e6; font-weight: bold;">No. Factura:</td>
-              <td style="padding: 10px; border: 1px solid #dee2e6;">${numeroFactura}</td>
-            </tr>
-            <tr style="background-color: #f8f9fa;">
-              <td style="padding: 10px; border: 1px solid #dee2e6; font-weight: bold;">Proveedor:</td>
-              <td style="padding: 10px; border: 1px solid #dee2e6;">${proveedor}</td>
-            </tr>
-          </table>
-          <p style="color: #6c757d; font-size: 14px;">
-            El archivo de la factura se encuentra adjunto a este correo.
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
+          <p>${saludo},</p>
+
+          <p>Adjunto factura de <strong>${proveedor}</strong> para su respectiva gestión.</p>
+
+          <p style="margin-top: 20px;">
+            <strong>Consecutivo:</strong> ${numeroControl}<br>
+            <strong>Número Factura:</strong> ${numeroFactura}<br>
+            <strong>Proveedor:</strong> ${proveedor}
           </p>
+
+          <p style="margin-top: 30px;">Saludos,</p>
+
+          <div style="margin-top: 20px;">
+            <img src="cid:firma" alt="Firma" width="450" style="height: auto; display: block;" />
+          </div>
         </div>
       `;
 
       const text = `
-        Nueva Factura Registrada
+        ${saludo},
+
+        Adjunto factura de ${proveedor} para su respectiva gestión.
 
         Consecutivo: ${numeroControl}
-        No. Factura: ${numeroFactura}
+        Número Factura: ${numeroFactura}
         Proveedor: ${proveedor}
 
-        El archivo de la factura se encuentra adjunto a este correo.
+        Saludos,
       `;
 
-      const attachments = archivo ? [{
-        filename: archivo.filename,
-        content: archivo.buffer,
-        contentType: archivo.mimetype
-      }] : [];
+      // Preparar attachments
+      const attachments = [];
+
+      // Agregar archivo de factura si existe
+      if (archivo) {
+        attachments.push({
+          filename: archivo.filename,
+          content: archivo.buffer,
+          contentType: archivo.mimetype
+        });
+      }
+
+      // Agregar imagen de firma
+      try {
+        // Intentar rutas posibles según el entorno
+        let firmaPath;
+
+        // Ruta local en el backend (preferida)
+        const rutaLocal = path.join(__dirname, '../assets/Juliet Acevedo.gif');
+
+        // Ruta en desarrollo (desde backend hacia frontend)
+        const rutaDesarrollo = path.join(__dirname, '../../../frontend/src/assets/Juliet Acevedo.gif');
+
+        // Ruta en Docker
+        const rutaDocker = '/app/backend/src/assets/Juliet Acevedo.gif';
+
+        if (fs.existsSync(rutaLocal)) {
+          firmaPath = rutaLocal;
+        } else if (fs.existsSync(rutaDesarrollo)) {
+          firmaPath = rutaDesarrollo;
+        } else if (fs.existsSync(rutaDocker)) {
+          firmaPath = rutaDocker;
+        } else {
+          throw new Error('No se encontró la imagen de firma en ninguna ruta conocida');
+        }
+
+        console.log('📎 Cargando firma desde:', firmaPath);
+        const firmaBuffer = fs.readFileSync(firmaPath);
+        attachments.push({
+          filename: 'Juliet Acevedo.gif',
+          content: firmaBuffer,
+          contentType: 'image/gif',
+          cid: 'firma' // Content ID para referenciar en el HTML
+        });
+      } catch (error) {
+        console.warn('⚠ No se pudo cargar la imagen de firma:', error.message);
+        console.warn('⚠ Intentó buscar en las siguientes rutas:', {
+          local: path.join(__dirname, '../assets/Juliet Acevedo.gif'),
+          desarrollo: path.join(__dirname, '../../../frontend/src/assets/Juliet Acevedo.gif'),
+          docker: '/app/backend/src/assets/Juliet Acevedo.gif'
+        });
+      }
 
       return await this.enviarCorreo({
         to,

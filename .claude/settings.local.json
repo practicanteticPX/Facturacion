@@ -34,7 +34,9 @@
       "Bash(npm run test:smtp:*)",
       "Bash(timeout /t 10)",
       "Bash(docker-compose build:*)",
-      "Bash(docker-compose stop:*)"
+      "Bash(docker-compose stop:*)",
+      "Bash(dir:*)",
+      "Bash(if not exist \"d:\\CRUD\\backend\\src\\assets\" mkdir \"d:\\CRUD\\backend\\src\\assets\")"
     ],
     "deny": [],
     "ask": []

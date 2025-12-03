@@ -16,6 +16,17 @@ import { DatePicker } from './ui/DatePicker';
 import './InscripcionFactura.css';
 
 /**
+ * Helper para obtener la fecha actual en formato YYYY-MM-DD
+ */
+const obtenerFechaActual = () => {
+  const hoy = new Date();
+  const year = hoy.getFullYear();
+  const month = String(hoy.getMonth() + 1).padStart(2, '0');
+  const day = String(hoy.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
+/**
  * InscripcionFactura Component
  * Formulario para crear nuevas facturas en el sistema
  */
@@ -26,13 +37,13 @@ function InscripcionFactura() {
     cia: '',
     nit: '',
     numeroFactura: '',
-    fechaRadicado: '',
+    fechaRadicado: obtenerFechaActual(),
     fechaFactura: '',
     facturaCredito: false,
     acuseReciboSCI: false,
     legalizaAnticipo: false,
     entregadaA: '',
-    fechaEntrega: ''
+    fechaEntrega: obtenerFechaActual()
   });
 
   const [proveedorNombre, setProveedorNombre] = useState('');
@@ -133,6 +144,27 @@ function InscripcionFactura() {
     console.log('Archivos adjuntos:', files);
   };
 
+  const limpiarFormulario = () => {
+    setFormData({
+      cia: '',
+      nit: '',
+      numeroFactura: '',
+      fechaRadicado: obtenerFechaActual(),
+      fechaFactura: '',
+      facturaCredito: false,
+      acuseReciboSCI: false,
+      legalizaAnticipo: false,
+      entregadaA: '',
+      fechaEntrega: obtenerFechaActual()
+    });
+    setProveedorNombre('');
+    setCiaNit('');
+    setMensaje({ tipo: '', texto: '' });
+    setMostrarSugerencias(false);
+    setPersonasFiltradas([]);
+    setArchivosAdjuntos([]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMensaje({ tipo: '', texto: '' });
@@ -173,6 +205,12 @@ function InscripcionFactura() {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && e.target.type !== 'submit') {
+      e.preventDefault();
+    }
+  };
+
   return (
     <div className="inscripcion-card">
       <h2 className="inscripcion-title">Inscripción de Nueva Factura</h2>
@@ -183,7 +221,7 @@ function InscripcionFactura() {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="inscripcion-form">
+      <form onSubmit={handleSubmit} onKeyDown={handleKeyDown} className="inscripcion-form">
         <div className="inscripcion-form-grid">
           {/* Fila 1 */}
           <div className="inscripcion-form-group">
@@ -272,6 +310,7 @@ function InscripcionFactura() {
               onChange={handleChange}
               required
               id="fechaRadicado"
+              disabled={true}
             />
           </div>
 
@@ -293,6 +332,7 @@ function InscripcionFactura() {
               value={formData.fechaEntrega}
               onChange={handleChange}
               id="fechaEntrega"
+              disabled={true}
             />
           </div>
 
@@ -395,7 +435,7 @@ function InscripcionFactura() {
         <div className="inscripcion-button-group">
           <button
             type="button"
-            onClick={() => navigate('/facturas')}
+            onClick={limpiarFormulario}
             className="inscripcion-btn inscripcion-btn-secondary"
           >
             Cancelar

@@ -22,6 +22,7 @@ import {
  * @param {string} name - Nombre del campo para formularios
  * @param {string} placeholder - Texto placeholder cuando no hay fecha
  * @param {string} id - ID del campo
+ * @param {boolean} disabled - Si el campo está deshabilitado
  */
 export function DatePicker({
   label,
@@ -31,6 +32,7 @@ export function DatePicker({
   name,
   placeholder = "Seleccione fecha",
   id,
+  disabled = false,
   ...props
 }) {
   const [open, setOpen] = React.useState(false)
@@ -86,16 +88,19 @@ export function DatePicker({
           {required && <span style={{ color: '#ef4444', marginLeft: '4px' }}>*</span>}
         </Label>
       )}
-      <Popover open={open} onOpenChange={setOpen}>
+      <Popover open={open && !disabled} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
             variant="outline"
             id={id}
+            disabled={disabled}
             style={{
               width: '100%',
               justifyContent: 'space-between',
               fontWeight: 'normal',
-              color: dateValue ? '#0f172a' : '#94a3b8'
+              color: dateValue ? '#0f172a' : '#94a3b8',
+              cursor: disabled ? 'not-allowed' : 'pointer',
+              opacity: disabled ? 0.6 : 1
             }}
             {...props}
           >

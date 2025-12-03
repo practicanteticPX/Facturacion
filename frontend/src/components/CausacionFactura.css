@@ -1,0 +1,123 @@
+/**
+ * CausacionFactura Component Styles
+ * Todas las clases prefijadas con .causacion-* para evitar conflictos
+ */
+
+.causacion-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03);
+  padding: 2rem;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.causacion-header {
+  margin-bottom: 2rem;
+}
+
+.causacion-title {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #0f172a;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.causacion-subtitle {
+  font-size: 0.9375rem;
+  color: #64748b;
+  margin: 0;
+  font-weight: 400;
+}
+
+.causacion-loading {
+  text-align: center;
+  padding: 3rem;
+  color: #64748b;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.causacion-alert {
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  font-size: 0.9375rem;
+  border: 1px solid;
+}
+
+.causacion-alert-success {
+  background-color: #f0fdf4;
+  color: #166534;
+  border-color: #bbf7d0;
+}
+
+.causacion-alert-error {
+  background-color: #fef2f2;
+  color: #991b1b;
+  border-color: #fecaca;
+}
+
+.causacion-section {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #e2e8f0;
+}
+
+.causacion-section-title {
+  font-size: 1rem;
+  color: #0f172a;
+  margin: 0 0 1.25rem 0;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.causacion-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.causacion-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.causacion-input {
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 0.9375rem;
+  box-sizing: border-box;
+  transition: all 0.15s ease;
+  background-color: white;
+  color: #0f172a;
+}
+
+.causacion-input::placeholder {
+  color: #94a3b8;
+}
+
+.causacion-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.causacion-input:disabled {
+  background-color: #f3f4f6;
+  color: #6b7280;
+  cursor: not-allowed;
+}
+
+.causacion-button-group {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 2rem;
+  justify-content: flex-end;
+}

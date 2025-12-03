@@ -13,6 +13,7 @@ import { executeMutationWithFile } from '../apollo/client';
 import FileUpload from './FileUpload';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from './ui/select';
 import { DatePicker } from './ui/DatePicker';
+import { Button } from './ui/button';
 import './InscripcionFactura.css';
 
 /**
@@ -433,20 +434,20 @@ function InscripcionFactura() {
         </div>
 
         <div className="inscripcion-button-group">
-          <button
+          <Button
             type="button"
             onClick={limpiarFormulario}
-            className="inscripcion-btn inscripcion-btn-secondary"
+            variant="outline"
           >
             Cancelar
-          </button>
-          <button
+          </Button>
+          <Button
             type="submit"
-            className="inscripcion-btn inscripcion-btn-primary"
+            variant="default"
             disabled={loadingCrear}
           >
             {loadingCrear ? 'Creando...' : 'Crear Factura'}
-          </button>
+          </Button>
         </div>
       </form>
     </div>

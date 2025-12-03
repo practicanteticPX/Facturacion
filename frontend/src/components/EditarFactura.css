@@ -15,8 +15,6 @@
   font-size: 1.75rem;
   margin-bottom: 2rem;
   color: #1a1a1a;
-  border-bottom: 1px solid #e0e0e0;
-  padding-bottom: 1rem;
   font-weight: 600;
 }
 
@@ -53,7 +51,6 @@
 .editar-section {
   margin-bottom: 2rem;
   padding-bottom: 2rem;
-  border-bottom: 1px solid #ecf0f1;
 }
 
 .editar-section:last-child {
@@ -69,13 +66,33 @@
 
 .editar-form-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
+}
+
+@media (max-width: 1200px) {
+  .editar-form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .editar-form-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .editar-form-group {
   margin-bottom: 1.5rem;
   position: relative;
+}
+
+.editar-empty {
+  visibility: hidden;
+}
+
+.editar-form-group-span-2 {
+  grid-column: span 2;
 }
 
 .editar-label {

@@ -4,14 +4,14 @@ import { useNavigate, useParams } from 'react-router-dom';
 import {
   GET_FACTURA,
   ACTUALIZAR_FACTURA,
-  GET_PERSONAS,
   GET_COMPANIAS,
-  GET_OPCIONES_OBSERVACIONES,
+  GET_PERSONAS,
   GET_PROVEEDOR,
   GET_FACTURAS
 } from '../apollo/queries';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from './ui/select';
 import { DatePicker } from './ui/DatePicker';
+import { Button } from './ui/button';
 import './EditarFactura.css';
 
 /**
@@ -61,22 +61,15 @@ function EditarFactura() {
     acuseReciboSCI: false,
     legalizaAnticipo: false,
     entregadaA: '',
-    fechaEntrega: '',
-    fechaRecepcionCausacion: '',
-    recibidaPor: '',
-    fechaRevisionCausacion: '',
-    numeroCausacion: '',
-    fechaCausacion: '',
-    observaciones: ''
+    fechaEntrega: ''
   });
 
   const [proveedorNombre, setProveedorNombre] = useState('');
   const [ciaNit, setCiaNit] = useState('');
   const [mensaje, setMensaje] = useState({ tipo: '', texto: '' });
 
-  const { data: personasData } = useQuery(GET_PERSONAS);
   const { data: companiasData } = useQuery(GET_COMPANIAS);
-  const { data: opcionesObservacionesData } = useQuery(GET_OPCIONES_OBSERVACIONES);
+  const { data: personasData } = useQuery(GET_PERSONAS);
 
   const { data: facturaData, loading: loadingFactura } = useQuery(GET_FACTURA, {
     variables: { id: parseInt(id) },
@@ -94,13 +87,7 @@ function EditarFactura() {
           acuseReciboSCI: factura.acuseReciboSCI || false,
           legalizaAnticipo: factura.legalizaAnticipo || false,
           entregadaA: factura.entregadaA || '',
-          fechaEntrega: formatearFechaParaInput(factura.fechaEntrega),
-          fechaRecepcionCausacion: formatearFechaParaInput(factura.fechaRecepcionCausacion),
-          recibidaPor: factura.recibidaPor || '',
-          fechaRevisionCausacion: formatearFechaParaInput(factura.fechaRevisionCausacion),
-          numeroCausacion: factura.numeroCausacion || '',
-          fechaCausacion: formatearFechaParaInput(factura.fechaCausacion),
-          observaciones: factura.observaciones || ''
+          fechaEntrega: formatearFechaParaInput(factura.fechaEntrega)
         });
         setProveedorNombre(factura.proveedor);
         setCiaNit(factura.ciaNit);
@@ -207,8 +194,8 @@ function EditarFactura() {
 
       <form onSubmit={handleSubmit}>
         <div className="editar-section">
-          <h3 className="editar-section-title">Información Básica</h3>
           <div className="editar-form-grid">
+            {/* Fila 1: No. de Control | Cia | Compañía + NIT | (vacío) */}
             <div className="editar-form-group">
               <label className="editar-label">No. de Control</label>
               <input
@@ -238,13 +225,26 @@ function EditarFactura() {
               </Select>
             </div>
 
-            <div className="editar-form-group">
+            <div className="editar-form-group editar-form-group-span-2">
               <label className="editar-label">Compañía + NIT</label>
               <input
                 type="text"
                 value={ciaNit}
                 className="editar-input"
                 disabled
+              />
+            </div>
+
+            {/* Fila 2: No. Factura | NIT | Proveedor */}
+            <div className="editar-form-group">
+              <label className="editar-label editar-label-required">No. Factura</label>
+              <input
+                type="text"
+                name="numeroFactura"
+                value={formData.numeroFactura}
+                onChange={handleChange}
+                className="editar-input"
+                required
               />
             </div>
 
@@ -260,7 +260,7 @@ function EditarFactura() {
               />
             </div>
 
-            <div className="editar-form-group">
+            <div className="editar-form-group editar-form-group-span-2">
               <label className="editar-label">Proveedor</label>
               <input
                 type="text"
@@ -270,18 +270,7 @@ function EditarFactura() {
               />
             </div>
 
-            <div className="editar-form-group">
-              <label className="editar-label editar-label-required">No. Factura</label>
-              <input
-                type="text"
-                name="numeroFactura"
-                value={formData.numeroFactura}
-                onChange={handleChange}
-                className="editar-input"
-                required
-              />
-            </div>
-
+            {/* Fila 3: Fecha Radicado | Fecha Factura | Fecha de Entrega | Entregada a */}
             <div className="editar-form-group">
               <DatePicker
                 label="Fecha Radicado"
@@ -290,6 +279,7 @@ function EditarFactura() {
                 onChange={handleChange}
                 required
                 id="fechaRadicado"
+                disabled
               />
             </div>
 
@@ -301,9 +291,42 @@ function EditarFactura() {
                 onChange={handleChange}
                 required
                 id="fechaFactura"
+                disabled
               />
             </div>
 
+            <div className="editar-form-group">
+              <DatePicker
+                label="Fecha de Entrega"
+                name="fechaEntrega"
+                value={formData.fechaEntrega}
+                onChange={handleChange}
+                id="fechaEntrega"
+                disabled
+              />
+            </div>
+
+            <div className="editar-form-group">
+              <label className="editar-label">Entregada a</label>
+              <Select
+                value={formData.entregadaA}
+                onValueChange={(value) => handleChange({ target: { name: 'entregadaA', value } })}
+                disabled
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Seleccione una persona" />
+                </SelectTrigger>
+                <SelectContent>
+                  {personasData?.personas?.map(persona => (
+                    <SelectItem key={persona.id} value={persona.nombre}>
+                      {persona.nombre}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Fila 4: Factura a Crédito | Acuse Recibo SCI | ¿Legaliza anticipo? | (vacío) */}
             <div className="editar-form-group">
               <label className="editar-label">Factura a Crédito</label>
               <Select
@@ -337,35 +360,6 @@ function EditarFactura() {
             </div>
 
             <div className="editar-form-group">
-              <label className="editar-label">Entregada a</label>
-              <Select
-                value={formData.entregadaA}
-                onValueChange={(value) => handleChange({ target: { name: 'entregadaA', value } })}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Seleccione una persona" />
-                </SelectTrigger>
-                <SelectContent>
-                  {personasData?.personas?.map(persona => (
-                    <SelectItem key={persona.id} value={persona.nombre}>
-                      {persona.nombre}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="editar-form-group">
-              <DatePicker
-                label="Fecha de Entrega"
-                name="fechaEntrega"
-                value={formData.fechaEntrega}
-                onChange={handleChange}
-                id="fechaEntrega"
-              />
-            </div>
-
-            <div className="editar-form-group">
               <label className="editar-label">¿Legaliza anticipo?</label>
               <Select
                 value={formData.legalizaAnticipo ? 'Si' : 'No'}
@@ -380,111 +374,26 @@ function EditarFactura() {
                 </SelectContent>
               </Select>
             </div>
-          </div>
-        </div>
 
-        <div className="editar-section">
-          <h3 className="editar-section-title">Información de Causación</h3>
-          <p className="editar-info-text" style={{ marginBottom: '1rem' }}>
-            Estos campos se completan después de la creación inicial
-          </p>
-          <div className="editar-form-grid">
-            <div className="editar-form-group">
-              <DatePicker
-                label="Fecha Recepción Causación"
-                name="fechaRecepcionCausacion"
-                value={formData.fechaRecepcionCausacion}
-                onChange={handleChange}
-                id="fechaRecepcionCausacion"
-              />
-            </div>
-
-            <div className="editar-form-group">
-              <label className="editar-label">Recibida por</label>
-              <Select
-                value={formData.recibidaPor}
-                onValueChange={(value) => handleChange({ target: { name: 'recibidaPor', value } })}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Seleccione una persona" />
-                </SelectTrigger>
-                <SelectContent>
-                  {personasData?.personas?.map(persona => (
-                    <SelectItem key={persona.id} value={persona.nombre}>
-                      {persona.nombre}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="editar-form-group">
-              <DatePicker
-                label="Fecha Revisión Causación"
-                name="fechaRevisionCausacion"
-                value={formData.fechaRevisionCausacion}
-                onChange={handleChange}
-                id="fechaRevisionCausacion"
-              />
-            </div>
-
-            <div className="editar-form-group">
-              <label className="editar-label">No. Causación</label>
-              <input
-                type="text"
-                name="numeroCausacion"
-                value={formData.numeroCausacion}
-                onChange={handleChange}
-                className="editar-input"
-              />
-            </div>
-
-            <div className="editar-form-group">
-              <DatePicker
-                label="Fecha Causación"
-                name="fechaCausacion"
-                value={formData.fechaCausacion}
-                onChange={handleChange}
-                id="fechaCausacion"
-              />
-            </div>
-
-            <div className="editar-form-group">
-              <label className="editar-label">Observaciones</label>
-              <Select
-                value={formData.observaciones}
-                onValueChange={(value) => handleChange({ target: { name: 'observaciones', value } })}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Seleccione una observación" />
-                </SelectTrigger>
-                <SelectContent>
-                  {opcionesObservacionesData?.opcionesObservaciones?.map((obs, idx) => (
-                    <SelectItem key={idx} value={obs}>
-                      {obs}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+            <div className="editar-form-group editar-empty"></div>
           </div>
         </div>
 
         <div className="editar-button-group">
-          <button
+          <Button
             type="button"
             onClick={() => navigate('/facturas')}
-            className="editar-btn editar-btn-secondary"
+            variant="outline"
           >
             Cancelar
-          </button>
-          <button
+          </Button>
+          <Button
             type="submit"
-            className="editar-btn editar-btn-success"
+            variant="default"
             disabled={loadingActualizar}
           >
             {loadingActualizar ? 'Guardando...' : 'Guardar Cambios'}
-          </button>
+          </Button>
         </div>
       </form>
     </div>

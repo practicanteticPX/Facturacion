@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import { GET_FACTURAS, GET_COMPANIAS } from '../apollo/queries';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import { Button } from './ui/button';
+import { Label } from './ui/label';
 import './ListaFacturas.css';
 
 /**
@@ -48,83 +51,92 @@ function ListaFacturas() {
 
   return (
     <div className="lista-card">
-      <h2 className="lista-title">Lista de Facturas</h2>
+      <div className="lista-header">
+        <h2 className="lista-title">Lista de Facturas</h2>
+        <p className="lista-subtitle">Gestiona y consulta las facturas registradas en el sistema</p>
+      </div>
 
-      <div className="lista-section">
-        <h3 className="lista-section-title">Filtros</h3>
+      <div className="lista-filters-card">
+        <div className="lista-filters-header">
+          <h3 className="lista-section-title">Filtros de búsqueda</h3>
+        </div>
+
         <div className="lista-form-grid">
           <div className="lista-form-group">
-            <label className="lista-label">Compañía</label>
-            <select
-              name="cia"
-              value={filtros.cia}
-              onChange={handleFiltroChange}
-              className="lista-select"
+            <Label>Compañía</Label>
+            <Select
+              value={filtros.cia || "all"}
+              onValueChange={(value) => setFiltros(prev => ({ ...prev, cia: value === "all" ? "" : value }))}
             >
-              <option value="">Todas</option>
-              {companiasData?.companias?.map(cia => (
-                <option key={cia} value={cia}>{cia}</option>
-              ))}
-            </select>
+              <SelectTrigger>
+                <SelectValue placeholder="Todas las compañías" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Todas</SelectItem>
+                {companiasData?.companias?.map(cia => (
+                  <SelectItem key={cia} value={cia}>{cia}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="lista-form-group">
-            <label className="lista-label">NIT</label>
+            <Label>NIT del proveedor</Label>
             <input
               type="text"
               name="nit"
               value={filtros.nit}
               onChange={handleFiltroChange}
               className="lista-input"
-              placeholder="Buscar por NIT"
+              placeholder="Ej: 900123456-1"
             />
           </div>
 
           <div className="lista-form-group">
-            <label className="lista-label">Nº. Control</label>
+            <Label>Número de control</Label>
             <input
               type="text"
               name="numeroControl"
               value={filtros.numeroControl}
               onChange={handleFiltroChange}
               className="lista-input"
-              placeholder="Buscar por número de control"
+              placeholder="Ej: 2024001"
             />
           </div>
         </div>
 
         <div className="lista-button-group">
-          <button onClick={aplicarFiltros} className="lista-btn lista-btn-primary">
+          <Button onClick={aplicarFiltros} variant="default">
             Aplicar Filtros
-          </button>
-          <button onClick={limpiarFiltros} className="lista-btn lista-btn-secondary">
-            Limpiar Filtros
-          </button>
+          </Button>
+          <Button onClick={limpiarFiltros} variant="outline">
+            Limpiar
+          </Button>
         </div>
       </div>
 
-      <div className="lista-table-container">
-        <p className="lista-info-text">Total de facturas: {data?.facturas?.length || 0}</p>
-        <table className="lista-table">
+      <div className="lista-table-section">
+        <div className="lista-table-header">
+          <p className="lista-info-text">
+            {data?.facturas?.length || 0} {data?.facturas?.length === 1 ? 'factura encontrada' : 'facturas encontradas'}
+          </p>
+        </div>
+        <div className="lista-table-container">
+          <table className="lista-table">
           <thead>
             <tr>
               <th>Nº Control</th>
-              <th>Compañía</th>
-              <th>Compañía + NIT</th>
+              <th>Cia</th>
               <th>Proveedor</th>
               <th>No. Factura</th>
-              <th>Fecha Radicado</th>
-              <th>Fecha Factura</th>
-              <th>Crédito</th>
               <th>Entregada a</th>
-              <th>Observaciones</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {data?.facturas?.length === 0 ? (
               <tr>
-                <td colSpan="11" className="lista-table-empty">
+                <td colSpan="6" className="lista-table-empty">
                   No se encontraron facturas
                 </td>
               </tr>
@@ -133,22 +145,25 @@ function ListaFacturas() {
                 <tr key={factura.id}>
                   <td>{factura.numeroControl}</td>
                   <td>{factura.cia}</td>
-                  <td>{factura.ciaNit}</td>
                   <td>{factura.proveedor}</td>
                   <td>{factura.numeroFactura}</td>
-                  <td>{formatearFecha(factura.fechaRadicado)}</td>
-                  <td>{formatearFecha(factura.fechaFactura)}</td>
-                  <td>{factura.facturaCredito ? 'Sí' : 'No'}</td>
                   <td>{factura.entregadaA || '-'}</td>
-                  <td>{factura.observaciones || '-'}</td>
                   <td>
                     <div className="lista-table-actions">
-                      <button
+                      <Button
                         onClick={() => navigate(`/facturas/${factura.id}`)}
-                        className="lista-btn lista-btn-primary"
+                        variant="ghost"
+                        size="sm"
                       >
                         Editar
-                      </button>
+                      </Button>
+                      <Button
+                        onClick={() => navigate(`/facturas/${factura.id}/causacion`)}
+                        variant="outline"
+                        size="sm"
+                      >
+                        Causar
+                      </Button>
                     </div>
                   </td>
                 </tr>
@@ -156,6 +171,7 @@ function ListaFacturas() {
             )}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   );

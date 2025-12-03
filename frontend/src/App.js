@@ -4,6 +4,7 @@ import Login from './components/Login';
 import InscripcionFactura from './components/InscripcionFactura';
 import ListaFacturas from './components/ListaFacturas';
 import EditarFactura from './components/EditarFactura';
+import CausacionFactura from './components/CausacionFactura';
 import './App.css';
 
 function App() {
@@ -78,6 +79,7 @@ function App() {
             <Route path="/" element={<InscripcionFactura />} />
             <Route path="/facturas" element={<ListaFacturas />} />
             <Route path="/facturas/:id" element={<EditarFactura />} />
+            <Route path="/facturas/:id/causacion" element={<CausacionFactura />} />
           </Routes>
         </div>
       </div>

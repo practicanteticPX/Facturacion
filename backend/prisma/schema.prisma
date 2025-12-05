@@ -43,6 +43,9 @@ model Factura {
   observaciones           String?   @db.VarChar(50)
   creadoEn                DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
   actualizadoEn           DateTime? @default(now()) @map("updated_at") @db.Timestamptz(6)
+  enProceso               Boolean?  @default(false) @map("en_proceso")
+  finalizado              Boolean?  @default(false) @map("finalizado")
+  causado                 Boolean?  @default(false) @map("causado")
 
   @@index([cia], map: "idx_facturas_cia")
   @@index([nit], map: "idx_facturas_nit")

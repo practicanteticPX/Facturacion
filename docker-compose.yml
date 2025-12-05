@@ -4,12 +4,12 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     ports:
-      - "192.168.0.93:4000:4000"
+      - "192.168.0.30:4001:4001"
     environment:
       - DATABASE_URL=postgresql://admin:$$40M1n*!!2023@192.168.0.254:5432/SERV_QPREX
       - DATABASE_URL_2=postgresql://admin:$$40M1n*!!2023@192.168.0.254:5432/DB_QPREX
-      - PORT=4000
-      - FRONTEND_URL=http://192.168.0.93:3000
+      - PORT=4001
+      - FRONTEND_URL=http://192.168.0.30:3001
       - AD_PROTOCOL=ldap
       - AD_HOSTNAME=192.168.0.253
       - AD_PORT=389
@@ -29,10 +29,11 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - "192.168.0.93:3000:3000"
+      - "192.168.0.30:3001:3001"
     environment:
-      - REACT_APP_GRAPHQL_URL=http://192.168.0.93:4000/graphql
+      - REACT_APP_GRAPHQL_URL=http://192.168.0.30:4001/graphql
       - HOST=0.0.0.0
+      - PORT=3001
     volumes:
       - ./frontend:/app
       - /app/node_modules

@@ -12,10 +12,11 @@
 }
 
 .inscripcion-title {
-  font-size: 1.75rem;
-  margin-bottom: 2rem;
-  color: #1a1a1a;
-  font-weight: 600;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #0f172a;
+  font-weight: 700;
+  letter-spacing: -0.025em;
 }
 
 .inscripcion-alert {
@@ -39,6 +40,14 @@
 
 .inscripcion-form {
   width: 100%;
+}
+
+.inscripcion-form-container {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #e2e8f0;
 }
 
 .inscripcion-form-grid {
@@ -144,8 +153,7 @@
 .inscripcion-button-group {
   display: flex;
   gap: 1rem;
-  margin-top: 2.5rem;
-  padding-top: 1.5rem;
+  margin-top: 0;
   justify-content: flex-end;
 }
 

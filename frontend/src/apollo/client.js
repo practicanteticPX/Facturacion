@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 
 const client = new ApolloClient({
-  uri: process.env.REACT_APP_GRAPHQL_URL || 'http://192.168.0.93:4000/graphql',
+  uri: process.env.REACT_APP_GRAPHQL_URL || 'http://192.168.0.30:4001/graphql',
   cache: new InMemoryCache(),
   defaultOptions: {
     watchQuery: {
@@ -51,7 +51,7 @@ export const executeMutationWithFile = async (mutation, variables) => {
   });
 
   // Enviar request con fetch
-  const response = await fetch(client.link.options.uri || process.env.REACT_APP_GRAPHQL_URL || 'http://192.168.0.93:4000/graphql', {
+  const response = await fetch(client.link.options.uri || process.env.REACT_APP_GRAPHQL_URL || 'http://192.168.0.30:4001/graphql', {
     method: 'POST',
     headers: {
       'apollo-require-preflight': 'true',

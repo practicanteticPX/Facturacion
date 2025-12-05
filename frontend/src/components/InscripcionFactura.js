@@ -223,7 +223,8 @@ function InscripcionFactura() {
       )}
 
       <form onSubmit={handleSubmit} onKeyDown={handleKeyDown} className="inscripcion-form">
-        <div className="inscripcion-form-grid">
+        <div className="inscripcion-form-container">
+          <div className="inscripcion-form-grid">
           {/* Fila 1 */}
           <div className="inscripcion-form-group">
             <label className="inscripcion-label">No. de Control</label>
@@ -430,6 +431,7 @@ function InscripcionFactura() {
               maxSizeMB={10}
               multiple={true}
             />
+          </div>
           </div>
         </div>
 

@@ -13,7 +13,7 @@ import emailService from './services/emailService.js';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 4001;
 
 const server = new ApolloServer({
   typeDefs,
@@ -43,7 +43,7 @@ const startServer = async () => {
       cors({
         origin: (origin, callback) => {
           const isLocalNetwork = !origin ||
-            origin.includes('192.168.0.93') ||
+            origin.includes('192.168.0.30') ||
             origin.match(/^http:\/\/192\.168\.\d{1,3}\.\d{1,3}:\d+$/) ||
             origin.match(/^http:\/\/10\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d+$/) ||
             origin.match(/^http:\/\/172\.(1[6-9]|2[0-9]|3[0-1])\.\d{1,3}\.\d{1,3}:\d+$/);

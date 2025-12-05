@@ -121,8 +121,8 @@ El archivo `.env` ya contiene las conexiones correctas:
 ```env
 DATABASE_URL="postgresql://admin:$40M1n*!!2023@192.168.0.254:5432/SERV_QPREX"
 DATABASE_URL_2="postgresql://admin:$40M1n*!!2023@192.168.0.254:5432/DB_QPREX"
-PORT=4000
-FRONTEND_URL=http://192.168.0.93:3000
+PORT=4001
+FRONTEND_URL=http://192.168.0.30:3001
 ```
 
 ### 3. Instalar Dependencias y Generar Clientes Prisma
@@ -153,7 +153,7 @@ cd backend
 npm run dev
 ```
 
-El servidor GraphQL estará disponible en: `http://192.168.0.93:4000/graphql`
+El servidor GraphQL estará disponible en: `http://192.168.0.30:4001/graphql`
 
 #### Terminal 2 - Frontend:
 ```bash
@@ -161,7 +161,7 @@ cd frontend
 npm start
 ```
 
-La aplicación web estará disponible en: `http://192.168.0.93:3000`
+La aplicación web estará disponible en: `http://192.168.0.30:3001`
 
 ### Modo Producción (con Docker)
 
@@ -171,8 +171,8 @@ docker-compose up --build
 ```
 
 Esto levantará ambos servicios:
-- Backend: `http://192.168.0.93:4000/graphql`
-- Frontend: `http://192.168.0.93:3000`
+- Backend: `http://192.168.0.30:4001/graphql`
+- Frontend: `http://192.168.0.30:3001`
 
 Para detener los contenedores:
 ```bash
@@ -207,15 +207,15 @@ Edita el archivo [.env](.env) y actualiza la variable `REACT_APP_GRAPHQL_URL` co
 
 ```env
 # Cambia esto:
-REACT_APP_GRAPHQL_URL=http://192.168.0.93:4000/graphql
+REACT_APP_GRAPHQL_URL=http://192.168.0.30:4001/graphql
 
 # Por esto (usando tu IP local):
-REACT_APP_GRAPHQL_URL=http://192.168.0.100:4000/graphql
+REACT_APP_GRAPHQL_URL=http://192.168.0.100:4001/graphql
 ```
 
 También puedes actualizar `FRONTEND_URL` si es necesario:
 ```env
-FRONTEND_URL=http://192.168.0.100:3000
+FRONTEND_URL=http://192.168.0.100:3001
 ```
 
 ### 3. Reiniciar los Servicios
@@ -233,37 +233,37 @@ docker-compose up --build
 
 Una vez configurado, otros equipos en la red local pueden acceder a:
 
-- **Frontend**: `http://<IP_DEL_SERVIDOR>:3000`
-- **Backend GraphQL**: `http://<IP_DEL_SERVIDOR>:4000/graphql`
+- **Frontend**: `http://<IP_DEL_SERVIDOR>:3001`
+- **Backend GraphQL**: `http://<IP_DEL_SERVIDOR>:4001/graphql`
 
 Ejemplo con IP `192.168.0.100`:
-- Frontend: [http://192.168.0.100:3000](http://192.168.0.100:3000)
-- Backend: [http://192.168.0.100:4000/graphql](http://192.168.0.100:4000/graphql)
+- Frontend: [http://192.168.0.100:3001](http://192.168.0.100:3001)
+- Backend: [http://192.168.0.100:4001/graphql](http://192.168.0.100:4001/graphql)
 
 ### 5. Verificar Configuración de Red
 
 Asegúrate de que:
-- El firewall permita conexiones en los puertos 3000 y 4000
+- El firewall permita conexiones en los puertos 3001 y 4001
 - Los equipos estén en la misma red local
 - No haya restricciones de red empresarial
 
 **Windows - Permitir en el Firewall:**
 ```bash
 # PowerShell como Administrador
-New-NetFirewallRule -DisplayName "React App" -Direction Inbound -LocalPort 3000 -Protocol TCP -Action Allow
-New-NetFirewallRule -DisplayName "GraphQL Backend" -Direction Inbound -LocalPort 4000 -Protocol TCP -Action Allow
+New-NetFirewallRule -DisplayName "React App" -Direction Inbound -LocalPort 3001 -Protocol TCP -Action Allow
+New-NetFirewallRule -DisplayName "GraphQL Backend" -Direction Inbound -LocalPort 4001 -Protocol TCP -Action Allow
 ```
 
 **Linux - Permitir en el Firewall:**
 ```bash
-sudo ufw allow 3000/tcp
-sudo ufw allow 4000/tcp
+sudo ufw allow 3001/tcp
+sudo ufw allow 4001/tcp
 ```
 
 ### Redes Soportadas
 
 El CORS del backend está configurado para aceptar conexiones desde:
-- 192.168.0.93 (127.0.0.1)
+- 192.168.0.30 (127.0.0.1)
 - Redes privadas clase C: `192.168.x.x`
 - Redes privadas clase A: `10.x.x.x`
 - Redes privadas clase B: `172.16.x.x - 172.31.x.x`

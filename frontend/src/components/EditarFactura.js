@@ -194,7 +194,8 @@ function EditarFactura() {
 
       <form onSubmit={handleSubmit}>
         <div className="editar-section">
-          <div className="editar-form-grid">
+          <div className="editar-form-container">
+            <div className="editar-form-grid">
             {/* Fila 1: No. de Control | Cia | Compañía + NIT | (vacío) */}
             <div className="editar-form-group">
               <label className="editar-label">No. de Control</label>
@@ -376,6 +377,7 @@ function EditarFactura() {
             </div>
 
             <div className="editar-form-group editar-empty"></div>
+            </div>
           </div>
         </div>
 

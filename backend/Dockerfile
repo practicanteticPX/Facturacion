@@ -13,6 +13,6 @@ COPY . .
 RUN npx prisma generate --schema=./prisma/schema.prisma
 RUN npx prisma generate --schema=./prisma/schema2.prisma
 
-EXPOSE 4000
+EXPOSE 4001
 
 CMD ["npm", "start"]

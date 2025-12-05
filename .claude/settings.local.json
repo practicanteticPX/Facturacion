@@ -36,7 +36,8 @@
       "Bash(docker-compose build:*)",
       "Bash(docker-compose stop:*)",
       "Bash(dir:*)",
-      "Bash(if not exist \"d:\\CRUD\\backend\\src\\assets\" mkdir \"d:\\CRUD\\backend\\src\\assets\")"
+      "Bash(if not exist \"d:\\CRUD\\backend\\src\\assets\" mkdir \"d:\\CRUD\\backend\\src\\assets\")",
+      "Bash(find:*)"
     ],
     "deny": [],
     "ask": []

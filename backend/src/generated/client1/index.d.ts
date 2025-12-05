@@ -1934,6 +1934,9 @@ export namespace Prisma {
     observaciones: string | null
     creadoEn: Date | null
     actualizadoEn: Date | null
+    enProceso: boolean | null
+    finalizado: boolean | null
+    causado: boolean | null
   }
 
   export type FacturaMaxAggregateOutputType = {
@@ -1959,6 +1962,9 @@ export namespace Prisma {
     observaciones: string | null
     creadoEn: Date | null
     actualizadoEn: Date | null
+    enProceso: boolean | null
+    finalizado: boolean | null
+    causado: boolean | null
   }
 
   export type FacturaCountAggregateOutputType = {
@@ -1984,6 +1990,9 @@ export namespace Prisma {
     observaciones: number
     creadoEn: number
     actualizadoEn: number
+    enProceso: number
+    finalizado: number
+    causado: number
     _all: number
   }
 
@@ -2019,6 +2028,9 @@ export namespace Prisma {
     observaciones?: true
     creadoEn?: true
     actualizadoEn?: true
+    enProceso?: true
+    finalizado?: true
+    causado?: true
   }
 
   export type FacturaMaxAggregateInputType = {
@@ -2044,6 +2056,9 @@ export namespace Prisma {
     observaciones?: true
     creadoEn?: true
     actualizadoEn?: true
+    enProceso?: true
+    finalizado?: true
+    causado?: true
   }
 
   export type FacturaCountAggregateInputType = {
@@ -2069,6 +2084,9 @@ export namespace Prisma {
     observaciones?: true
     creadoEn?: true
     actualizadoEn?: true
+    enProceso?: true
+    finalizado?: true
+    causado?: true
     _all?: true
   }
 
@@ -2181,6 +2199,9 @@ export namespace Prisma {
     observaciones: string | null
     creadoEn: Date | null
     actualizadoEn: Date | null
+    enProceso: boolean | null
+    finalizado: boolean | null
+    causado: boolean | null
     _count: FacturaCountAggregateOutputType | null
     _avg: FacturaAvgAggregateOutputType | null
     _sum: FacturaSumAggregateOutputType | null
@@ -2225,6 +2246,9 @@ export namespace Prisma {
     observaciones?: boolean
     creadoEn?: boolean
     actualizadoEn?: boolean
+    enProceso?: boolean
+    finalizado?: boolean
+    causado?: boolean
   }, ExtArgs["result"]["factura"]>
 
   export type FacturaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2250,6 +2274,9 @@ export namespace Prisma {
     observaciones?: boolean
     creadoEn?: boolean
     actualizadoEn?: boolean
+    enProceso?: boolean
+    finalizado?: boolean
+    causado?: boolean
   }, ExtArgs["result"]["factura"]>
 
   export type FacturaSelectScalar = {
@@ -2275,6 +2302,9 @@ export namespace Prisma {
     observaciones?: boolean
     creadoEn?: boolean
     actualizadoEn?: boolean
+    enProceso?: boolean
+    finalizado?: boolean
+    causado?: boolean
   }
 
 
@@ -2304,6 +2334,9 @@ export namespace Prisma {
       observaciones: string | null
       creadoEn: Date | null
       actualizadoEn: Date | null
+      enProceso: boolean | null
+      finalizado: boolean | null
+      causado: boolean | null
     }, ExtArgs["result"]["factura"]>
     composites: {}
   }
@@ -2719,6 +2752,9 @@ export namespace Prisma {
     readonly observaciones: FieldRef<"Factura", 'String'>
     readonly creadoEn: FieldRef<"Factura", 'DateTime'>
     readonly actualizadoEn: FieldRef<"Factura", 'DateTime'>
+    readonly enProceso: FieldRef<"Factura", 'Boolean'>
+    readonly finalizado: FieldRef<"Factura", 'Boolean'>
+    readonly causado: FieldRef<"Factura", 'Boolean'>
   }
     
 
@@ -3939,7 +3975,10 @@ export namespace Prisma {
     fechaCausacion: 'fechaCausacion',
     observaciones: 'observaciones',
     creadoEn: 'creadoEn',
-    actualizadoEn: 'actualizadoEn'
+    actualizadoEn: 'actualizadoEn',
+    enProceso: 'enProceso',
+    finalizado: 'finalizado',
+    causado: 'causado'
   };
 
   export type FacturaScalarFieldEnum = (typeof FacturaScalarFieldEnum)[keyof typeof FacturaScalarFieldEnum]
@@ -4026,6 +4065,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -4107,6 +4153,9 @@ export namespace Prisma {
     observaciones?: StringNullableFilter<"Factura"> | string | null
     creadoEn?: DateTimeNullableFilter<"Factura"> | Date | string | null
     actualizadoEn?: DateTimeNullableFilter<"Factura"> | Date | string | null
+    enProceso?: BoolNullableFilter<"Factura"> | boolean | null
+    finalizado?: BoolNullableFilter<"Factura"> | boolean | null
+    causado?: BoolNullableFilter<"Factura"> | boolean | null
   }
 
   export type FacturaOrderByWithRelationInput = {
@@ -4132,6 +4181,9 @@ export namespace Prisma {
     observaciones?: SortOrderInput | SortOrder
     creadoEn?: SortOrderInput | SortOrder
     actualizadoEn?: SortOrderInput | SortOrder
+    enProceso?: SortOrderInput | SortOrder
+    finalizado?: SortOrderInput | SortOrder
+    causado?: SortOrderInput | SortOrder
   }
 
   export type FacturaWhereUniqueInput = Prisma.AtLeast<{
@@ -4160,6 +4212,9 @@ export namespace Prisma {
     observaciones?: StringNullableFilter<"Factura"> | string | null
     creadoEn?: DateTimeNullableFilter<"Factura"> | Date | string | null
     actualizadoEn?: DateTimeNullableFilter<"Factura"> | Date | string | null
+    enProceso?: BoolNullableFilter<"Factura"> | boolean | null
+    finalizado?: BoolNullableFilter<"Factura"> | boolean | null
+    causado?: BoolNullableFilter<"Factura"> | boolean | null
   }, "id" | "numeroControl">
 
   export type FacturaOrderByWithAggregationInput = {
@@ -4185,6 +4240,9 @@ export namespace Prisma {
     observaciones?: SortOrderInput | SortOrder
     creadoEn?: SortOrderInput | SortOrder
     actualizadoEn?: SortOrderInput | SortOrder
+    enProceso?: SortOrderInput | SortOrder
+    finalizado?: SortOrderInput | SortOrder
+    causado?: SortOrderInput | SortOrder
     _count?: FacturaCountOrderByAggregateInput
     _avg?: FacturaAvgOrderByAggregateInput
     _max?: FacturaMaxOrderByAggregateInput
@@ -4218,6 +4276,9 @@ export namespace Prisma {
     observaciones?: StringNullableWithAggregatesFilter<"Factura"> | string | null
     creadoEn?: DateTimeNullableWithAggregatesFilter<"Factura"> | Date | string | null
     actualizadoEn?: DateTimeNullableWithAggregatesFilter<"Factura"> | Date | string | null
+    enProceso?: BoolNullableWithAggregatesFilter<"Factura"> | boolean | null
+    finalizado?: BoolNullableWithAggregatesFilter<"Factura"> | boolean | null
+    causado?: BoolNullableWithAggregatesFilter<"Factura"> | boolean | null
   }
 
   export type PersonaWhereInput = {
@@ -4319,6 +4380,9 @@ export namespace Prisma {
     observaciones?: string | null
     creadoEn?: Date | string | null
     actualizadoEn?: Date | string | null
+    enProceso?: boolean | null
+    finalizado?: boolean | null
+    causado?: boolean | null
   }
 
   export type FacturaUncheckedCreateInput = {
@@ -4344,6 +4408,9 @@ export namespace Prisma {
     observaciones?: string | null
     creadoEn?: Date | string | null
     actualizadoEn?: Date | string | null
+    enProceso?: boolean | null
+    finalizado?: boolean | null
+    causado?: boolean | null
   }
 
   export type FacturaUpdateInput = {
@@ -4368,6 +4435,9 @@ export namespace Prisma {
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     actualizadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enProceso?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    finalizado?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    causado?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type FacturaUncheckedUpdateInput = {
@@ -4393,6 +4463,9 @@ export namespace Prisma {
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     actualizadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enProceso?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    finalizado?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    causado?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type FacturaCreateManyInput = {
@@ -4418,6 +4491,9 @@ export namespace Prisma {
     observaciones?: string | null
     creadoEn?: Date | string | null
     actualizadoEn?: Date | string | null
+    enProceso?: boolean | null
+    finalizado?: boolean | null
+    causado?: boolean | null
   }
 
   export type FacturaUpdateManyMutationInput = {
@@ -4442,6 +4518,9 @@ export namespace Prisma {
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     actualizadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enProceso?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    finalizado?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    causado?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type FacturaUncheckedUpdateManyInput = {
@@ -4467,6 +4546,9 @@ export namespace Prisma {
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     actualizadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enProceso?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    finalizado?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    causado?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type PersonaCreateInput = {
@@ -4634,6 +4716,11 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
+  export type BoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
   export type FacturaCountOrderByAggregateInput = {
     id?: SortOrder
     numeroControl?: SortOrder
@@ -4657,6 +4744,9 @@ export namespace Prisma {
     observaciones?: SortOrder
     creadoEn?: SortOrder
     actualizadoEn?: SortOrder
+    enProceso?: SortOrder
+    finalizado?: SortOrder
+    causado?: SortOrder
   }
 
   export type FacturaAvgOrderByAggregateInput = {
@@ -4686,6 +4776,9 @@ export namespace Prisma {
     observaciones?: SortOrder
     creadoEn?: SortOrder
     actualizadoEn?: SortOrder
+    enProceso?: SortOrder
+    finalizado?: SortOrder
+    causado?: SortOrder
   }
 
   export type FacturaMinOrderByAggregateInput = {
@@ -4711,6 +4804,9 @@ export namespace Prisma {
     observaciones?: SortOrder
     creadoEn?: SortOrder
     actualizadoEn?: SortOrder
+    enProceso?: SortOrder
+    finalizado?: SortOrder
+    causado?: SortOrder
   }
 
   export type FacturaSumOrderByAggregateInput = {
@@ -4763,6 +4859,14 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
+  }
+
   export type PersonaCountOrderByAggregateInput = {
     id?: SortOrder
     nombre?: SortOrder
@@ -4811,6 +4915,10 @@ export namespace Prisma {
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
+  }
+
+  export type NullableBoolFieldUpdateOperationsInput = {
+    set?: boolean | null
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -4929,6 +5037,11 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
+  export type NestedBoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -4972,6 +5085,14 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
 

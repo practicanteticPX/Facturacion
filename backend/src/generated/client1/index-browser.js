@@ -149,7 +149,10 @@ exports.Prisma.FacturaScalarFieldEnum = {
   fechaCausacion: 'fechaCausacion',
   observaciones: 'observaciones',
   creadoEn: 'creadoEn',
-  actualizadoEn: 'actualizadoEn'
+  actualizadoEn: 'actualizadoEn',
+  enProceso: 'enProceso',
+  finalizado: 'finalizado',
+  causado: 'causado'
 };
 
 exports.Prisma.PersonaScalarFieldEnum = {

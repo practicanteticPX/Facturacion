@@ -10,12 +10,8 @@ import {
 
 class FacturaService {
   convertirBooleanos(factura) {
-    return {
-      ...factura,
-      facturaCredito: factura.facturaCredito === 'Si',
-      acuseReciboSCI: factura.acuseReciboSCI === 'Si',
-      legalizaAnticipo: factura.legalizaAnticipo === 'Si'
-    };
+    // Los booleanos ya vienen correctamente de la base de datos
+    return factura;
   }
 
   formatearFechaParaGraphQL(fecha) {
@@ -44,7 +40,10 @@ class FacturaService {
       fechaRevisionCausacion: this.formatearFechaParaGraphQL(factura.fechaRevisionCausacion),
       fechaCausacion: this.formatearFechaParaGraphQL(factura.fechaCausacion),
       creadoEn: factura.creadoEn ? factura.creadoEn.toISOString() : null,
-      actualizadoEn: factura.actualizadoEn ? factura.actualizadoEn.toISOString() : null
+      actualizadoEn: factura.actualizadoEn ? factura.actualizadoEn.toISOString() : null,
+      enProceso: factura.enProceso || false,
+      finalizado: factura.finalizado || false,
+      causado: factura.causado || false
     });
   }
 
@@ -77,7 +76,7 @@ class FacturaService {
       // Verificar que el número no exista (seguridad adicional)
       const existe = await prismaServ.factura.findFirst({
         where: {
-          numeroControl: proximoNumero.toString()
+          numeroControl: proximoNumero
         }
       });
 
@@ -90,7 +89,7 @@ class FacturaService {
         while (existeNumero) {
           existeNumero = await prismaServ.factura.findFirst({
             where: {
-              numeroControl: numeroDisponible.toString()
+              numeroControl: numeroDisponible
             }
           });
           if (existeNumero) {
@@ -142,9 +141,8 @@ class FacturaService {
           numeroFactura: datos.numeroFactura,
           fechaRadicado: new Date(datos.fechaRadicado),
           fechaFactura: new Date(datos.fechaFactura),
-          facturaCredito: datos.facturaCredito ? 'Si' : 'No',
-          acuseReciboSCI: datos.acuseReciboSCI ? 'Si' : 'No',
-          legalizaAnticipo: datos.legalizaAnticipo ? 'Si' : 'No',
+          facturaCredito: datos.facturaCredito || false,
+          acuseReciboSCI: datos.acuseReciboSCI || false,
           entregadaA: datos.entregadaA || '',
           fechaEntrega: datos.fechaEntrega ? new Date(datos.fechaEntrega) : new Date()
         }
@@ -182,33 +180,26 @@ class FacturaService {
         );
       }
 
-      return await this.obtenerFacturaCompleta(factura.id);
+      return await this.obtenerFacturaCompleta(factura.numeroControl);
     } catch (error) {
       console.error('Error creando factura:', error);
       throw error;
     }
   }
 
-  async obtenerFacturaCompleta(id) {
+  async obtenerFacturaCompleta(numeroControl) {
     const factura = await prismaServ.factura.findUnique({
-      where: { id }
+      where: { numeroControl: parseInt(numeroControl) }
     });
 
     if (!factura) {
-      throw new Error(`Factura con ID ${id} no encontrada`);
-    }
-
-    let proveedor = null;
-    try {
-      proveedor = await proveedorService.obtenerProveedorPorNit(factura.nit);
-    } catch (error) {
-      console.warn(`Proveedor no encontrado para NIT ${factura.nit}`);
+      throw new Error(`Factura con número de control ${numeroControl} no encontrada`);
     }
 
     return this.formatearFactura({
       ...factura,
       ciaNit: proveedorService.generarCiaNit(factura.cia, factura.nit),
-      proveedor: proveedor ? proveedor.Nombre : 'Proveedor no encontrado'
+      proveedor: factura.proveedor || 'Proveedor no encontrado'
     });
   }
 
@@ -228,45 +219,54 @@ class FacturaService {
         where.numeroControl = { contains: filtros.numeroControl };
       }
 
+      // Paginación: valores por defecto
+      const page = filtros.page || 1;
+      const pageSize = filtros.pageSize || 100;
+      const skip = (page - 1) * pageSize;
+
+      // Consultar total de registros (para calcular hasMore)
+      const total = await prismaServ.factura.count({ where });
+
+      // Consultar facturas con paginación
       const facturas = await prismaServ.factura.findMany({
         where,
         orderBy: {
-          creadoEn: 'desc'
-        }
+          numeroControl: 'desc'  // Ordenar por número de control descendente (más recientes primero)
+        },
+        skip,
+        take: pageSize
       });
 
-      const facturasCompletas = await Promise.all(
-        facturas.map(async (factura) => {
-          let proveedor = null;
-          try {
-            proveedor = await proveedorService.obtenerProveedorPorNit(factura.nit);
-          } catch (error) {
-            console.warn(`Proveedor no encontrado para NIT ${factura.nit}`);
-          }
+      // El proveedor ya está almacenado en la tabla, no necesitamos hacer lookups individuales
+      const facturasCompletas = facturas.map((factura) => {
+        return this.formatearFactura({
+          ...factura,
+          ciaNit: proveedorService.generarCiaNit(factura.cia, factura.nit),
+          proveedor: factura.proveedor || 'Proveedor no encontrado'
+        });
+      });
 
-          return this.formatearFactura({
-            ...factura,
-            ciaNit: proveedorService.generarCiaNit(factura.cia, factura.nit),
-            proveedor: proveedor ? proveedor.Nombre : 'Proveedor no encontrado'
-          });
-        })
-      );
-
-      return facturasCompletas;
+      return {
+        facturas: facturasCompletas,
+        total,
+        page,
+        pageSize,
+        hasMore: skip + facturas.length < total
+      };
     } catch (error) {
       console.error('Error obteniendo facturas:', error);
       throw new Error('Error al obtener las facturas');
     }
   }
 
-  async actualizarFactura(id, datos) {
+  async actualizarFactura(numeroControl, datos) {
     try {
       const facturaExistente = await prismaServ.factura.findUnique({
-        where: { id }
+        where: { numeroControl: parseInt(numeroControl) }
       });
 
       if (!facturaExistente) {
-        throw new Error(`Factura con ID ${id} no encontrada`);
+        throw new Error(`Factura con número de control ${numeroControl} no encontrada`);
       }
 
       if (datos.cia) {
@@ -294,12 +294,12 @@ class FacturaService {
 
       const camposPermitidos = [
         'numeroControl', 'cia', 'nit', 'numeroFactura', 'fechaRadicado', 'fechaFactura',
-        'facturaCredito', 'acuseReciboSCI', 'legalizaAnticipo', 'entregadaA', 'fechaEntrega',
+        'facturaCredito', 'acuseReciboSCI', 'entregadaA', 'fechaEntrega',
         'fechaRecepcionCausacion', 'recibidaPor', 'fechaRevisionCausacion',
         'numeroCausacion', 'fechaCausacion', 'observaciones'
       ];
 
-      const camposBooleanos = ['facturaCredito', 'acuseReciboSCI', 'legalizaAnticipo'];
+      const camposBooleanos = ['facturaCredito', 'acuseReciboSCI'];
 
       camposPermitidos.forEach(campo => {
         if (datos[campo] !== undefined) {
@@ -318,8 +318,8 @@ class FacturaService {
               datosActualizacion[campo] = null;
             }
           } else if (camposBooleanos.includes(campo)) {
-            // Convertir booleanos a "Si"/"No" para la BD
-            datosActualizacion[campo] = datos[campo] ? 'Si' : 'No';
+            // Los booleanos se guardan directamente
+            datosActualizacion[campo] = datos[campo] || false;
           } else {
             datosActualizacion[campo] = datos[campo];
           }
@@ -337,11 +337,11 @@ class FacturaService {
       }
 
       const facturaActualizada = await prismaServ.factura.update({
-        where: { id },
+        where: { numeroControl: parseInt(numeroControl) },
         data: datosActualizacion
       });
 
-      return await this.obtenerFacturaCompleta(facturaActualizada.id);
+      return await this.obtenerFacturaCompleta(facturaActualizada.numeroControl);
     } catch (error) {
       console.error('Error actualizando factura:', error);
       throw error;

@@ -3,11 +3,11 @@ import { prismaServ } from '../config/database.js';
 class CompaniaService {
   async obtenerTodasLasCompanias() {
     try {
-      const companias = await prismaServ.compania.findMany({
-        orderBy: {
-          cia: 'asc'
-        }
-      });
+      const companias = await prismaServ.$queryRaw`
+        SELECT id, cia
+        FROM crud_facturas."T_Cias"
+        ORDER BY cia ASC
+      `;
       return companias;
     } catch (error) {
       console.error('Error obteniendo compañías:', error);
@@ -17,10 +17,13 @@ class CompaniaService {
 
   async obtenerCompaniaPorCodigo(codigo) {
     try {
-      const compania = await prismaServ.compania.findFirst({
-        where: { cia: codigo }
-      });
-      return compania;
+      const companias = await prismaServ.$queryRaw`
+        SELECT id, cia
+        FROM crud_facturas."T_Cias"
+        WHERE cia = ${codigo}
+        LIMIT 1
+      `;
+      return companias.length > 0 ? companias[0] : null;
     } catch (error) {
       console.error('Error obteniendo compañía:', error);
       throw error;

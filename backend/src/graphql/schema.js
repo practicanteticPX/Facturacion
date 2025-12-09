@@ -4,18 +4,16 @@ export const typeDefs = gql`
   scalar Upload
 
   type Factura {
-    id: Int!
-    numeroControl: String!
-    cia: String!
-    ciaNit: String!
-    nit: String!
-    proveedor: String!
-    numeroFactura: String!
-    fechaRadicado: String!
-    fechaFactura: String!
-    facturaCredito: Boolean!
-    acuseReciboSCI: Boolean!
-    legalizaAnticipo: Boolean!
+    numeroControl: Int!
+    cia: String
+    ciaNit: String
+    nit: String
+    proveedor: String
+    numeroFactura: String
+    fechaRadicado: String
+    fechaFactura: String
+    facturaCredito: Boolean
+    acuseReciboSCI: Boolean
     entregadaA: String
     fechaEntrega: String
     fechaRecepcionCausacion: String
@@ -24,8 +22,19 @@ export const typeDefs = gql`
     numeroCausacion: String
     fechaCausacion: String
     observaciones: String
-    creadoEn: String!
-    actualizadoEn: String!
+    creadoEn: String
+    actualizadoEn: String
+    enProceso: Boolean
+    finalizado: Boolean
+    causado: Boolean
+  }
+
+  type FacturasResponse {
+    facturas: [Factura!]!
+    total: Int!
+    page: Int!
+    pageSize: Int!
+    hasMore: Boolean!
   }
 
   type Persona {
@@ -48,13 +57,11 @@ export const typeDefs = gql`
     fechaFactura: String!
     facturaCredito: Boolean
     acuseReciboSCI: Boolean
-    legalizaAnticipo: Boolean
     entregadaA: String
     fechaEntrega: String
   }
 
   input ActualizarFacturaInput {
-    numeroControl: String
     cia: String
     nit: String
     numeroFactura: String
@@ -62,7 +69,6 @@ export const typeDefs = gql`
     fechaFactura: String
     facturaCredito: Boolean
     acuseReciboSCI: Boolean
-    legalizaAnticipo: Boolean
     entregadaA: String
     fechaEntrega: String
     fechaRecepcionCausacion: String
@@ -77,6 +83,8 @@ export const typeDefs = gql`
     cia: String
     nit: String
     numeroControl: String
+    page: Int
+    pageSize: Int
   }
 
   type User {
@@ -98,8 +106,8 @@ export const typeDefs = gql`
   }
 
   type Query {
-    facturas(filtros: FiltrosFacturaInput): [Factura!]!
-    factura(id: Int!): Factura
+    facturas(filtros: FiltrosFacturaInput): FacturasResponse!
+    factura(numeroControl: Int!): Factura
     proximoNumeroControl: String!
     personas: [Persona!]!
     proveedor(nit: String!): Proveedor
@@ -111,6 +119,6 @@ export const typeDefs = gql`
   type Mutation {
     login(input: LoginInput!): AuthResponse!
     crearFactura(input: CrearFacturaInput!, archivo: Upload): Factura!
-    actualizarFactura(id: Int!, input: ActualizarFacturaInput!): Factura!
+    actualizarFactura(numeroControl: Int!, input: ActualizarFacturaInput!): Factura!
   }
 `;

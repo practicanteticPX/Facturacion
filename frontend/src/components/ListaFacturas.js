@@ -18,10 +18,20 @@ function ListaFacturas() {
     nit: '',
     numeroControl: ''
   });
+  const [page, setPage] = useState(1);
+  const pageSize = 100;
 
   const { data: companiasData } = useQuery(GET_COMPANIAS);
   const { data, loading, error, refetch } = useQuery(GET_FACTURAS, {
-    variables: { filtros: filtros.cia || filtros.nit || filtros.numeroControl ? filtros : undefined }
+    variables: {
+      filtros: {
+        ...(filtros.cia && { cia: filtros.cia }),
+        ...(filtros.nit && { nit: filtros.nit }),
+        ...(filtros.numeroControl && { numeroControl: filtros.numeroControl }),
+        page,
+        pageSize
+      }
+    }
   });
 
   const handleFiltroChange = (e) => {
@@ -33,12 +43,40 @@ function ListaFacturas() {
   };
 
   const aplicarFiltros = () => {
-    refetch({ filtros: filtros.cia || filtros.nit || filtros.numeroControl ? filtros : undefined });
+    setPage(1); // Resetear a la primera página al aplicar filtros
+    refetch({
+      filtros: {
+        ...(filtros.cia && { cia: filtros.cia }),
+        ...(filtros.nit && { nit: filtros.nit }),
+        ...(filtros.numeroControl && { numeroControl: filtros.numeroControl }),
+        page: 1,
+        pageSize
+      }
+    });
   };
 
   const limpiarFiltros = () => {
     setFiltros({ cia: '', nit: '', numeroControl: '' });
-    refetch({ filtros: undefined });
+    setPage(1);
+    refetch({
+      filtros: {
+        page: 1,
+        pageSize
+      }
+    });
+  };
+
+  const irAPagina = (nuevaPagina) => {
+    setPage(nuevaPagina);
+    refetch({
+      filtros: {
+        ...(filtros.cia && { cia: filtros.cia }),
+        ...(filtros.nit && { nit: filtros.nit }),
+        ...(filtros.numeroControl && { numeroControl: filtros.numeroControl }),
+        page: nuevaPagina,
+        pageSize
+      }
+    });
   };
 
   const formatearFecha = (fecha) => {
@@ -118,7 +156,8 @@ function ListaFacturas() {
       <div className="lista-table-section">
         <div className="lista-table-header">
           <p className="lista-info-text">
-            {data?.facturas?.length || 0} {data?.facturas?.length === 1 ? 'factura encontrada' : 'facturas encontradas'}
+            {data?.facturas?.total || 0} {data?.facturas?.total === 1 ? 'factura encontrada' : 'facturas encontradas'}
+            {data?.facturas?.total > 0 && ` (Mostrando ${((data?.facturas?.page - 1) * data?.facturas?.pageSize) + 1}-${Math.min(data?.facturas?.page * data?.facturas?.pageSize, data?.facturas?.total)})`}
           </p>
         </div>
         <div className="lista-table-container">
@@ -134,15 +173,15 @@ function ListaFacturas() {
             </tr>
           </thead>
           <tbody>
-            {data?.facturas?.length === 0 ? (
+            {data?.facturas?.facturas?.length === 0 ? (
               <tr>
                 <td colSpan="6" className="lista-table-empty">
                   No se encontraron facturas
                 </td>
               </tr>
             ) : (
-              data?.facturas?.map(factura => (
-                <tr key={factura.id}>
+              data?.facturas?.facturas?.map(factura => (
+                <tr key={factura.numeroControl}>
                   <td>{factura.numeroControl}</td>
                   <td>{factura.cia}</td>
                   <td>{factura.proveedor}</td>
@@ -151,14 +190,14 @@ function ListaFacturas() {
                   <td>
                     <div className="lista-table-actions">
                       <Button
-                        onClick={() => navigate(`/facturas/${factura.id}`)}
+                        onClick={() => navigate(`/facturas/${factura.numeroControl}`)}
                         variant="ghost"
                         size="sm"
                       >
                         Editar
                       </Button>
                       <Button
-                        onClick={() => navigate(`/facturas/${factura.id}/causacion`)}
+                        onClick={() => navigate(`/facturas/${factura.numeroControl}/causacion`)}
                         variant="outline"
                         size="sm"
                       >
@@ -172,6 +211,31 @@ function ListaFacturas() {
           </tbody>
         </table>
         </div>
+
+        {/* Controles de Paginación */}
+        {data?.facturas?.total > pageSize && (
+          <div className="lista-pagination">
+            <Button
+              onClick={() => irAPagina(page - 1)}
+              disabled={page === 1}
+              variant="outline"
+              size="sm"
+            >
+              Anterior
+            </Button>
+            <span className="lista-pagination-info">
+              Página {page} de {Math.ceil(data?.facturas?.total / pageSize)}
+            </span>
+            <Button
+              onClick={() => irAPagina(page + 1)}
+              disabled={!data?.facturas?.hasMore}
+              variant="outline"
+              size="sm"
+            >
+              Siguiente
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

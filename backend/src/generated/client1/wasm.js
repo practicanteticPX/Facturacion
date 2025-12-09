@@ -122,13 +122,14 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.CompaniaScalarFieldEnum = {
+exports.Prisma.CentroCostoScalarFieldEnum = {
   id: 'id',
-  cia: 'cia'
+  centroCosto: 'centroCosto',
+  ciaCC: 'ciaCC',
+  responsable: 'responsable'
 };
 
 exports.Prisma.FacturaScalarFieldEnum = {
-  id: 'id',
   numeroControl: 'numeroControl',
   cia: 'cia',
   ciaNit: 'ciaNit',
@@ -139,7 +140,6 @@ exports.Prisma.FacturaScalarFieldEnum = {
   fechaFactura: 'fechaFactura',
   facturaCredito: 'facturaCredito',
   acuseReciboSCI: 'acuseReciboSCI',
-  legalizaAnticipo: 'legalizaAnticipo',
   entregadaA: 'entregadaA',
   fechaEntrega: 'fechaEntrega',
   fechaRecepcionCausacion: 'fechaRecepcionCausacion',
@@ -155,10 +155,17 @@ exports.Prisma.FacturaScalarFieldEnum = {
   causado: 'causado'
 };
 
+exports.Prisma.NegociadorScalarFieldEnum = {
+  id: 'id',
+  negociador: 'negociador',
+  cargo: 'cargo'
+};
+
 exports.Prisma.PersonaScalarFieldEnum = {
   id: 'id',
   nombre: 'nombre',
-  correo: 'correo'
+  correo: 'correo',
+  cargo: 'cargo'
 };
 
 exports.Prisma.SortOrder = {
@@ -178,8 +185,9 @@ exports.Prisma.NullsOrder = {
 
 
 exports.Prisma.ModelName = {
-  Compania: 'Compania',
+  CentroCosto: 'CentroCosto',
   Factura: 'Factura',
+  Negociador: 'Negociador',
   Persona: 'Persona'
 };
 

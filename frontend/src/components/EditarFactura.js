@@ -59,7 +59,6 @@ function EditarFactura() {
     fechaFactura: '',
     facturaCredito: false,
     acuseReciboSCI: false,
-    legalizaAnticipo: false,
     entregadaA: '',
     fechaEntrega: ''
   });
@@ -72,7 +71,7 @@ function EditarFactura() {
   const { data: personasData } = useQuery(GET_PERSONAS);
 
   const { data: facturaData, loading: loadingFactura } = useQuery(GET_FACTURA, {
-    variables: { id: parseInt(id) },
+    variables: { numeroControl: parseInt(id) },
     onCompleted: (data) => {
       if (data?.factura) {
         const factura = data.factura;
@@ -85,7 +84,6 @@ function EditarFactura() {
           fechaFactura: formatearFechaParaInput(factura.fechaFactura),
           facturaCredito: factura.facturaCredito || false,
           acuseReciboSCI: factura.acuseReciboSCI || false,
-          legalizaAnticipo: factura.legalizaAnticipo || false,
           entregadaA: factura.entregadaA || '',
           fechaEntrega: formatearFechaParaInput(factura.fechaEntrega)
         });
@@ -108,7 +106,7 @@ function EditarFactura() {
   });
 
   const [actualizarFactura, { loading: loadingActualizar }] = useMutation(ACTUALIZAR_FACTURA, {
-    refetchQueries: [{ query: GET_FACTURAS }, { query: GET_FACTURA, variables: { id: parseInt(id) } }],
+    refetchQueries: [{ query: GET_FACTURAS }, { query: GET_FACTURA, variables: { numeroControl: parseInt(id) } }],
     onCompleted: () => {
       setMensaje({ tipo: 'success', texto: 'Factura actualizada exitosamente' });
       setTimeout(() => {
@@ -141,7 +139,7 @@ function EditarFactura() {
     const { name, value, type, checked } = e.target;
 
     // Convertir valores Si/No a boolean para los campos específicos
-    const booleanFields = ['facturaCredito', 'acuseReciboSCI', 'legalizaAnticipo'];
+    const booleanFields = ['facturaCredito', 'acuseReciboSCI'];
     let finalValue = value;
 
     if (booleanFields.includes(name)) {
@@ -171,7 +169,7 @@ function EditarFactura() {
 
       await actualizarFactura({
         variables: {
-          id: parseInt(id),
+          numeroControl: parseInt(id),
           input
         }
       });
@@ -360,22 +358,7 @@ function EditarFactura() {
               </Select>
             </div>
 
-            <div className="editar-form-group">
-              <label className="editar-label">¿Legaliza anticipo?</label>
-              <Select
-                value={formData.legalizaAnticipo ? 'Si' : 'No'}
-                onValueChange={(value) => handleChange({ target: { name: 'legalizaAnticipo', value } })}
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="No">No</SelectItem>
-                  <SelectItem value="Si">Si</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
+            <div className="editar-form-group editar-empty"></div>
             <div className="editar-form-group editar-empty"></div>
             </div>
           </div>

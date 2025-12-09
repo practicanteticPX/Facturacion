@@ -42,7 +42,6 @@ function InscripcionFactura() {
     fechaFactura: '',
     facturaCredito: false,
     acuseReciboSCI: false,
-    legalizaAnticipo: false,
     entregadaA: '',
     fechaEntrega: obtenerFechaActual()
   });
@@ -95,7 +94,7 @@ function InscripcionFactura() {
     const { name, value, type, checked } = e.target;
 
     // Convertir valores Si/No a boolean para los campos específicos
-    const booleanFields = ['facturaCredito', 'acuseReciboSCI', 'legalizaAnticipo'];
+    const booleanFields = ['facturaCredito', 'acuseReciboSCI'];
     let finalValue = value;
 
     if (booleanFields.includes(name)) {
@@ -154,7 +153,6 @@ function InscripcionFactura() {
       fechaFactura: '',
       facturaCredito: false,
       acuseReciboSCI: false,
-      legalizaAnticipo: false,
       entregadaA: '',
       fechaEntrega: obtenerFechaActual()
     });
@@ -180,7 +178,6 @@ function InscripcionFactura() {
         fechaFactura: formData.fechaFactura,
         facturaCredito: formData.facturaCredito,
         acuseReciboSCI: formData.acuseReciboSCI,
-        legalizaAnticipo: formData.legalizaAnticipo,
       };
 
       if (formData.entregadaA) input.entregadaA = formData.entregadaA;
@@ -396,22 +393,6 @@ function InscripcionFactura() {
             <Select
               value={formData.acuseReciboSCI ? 'Si' : 'No'}
               onValueChange={(value) => handleChange({ target: { name: 'acuseReciboSCI', value } })}
-            >
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="No">No</SelectItem>
-                <SelectItem value="Si">Si</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="inscripcion-form-group">
-            <label className="inscripcion-label">¿Legaliza anticipo?</label>
-            <Select
-              value={formData.legalizaAnticipo ? 'Si' : 'No'}
-              onValueChange={(value) => handleChange({ target: { name: 'legalizaAnticipo', value } })}
             >
               <SelectTrigger>
                 <SelectValue />

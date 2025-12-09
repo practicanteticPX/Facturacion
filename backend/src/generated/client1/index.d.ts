@@ -14,15 +14,20 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 
 /**
- * Model Compania
+ * Model CentroCosto
  * 
  */
-export type Compania = $Result.DefaultSelection<Prisma.$CompaniaPayload>
+export type CentroCosto = $Result.DefaultSelection<Prisma.$CentroCostoPayload>
 /**
  * Model Factura
- * 
+ * This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
  */
 export type Factura = $Result.DefaultSelection<Prisma.$FacturaPayload>
+/**
+ * Model Negociador
+ * 
+ */
+export type Negociador = $Result.DefaultSelection<Prisma.$NegociadorPayload>
 /**
  * Model Persona
  * 
@@ -36,8 +41,8 @@ export type Persona = $Result.DefaultSelection<Prisma.$PersonaPayload>
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Companias
- * const companias = await prisma.compania.findMany()
+ * // Fetch zero or more CentroCostos
+ * const centroCostos = await prisma.centroCosto.findMany()
  * ```
  *
  * 
@@ -57,8 +62,8 @@ export class PrismaClient<
    * @example
    * ```
    * const prisma = new PrismaClient()
-   * // Fetch zero or more Companias
-   * const companias = await prisma.compania.findMany()
+   * // Fetch zero or more CentroCostos
+   * const centroCostos = await prisma.centroCosto.findMany()
    * ```
    *
    * 
@@ -153,14 +158,14 @@ export class PrismaClient<
   $extends: $Extensions.ExtendsHook<"extends", Prisma.TypeMapCb, ExtArgs>
 
       /**
-   * `prisma.compania`: Exposes CRUD operations for the **Compania** model.
+   * `prisma.centroCosto`: Exposes CRUD operations for the **CentroCosto** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Companias
-    * const companias = await prisma.compania.findMany()
+    * // Fetch zero or more CentroCostos
+    * const centroCostos = await prisma.centroCosto.findMany()
     * ```
     */
-  get compania(): Prisma.CompaniaDelegate<ExtArgs>;
+  get centroCosto(): Prisma.CentroCostoDelegate<ExtArgs>;
 
   /**
    * `prisma.factura`: Exposes CRUD operations for the **Factura** model.
@@ -171,6 +176,16 @@ export class PrismaClient<
     * ```
     */
   get factura(): Prisma.FacturaDelegate<ExtArgs>;
+
+  /**
+   * `prisma.negociador`: Exposes CRUD operations for the **Negociador** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Negociadors
+    * const negociadors = await prisma.negociador.findMany()
+    * ```
+    */
+  get negociador(): Prisma.NegociadorDelegate<ExtArgs>;
 
   /**
    * `prisma.persona`: Exposes CRUD operations for the **Persona** model.
@@ -622,8 +637,9 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    Compania: 'Compania',
+    CentroCosto: 'CentroCosto',
     Factura: 'Factura',
+    Negociador: 'Negociador',
     Persona: 'Persona'
   };
 
@@ -640,77 +656,77 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "compania" | "factura" | "persona"
+      modelProps: "centroCosto" | "factura" | "negociador" | "persona"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
-      Compania: {
-        payload: Prisma.$CompaniaPayload<ExtArgs>
-        fields: Prisma.CompaniaFieldRefs
+      CentroCosto: {
+        payload: Prisma.$CentroCostoPayload<ExtArgs>
+        fields: Prisma.CentroCostoFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.CompaniaFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CompaniaPayload> | null
+            args: Prisma.CentroCostoFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CentroCostoPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.CompaniaFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CompaniaPayload>
+            args: Prisma.CentroCostoFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CentroCostoPayload>
           }
           findFirst: {
-            args: Prisma.CompaniaFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CompaniaPayload> | null
+            args: Prisma.CentroCostoFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CentroCostoPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.CompaniaFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CompaniaPayload>
+            args: Prisma.CentroCostoFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CentroCostoPayload>
           }
           findMany: {
-            args: Prisma.CompaniaFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CompaniaPayload>[]
+            args: Prisma.CentroCostoFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CentroCostoPayload>[]
           }
           create: {
-            args: Prisma.CompaniaCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CompaniaPayload>
+            args: Prisma.CentroCostoCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CentroCostoPayload>
           }
           createMany: {
-            args: Prisma.CompaniaCreateManyArgs<ExtArgs>
+            args: Prisma.CentroCostoCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.CompaniaCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CompaniaPayload>[]
+            args: Prisma.CentroCostoCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CentroCostoPayload>[]
           }
           delete: {
-            args: Prisma.CompaniaDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CompaniaPayload>
+            args: Prisma.CentroCostoDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CentroCostoPayload>
           }
           update: {
-            args: Prisma.CompaniaUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CompaniaPayload>
+            args: Prisma.CentroCostoUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CentroCostoPayload>
           }
           deleteMany: {
-            args: Prisma.CompaniaDeleteManyArgs<ExtArgs>
+            args: Prisma.CentroCostoDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.CompaniaUpdateManyArgs<ExtArgs>
+            args: Prisma.CentroCostoUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           upsert: {
-            args: Prisma.CompaniaUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$CompaniaPayload>
+            args: Prisma.CentroCostoUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CentroCostoPayload>
           }
           aggregate: {
-            args: Prisma.CompaniaAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateCompania>
+            args: Prisma.CentroCostoAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCentroCosto>
           }
           groupBy: {
-            args: Prisma.CompaniaGroupByArgs<ExtArgs>
-            result: $Utils.Optional<CompaniaGroupByOutputType>[]
+            args: Prisma.CentroCostoGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CentroCostoGroupByOutputType>[]
           }
           count: {
-            args: Prisma.CompaniaCountArgs<ExtArgs>
-            result: $Utils.Optional<CompaniaCountAggregateOutputType> | number
+            args: Prisma.CentroCostoCountArgs<ExtArgs>
+            result: $Utils.Optional<CentroCostoCountAggregateOutputType> | number
           }
         }
       }
@@ -781,6 +797,76 @@ export namespace Prisma {
           count: {
             args: Prisma.FacturaCountArgs<ExtArgs>
             result: $Utils.Optional<FacturaCountAggregateOutputType> | number
+          }
+        }
+      }
+      Negociador: {
+        payload: Prisma.$NegociadorPayload<ExtArgs>
+        fields: Prisma.NegociadorFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.NegociadorFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NegociadorPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.NegociadorFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NegociadorPayload>
+          }
+          findFirst: {
+            args: Prisma.NegociadorFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NegociadorPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.NegociadorFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NegociadorPayload>
+          }
+          findMany: {
+            args: Prisma.NegociadorFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NegociadorPayload>[]
+          }
+          create: {
+            args: Prisma.NegociadorCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NegociadorPayload>
+          }
+          createMany: {
+            args: Prisma.NegociadorCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.NegociadorCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NegociadorPayload>[]
+          }
+          delete: {
+            args: Prisma.NegociadorDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NegociadorPayload>
+          }
+          update: {
+            args: Prisma.NegociadorUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NegociadorPayload>
+          }
+          deleteMany: {
+            args: Prisma.NegociadorDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.NegociadorUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.NegociadorUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NegociadorPayload>
+          }
+          aggregate: {
+            args: Prisma.NegociadorAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateNegociador>
+          }
+          groupBy: {
+            args: Prisma.NegociadorGroupByArgs<ExtArgs>
+            result: $Utils.Optional<NegociadorGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.NegociadorCountArgs<ExtArgs>
+            result: $Utils.Optional<NegociadorCountAggregateOutputType> | number
           }
         }
       }
@@ -1016,328 +1102,350 @@ export namespace Prisma {
    */
 
   /**
-   * Model Compania
+   * Model CentroCosto
    */
 
-  export type AggregateCompania = {
-    _count: CompaniaCountAggregateOutputType | null
-    _avg: CompaniaAvgAggregateOutputType | null
-    _sum: CompaniaSumAggregateOutputType | null
-    _min: CompaniaMinAggregateOutputType | null
-    _max: CompaniaMaxAggregateOutputType | null
+  export type AggregateCentroCosto = {
+    _count: CentroCostoCountAggregateOutputType | null
+    _avg: CentroCostoAvgAggregateOutputType | null
+    _sum: CentroCostoSumAggregateOutputType | null
+    _min: CentroCostoMinAggregateOutputType | null
+    _max: CentroCostoMaxAggregateOutputType | null
   }
 
-  export type CompaniaAvgAggregateOutputType = {
+  export type CentroCostoAvgAggregateOutputType = {
     id: number | null
   }
 
-  export type CompaniaSumAggregateOutputType = {
+  export type CentroCostoSumAggregateOutputType = {
     id: number | null
   }
 
-  export type CompaniaMinAggregateOutputType = {
+  export type CentroCostoMinAggregateOutputType = {
     id: number | null
-    cia: string | null
+    centroCosto: string | null
+    ciaCC: string | null
+    responsable: string | null
   }
 
-  export type CompaniaMaxAggregateOutputType = {
+  export type CentroCostoMaxAggregateOutputType = {
     id: number | null
-    cia: string | null
+    centroCosto: string | null
+    ciaCC: string | null
+    responsable: string | null
   }
 
-  export type CompaniaCountAggregateOutputType = {
+  export type CentroCostoCountAggregateOutputType = {
     id: number
-    cia: number
+    centroCosto: number
+    ciaCC: number
+    responsable: number
     _all: number
   }
 
 
-  export type CompaniaAvgAggregateInputType = {
+  export type CentroCostoAvgAggregateInputType = {
     id?: true
   }
 
-  export type CompaniaSumAggregateInputType = {
+  export type CentroCostoSumAggregateInputType = {
     id?: true
   }
 
-  export type CompaniaMinAggregateInputType = {
+  export type CentroCostoMinAggregateInputType = {
     id?: true
-    cia?: true
+    centroCosto?: true
+    ciaCC?: true
+    responsable?: true
   }
 
-  export type CompaniaMaxAggregateInputType = {
+  export type CentroCostoMaxAggregateInputType = {
     id?: true
-    cia?: true
+    centroCosto?: true
+    ciaCC?: true
+    responsable?: true
   }
 
-  export type CompaniaCountAggregateInputType = {
+  export type CentroCostoCountAggregateInputType = {
     id?: true
-    cia?: true
+    centroCosto?: true
+    ciaCC?: true
+    responsable?: true
     _all?: true
   }
 
-  export type CompaniaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CentroCostoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Compania to aggregate.
+     * Filter which CentroCosto to aggregate.
      */
-    where?: CompaniaWhereInput
+    where?: CentroCostoWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Companias to fetch.
+     * Determine the order of CentroCostos to fetch.
      */
-    orderBy?: CompaniaOrderByWithRelationInput | CompaniaOrderByWithRelationInput[]
+    orderBy?: CentroCostoOrderByWithRelationInput | CentroCostoOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: CompaniaWhereUniqueInput
+    cursor?: CentroCostoWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Companias from the position of the cursor.
+     * Take `±n` CentroCostos from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Companias.
+     * Skip the first `n` CentroCostos.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Companias
+     * Count returned CentroCostos
     **/
-    _count?: true | CompaniaCountAggregateInputType
+    _count?: true | CentroCostoCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: CompaniaAvgAggregateInputType
+    _avg?: CentroCostoAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: CompaniaSumAggregateInputType
+    _sum?: CentroCostoSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: CompaniaMinAggregateInputType
+    _min?: CentroCostoMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: CompaniaMaxAggregateInputType
+    _max?: CentroCostoMaxAggregateInputType
   }
 
-  export type GetCompaniaAggregateType<T extends CompaniaAggregateArgs> = {
-        [P in keyof T & keyof AggregateCompania]: P extends '_count' | 'count'
+  export type GetCentroCostoAggregateType<T extends CentroCostoAggregateArgs> = {
+        [P in keyof T & keyof AggregateCentroCosto]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateCompania[P]>
-      : GetScalarType<T[P], AggregateCompania[P]>
+        : GetScalarType<T[P], AggregateCentroCosto[P]>
+      : GetScalarType<T[P], AggregateCentroCosto[P]>
   }
 
 
 
 
-  export type CompaniaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: CompaniaWhereInput
-    orderBy?: CompaniaOrderByWithAggregationInput | CompaniaOrderByWithAggregationInput[]
-    by: CompaniaScalarFieldEnum[] | CompaniaScalarFieldEnum
-    having?: CompaniaScalarWhereWithAggregatesInput
+  export type CentroCostoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CentroCostoWhereInput
+    orderBy?: CentroCostoOrderByWithAggregationInput | CentroCostoOrderByWithAggregationInput[]
+    by: CentroCostoScalarFieldEnum[] | CentroCostoScalarFieldEnum
+    having?: CentroCostoScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: CompaniaCountAggregateInputType | true
-    _avg?: CompaniaAvgAggregateInputType
-    _sum?: CompaniaSumAggregateInputType
-    _min?: CompaniaMinAggregateInputType
-    _max?: CompaniaMaxAggregateInputType
+    _count?: CentroCostoCountAggregateInputType | true
+    _avg?: CentroCostoAvgAggregateInputType
+    _sum?: CentroCostoSumAggregateInputType
+    _min?: CentroCostoMinAggregateInputType
+    _max?: CentroCostoMaxAggregateInputType
   }
 
-  export type CompaniaGroupByOutputType = {
+  export type CentroCostoGroupByOutputType = {
     id: number
-    cia: string | null
-    _count: CompaniaCountAggregateOutputType | null
-    _avg: CompaniaAvgAggregateOutputType | null
-    _sum: CompaniaSumAggregateOutputType | null
-    _min: CompaniaMinAggregateOutputType | null
-    _max: CompaniaMaxAggregateOutputType | null
+    centroCosto: string | null
+    ciaCC: string | null
+    responsable: string | null
+    _count: CentroCostoCountAggregateOutputType | null
+    _avg: CentroCostoAvgAggregateOutputType | null
+    _sum: CentroCostoSumAggregateOutputType | null
+    _min: CentroCostoMinAggregateOutputType | null
+    _max: CentroCostoMaxAggregateOutputType | null
   }
 
-  type GetCompaniaGroupByPayload<T extends CompaniaGroupByArgs> = Prisma.PrismaPromise<
+  type GetCentroCostoGroupByPayload<T extends CentroCostoGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<CompaniaGroupByOutputType, T['by']> &
+      PickEnumerable<CentroCostoGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof CompaniaGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof CentroCostoGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], CompaniaGroupByOutputType[P]>
-            : GetScalarType<T[P], CompaniaGroupByOutputType[P]>
+              : GetScalarType<T[P], CentroCostoGroupByOutputType[P]>
+            : GetScalarType<T[P], CentroCostoGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type CompaniaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type CentroCostoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    cia?: boolean
-  }, ExtArgs["result"]["compania"]>
+    centroCosto?: boolean
+    ciaCC?: boolean
+    responsable?: boolean
+  }, ExtArgs["result"]["centroCosto"]>
 
-  export type CompaniaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type CentroCostoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    cia?: boolean
-  }, ExtArgs["result"]["compania"]>
+    centroCosto?: boolean
+    ciaCC?: boolean
+    responsable?: boolean
+  }, ExtArgs["result"]["centroCosto"]>
 
-  export type CompaniaSelectScalar = {
+  export type CentroCostoSelectScalar = {
     id?: boolean
-    cia?: boolean
+    centroCosto?: boolean
+    ciaCC?: boolean
+    responsable?: boolean
   }
 
 
-  export type $CompaniaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Compania"
+  export type $CentroCostoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CentroCosto"
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      cia: string | null
-    }, ExtArgs["result"]["compania"]>
+      centroCosto: string | null
+      ciaCC: string | null
+      responsable: string | null
+    }, ExtArgs["result"]["centroCosto"]>
     composites: {}
   }
 
-  type CompaniaGetPayload<S extends boolean | null | undefined | CompaniaDefaultArgs> = $Result.GetResult<Prisma.$CompaniaPayload, S>
+  type CentroCostoGetPayload<S extends boolean | null | undefined | CentroCostoDefaultArgs> = $Result.GetResult<Prisma.$CentroCostoPayload, S>
 
-  type CompaniaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<CompaniaFindManyArgs, 'select' | 'include' | 'distinct'> & {
-      select?: CompaniaCountAggregateInputType | true
+  type CentroCostoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<CentroCostoFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: CentroCostoCountAggregateInputType | true
     }
 
-  export interface CompaniaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Compania'], meta: { name: 'Compania' } }
+  export interface CentroCostoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CentroCosto'], meta: { name: 'CentroCosto' } }
     /**
-     * Find zero or one Compania that matches the filter.
-     * @param {CompaniaFindUniqueArgs} args - Arguments to find a Compania
+     * Find zero or one CentroCosto that matches the filter.
+     * @param {CentroCostoFindUniqueArgs} args - Arguments to find a CentroCosto
      * @example
-     * // Get one Compania
-     * const compania = await prisma.compania.findUnique({
+     * // Get one CentroCosto
+     * const centroCosto = await prisma.centroCosto.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends CompaniaFindUniqueArgs>(args: SelectSubset<T, CompaniaFindUniqueArgs<ExtArgs>>): Prisma__CompaniaClient<$Result.GetResult<Prisma.$CompaniaPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+    findUnique<T extends CentroCostoFindUniqueArgs>(args: SelectSubset<T, CentroCostoFindUniqueArgs<ExtArgs>>): Prisma__CentroCostoClient<$Result.GetResult<Prisma.$CentroCostoPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
 
     /**
-     * Find one Compania that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one CentroCosto that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
-     * @param {CompaniaFindUniqueOrThrowArgs} args - Arguments to find a Compania
+     * @param {CentroCostoFindUniqueOrThrowArgs} args - Arguments to find a CentroCosto
      * @example
-     * // Get one Compania
-     * const compania = await prisma.compania.findUniqueOrThrow({
+     * // Get one CentroCosto
+     * const centroCosto = await prisma.centroCosto.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends CompaniaFindUniqueOrThrowArgs>(args: SelectSubset<T, CompaniaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CompaniaClient<$Result.GetResult<Prisma.$CompaniaPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+    findUniqueOrThrow<T extends CentroCostoFindUniqueOrThrowArgs>(args: SelectSubset<T, CentroCostoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CentroCostoClient<$Result.GetResult<Prisma.$CentroCostoPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
 
     /**
-     * Find the first Compania that matches the filter.
+     * Find the first CentroCosto that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CompaniaFindFirstArgs} args - Arguments to find a Compania
+     * @param {CentroCostoFindFirstArgs} args - Arguments to find a CentroCosto
      * @example
-     * // Get one Compania
-     * const compania = await prisma.compania.findFirst({
+     * // Get one CentroCosto
+     * const centroCosto = await prisma.centroCosto.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends CompaniaFindFirstArgs>(args?: SelectSubset<T, CompaniaFindFirstArgs<ExtArgs>>): Prisma__CompaniaClient<$Result.GetResult<Prisma.$CompaniaPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+    findFirst<T extends CentroCostoFindFirstArgs>(args?: SelectSubset<T, CentroCostoFindFirstArgs<ExtArgs>>): Prisma__CentroCostoClient<$Result.GetResult<Prisma.$CentroCostoPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
 
     /**
-     * Find the first Compania that matches the filter or
+     * Find the first CentroCosto that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CompaniaFindFirstOrThrowArgs} args - Arguments to find a Compania
+     * @param {CentroCostoFindFirstOrThrowArgs} args - Arguments to find a CentroCosto
      * @example
-     * // Get one Compania
-     * const compania = await prisma.compania.findFirstOrThrow({
+     * // Get one CentroCosto
+     * const centroCosto = await prisma.centroCosto.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends CompaniaFindFirstOrThrowArgs>(args?: SelectSubset<T, CompaniaFindFirstOrThrowArgs<ExtArgs>>): Prisma__CompaniaClient<$Result.GetResult<Prisma.$CompaniaPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+    findFirstOrThrow<T extends CentroCostoFindFirstOrThrowArgs>(args?: SelectSubset<T, CentroCostoFindFirstOrThrowArgs<ExtArgs>>): Prisma__CentroCostoClient<$Result.GetResult<Prisma.$CentroCostoPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
 
     /**
-     * Find zero or more Companias that matches the filter.
+     * Find zero or more CentroCostos that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CompaniaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {CentroCostoFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Companias
-     * const companias = await prisma.compania.findMany()
+     * // Get all CentroCostos
+     * const centroCostos = await prisma.centroCosto.findMany()
      * 
-     * // Get first 10 Companias
-     * const companias = await prisma.compania.findMany({ take: 10 })
+     * // Get first 10 CentroCostos
+     * const centroCostos = await prisma.centroCosto.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const companiaWithIdOnly = await prisma.compania.findMany({ select: { id: true } })
+     * const centroCostoWithIdOnly = await prisma.centroCosto.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends CompaniaFindManyArgs>(args?: SelectSubset<T, CompaniaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CompaniaPayload<ExtArgs>, T, "findMany">>
+    findMany<T extends CentroCostoFindManyArgs>(args?: SelectSubset<T, CentroCostoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CentroCostoPayload<ExtArgs>, T, "findMany">>
 
     /**
-     * Create a Compania.
-     * @param {CompaniaCreateArgs} args - Arguments to create a Compania.
+     * Create a CentroCosto.
+     * @param {CentroCostoCreateArgs} args - Arguments to create a CentroCosto.
      * @example
-     * // Create one Compania
-     * const Compania = await prisma.compania.create({
+     * // Create one CentroCosto
+     * const CentroCosto = await prisma.centroCosto.create({
      *   data: {
-     *     // ... data to create a Compania
+     *     // ... data to create a CentroCosto
      *   }
      * })
      * 
      */
-    create<T extends CompaniaCreateArgs>(args: SelectSubset<T, CompaniaCreateArgs<ExtArgs>>): Prisma__CompaniaClient<$Result.GetResult<Prisma.$CompaniaPayload<ExtArgs>, T, "create">, never, ExtArgs>
+    create<T extends CentroCostoCreateArgs>(args: SelectSubset<T, CentroCostoCreateArgs<ExtArgs>>): Prisma__CentroCostoClient<$Result.GetResult<Prisma.$CentroCostoPayload<ExtArgs>, T, "create">, never, ExtArgs>
 
     /**
-     * Create many Companias.
-     * @param {CompaniaCreateManyArgs} args - Arguments to create many Companias.
+     * Create many CentroCostos.
+     * @param {CentroCostoCreateManyArgs} args - Arguments to create many CentroCostos.
      * @example
-     * // Create many Companias
-     * const compania = await prisma.compania.createMany({
+     * // Create many CentroCostos
+     * const centroCosto = await prisma.centroCosto.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends CompaniaCreateManyArgs>(args?: SelectSubset<T, CompaniaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends CentroCostoCreateManyArgs>(args?: SelectSubset<T, CentroCostoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Companias and returns the data saved in the database.
-     * @param {CompaniaCreateManyAndReturnArgs} args - Arguments to create many Companias.
+     * Create many CentroCostos and returns the data saved in the database.
+     * @param {CentroCostoCreateManyAndReturnArgs} args - Arguments to create many CentroCostos.
      * @example
-     * // Create many Companias
-     * const compania = await prisma.compania.createManyAndReturn({
+     * // Create many CentroCostos
+     * const centroCosto = await prisma.centroCosto.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Companias and only return the `id`
-     * const companiaWithIdOnly = await prisma.compania.createManyAndReturn({ 
+     * // Create many CentroCostos and only return the `id`
+     * const centroCostoWithIdOnly = await prisma.centroCosto.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -1347,28 +1455,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends CompaniaCreateManyAndReturnArgs>(args?: SelectSubset<T, CompaniaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CompaniaPayload<ExtArgs>, T, "createManyAndReturn">>
+    createManyAndReturn<T extends CentroCostoCreateManyAndReturnArgs>(args?: SelectSubset<T, CentroCostoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CentroCostoPayload<ExtArgs>, T, "createManyAndReturn">>
 
     /**
-     * Delete a Compania.
-     * @param {CompaniaDeleteArgs} args - Arguments to delete one Compania.
+     * Delete a CentroCosto.
+     * @param {CentroCostoDeleteArgs} args - Arguments to delete one CentroCosto.
      * @example
-     * // Delete one Compania
-     * const Compania = await prisma.compania.delete({
+     * // Delete one CentroCosto
+     * const CentroCosto = await prisma.centroCosto.delete({
      *   where: {
-     *     // ... filter to delete one Compania
+     *     // ... filter to delete one CentroCosto
      *   }
      * })
      * 
      */
-    delete<T extends CompaniaDeleteArgs>(args: SelectSubset<T, CompaniaDeleteArgs<ExtArgs>>): Prisma__CompaniaClient<$Result.GetResult<Prisma.$CompaniaPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+    delete<T extends CentroCostoDeleteArgs>(args: SelectSubset<T, CentroCostoDeleteArgs<ExtArgs>>): Prisma__CentroCostoClient<$Result.GetResult<Prisma.$CentroCostoPayload<ExtArgs>, T, "delete">, never, ExtArgs>
 
     /**
-     * Update one Compania.
-     * @param {CompaniaUpdateArgs} args - Arguments to update one Compania.
+     * Update one CentroCosto.
+     * @param {CentroCostoUpdateArgs} args - Arguments to update one CentroCosto.
      * @example
-     * // Update one Compania
-     * const compania = await prisma.compania.update({
+     * // Update one CentroCosto
+     * const centroCosto = await prisma.centroCosto.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -1378,30 +1486,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends CompaniaUpdateArgs>(args: SelectSubset<T, CompaniaUpdateArgs<ExtArgs>>): Prisma__CompaniaClient<$Result.GetResult<Prisma.$CompaniaPayload<ExtArgs>, T, "update">, never, ExtArgs>
+    update<T extends CentroCostoUpdateArgs>(args: SelectSubset<T, CentroCostoUpdateArgs<ExtArgs>>): Prisma__CentroCostoClient<$Result.GetResult<Prisma.$CentroCostoPayload<ExtArgs>, T, "update">, never, ExtArgs>
 
     /**
-     * Delete zero or more Companias.
-     * @param {CompaniaDeleteManyArgs} args - Arguments to filter Companias to delete.
+     * Delete zero or more CentroCostos.
+     * @param {CentroCostoDeleteManyArgs} args - Arguments to filter CentroCostos to delete.
      * @example
-     * // Delete a few Companias
-     * const { count } = await prisma.compania.deleteMany({
+     * // Delete a few CentroCostos
+     * const { count } = await prisma.centroCosto.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends CompaniaDeleteManyArgs>(args?: SelectSubset<T, CompaniaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends CentroCostoDeleteManyArgs>(args?: SelectSubset<T, CentroCostoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Companias.
+     * Update zero or more CentroCostos.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CompaniaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {CentroCostoUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Companias
-     * const compania = await prisma.compania.updateMany({
+     * // Update many CentroCostos
+     * const centroCosto = await prisma.centroCosto.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -1411,56 +1519,56 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends CompaniaUpdateManyArgs>(args: SelectSubset<T, CompaniaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends CentroCostoUpdateManyArgs>(args: SelectSubset<T, CentroCostoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create or update one Compania.
-     * @param {CompaniaUpsertArgs} args - Arguments to update or create a Compania.
+     * Create or update one CentroCosto.
+     * @param {CentroCostoUpsertArgs} args - Arguments to update or create a CentroCosto.
      * @example
-     * // Update or create a Compania
-     * const compania = await prisma.compania.upsert({
+     * // Update or create a CentroCosto
+     * const centroCosto = await prisma.centroCosto.upsert({
      *   create: {
-     *     // ... data to create a Compania
+     *     // ... data to create a CentroCosto
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Compania we want to update
+     *     // ... the filter for the CentroCosto we want to update
      *   }
      * })
      */
-    upsert<T extends CompaniaUpsertArgs>(args: SelectSubset<T, CompaniaUpsertArgs<ExtArgs>>): Prisma__CompaniaClient<$Result.GetResult<Prisma.$CompaniaPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+    upsert<T extends CentroCostoUpsertArgs>(args: SelectSubset<T, CentroCostoUpsertArgs<ExtArgs>>): Prisma__CentroCostoClient<$Result.GetResult<Prisma.$CentroCostoPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
 
 
     /**
-     * Count the number of Companias.
+     * Count the number of CentroCostos.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CompaniaCountArgs} args - Arguments to filter Companias to count.
+     * @param {CentroCostoCountArgs} args - Arguments to filter CentroCostos to count.
      * @example
-     * // Count the number of Companias
-     * const count = await prisma.compania.count({
+     * // Count the number of CentroCostos
+     * const count = await prisma.centroCosto.count({
      *   where: {
-     *     // ... the filter for the Companias we want to count
+     *     // ... the filter for the CentroCostos we want to count
      *   }
      * })
     **/
-    count<T extends CompaniaCountArgs>(
-      args?: Subset<T, CompaniaCountArgs>,
+    count<T extends CentroCostoCountArgs>(
+      args?: Subset<T, CentroCostoCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], CompaniaCountAggregateOutputType>
+          : GetScalarType<T['select'], CentroCostoCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Compania.
+     * Allows you to perform aggregations operations on a CentroCosto.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CompaniaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {CentroCostoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -1480,13 +1588,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends CompaniaAggregateArgs>(args: Subset<T, CompaniaAggregateArgs>): Prisma.PrismaPromise<GetCompaniaAggregateType<T>>
+    aggregate<T extends CentroCostoAggregateArgs>(args: Subset<T, CentroCostoAggregateArgs>): Prisma.PrismaPromise<GetCentroCostoAggregateType<T>>
 
     /**
-     * Group by Compania.
+     * Group by CentroCosto.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CompaniaGroupByArgs} args - Group by arguments.
+     * @param {CentroCostoGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -1501,14 +1609,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends CompaniaGroupByArgs,
+      T extends CentroCostoGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: CompaniaGroupByArgs['orderBy'] }
-        : { orderBy?: CompaniaGroupByArgs['orderBy'] },
+        ? { orderBy: CentroCostoGroupByArgs['orderBy'] }
+        : { orderBy?: CentroCostoGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -1557,20 +1665,20 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, CompaniaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCompaniaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, CentroCostoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCentroCostoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Compania model
+   * Fields of the CentroCosto model
    */
-  readonly fields: CompaniaFieldRefs;
+  readonly fields: CentroCostoFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Compania.
+   * The delegate class that acts as a "Promise-like" for CentroCosto.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__CompaniaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__CentroCostoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1598,296 +1706,298 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Compania model
+   * Fields of the CentroCosto model
    */ 
-  interface CompaniaFieldRefs {
-    readonly id: FieldRef<"Compania", 'Int'>
-    readonly cia: FieldRef<"Compania", 'String'>
+  interface CentroCostoFieldRefs {
+    readonly id: FieldRef<"CentroCosto", 'Int'>
+    readonly centroCosto: FieldRef<"CentroCosto", 'String'>
+    readonly ciaCC: FieldRef<"CentroCosto", 'String'>
+    readonly responsable: FieldRef<"CentroCosto", 'String'>
   }
     
 
   // Custom InputTypes
   /**
-   * Compania findUnique
+   * CentroCosto findUnique
    */
-  export type CompaniaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CentroCostoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Compania
+     * Select specific fields to fetch from the CentroCosto
      */
-    select?: CompaniaSelect<ExtArgs> | null
+    select?: CentroCostoSelect<ExtArgs> | null
     /**
-     * Filter, which Compania to fetch.
+     * Filter, which CentroCosto to fetch.
      */
-    where: CompaniaWhereUniqueInput
+    where: CentroCostoWhereUniqueInput
   }
 
   /**
-   * Compania findUniqueOrThrow
+   * CentroCosto findUniqueOrThrow
    */
-  export type CompaniaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CentroCostoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Compania
+     * Select specific fields to fetch from the CentroCosto
      */
-    select?: CompaniaSelect<ExtArgs> | null
+    select?: CentroCostoSelect<ExtArgs> | null
     /**
-     * Filter, which Compania to fetch.
+     * Filter, which CentroCosto to fetch.
      */
-    where: CompaniaWhereUniqueInput
+    where: CentroCostoWhereUniqueInput
   }
 
   /**
-   * Compania findFirst
+   * CentroCosto findFirst
    */
-  export type CompaniaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CentroCostoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Compania
+     * Select specific fields to fetch from the CentroCosto
      */
-    select?: CompaniaSelect<ExtArgs> | null
+    select?: CentroCostoSelect<ExtArgs> | null
     /**
-     * Filter, which Compania to fetch.
+     * Filter, which CentroCosto to fetch.
      */
-    where?: CompaniaWhereInput
+    where?: CentroCostoWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Companias to fetch.
+     * Determine the order of CentroCostos to fetch.
      */
-    orderBy?: CompaniaOrderByWithRelationInput | CompaniaOrderByWithRelationInput[]
+    orderBy?: CentroCostoOrderByWithRelationInput | CentroCostoOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Companias.
+     * Sets the position for searching for CentroCostos.
      */
-    cursor?: CompaniaWhereUniqueInput
+    cursor?: CentroCostoWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Companias from the position of the cursor.
+     * Take `±n` CentroCostos from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Companias.
+     * Skip the first `n` CentroCostos.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Companias.
+     * Filter by unique combinations of CentroCostos.
      */
-    distinct?: CompaniaScalarFieldEnum | CompaniaScalarFieldEnum[]
+    distinct?: CentroCostoScalarFieldEnum | CentroCostoScalarFieldEnum[]
   }
 
   /**
-   * Compania findFirstOrThrow
+   * CentroCosto findFirstOrThrow
    */
-  export type CompaniaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CentroCostoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Compania
+     * Select specific fields to fetch from the CentroCosto
      */
-    select?: CompaniaSelect<ExtArgs> | null
+    select?: CentroCostoSelect<ExtArgs> | null
     /**
-     * Filter, which Compania to fetch.
+     * Filter, which CentroCosto to fetch.
      */
-    where?: CompaniaWhereInput
+    where?: CentroCostoWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Companias to fetch.
+     * Determine the order of CentroCostos to fetch.
      */
-    orderBy?: CompaniaOrderByWithRelationInput | CompaniaOrderByWithRelationInput[]
+    orderBy?: CentroCostoOrderByWithRelationInput | CentroCostoOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Companias.
+     * Sets the position for searching for CentroCostos.
      */
-    cursor?: CompaniaWhereUniqueInput
+    cursor?: CentroCostoWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Companias from the position of the cursor.
+     * Take `±n` CentroCostos from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Companias.
+     * Skip the first `n` CentroCostos.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Companias.
+     * Filter by unique combinations of CentroCostos.
      */
-    distinct?: CompaniaScalarFieldEnum | CompaniaScalarFieldEnum[]
+    distinct?: CentroCostoScalarFieldEnum | CentroCostoScalarFieldEnum[]
   }
 
   /**
-   * Compania findMany
+   * CentroCosto findMany
    */
-  export type CompaniaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CentroCostoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Compania
+     * Select specific fields to fetch from the CentroCosto
      */
-    select?: CompaniaSelect<ExtArgs> | null
+    select?: CentroCostoSelect<ExtArgs> | null
     /**
-     * Filter, which Companias to fetch.
+     * Filter, which CentroCostos to fetch.
      */
-    where?: CompaniaWhereInput
+    where?: CentroCostoWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Companias to fetch.
+     * Determine the order of CentroCostos to fetch.
      */
-    orderBy?: CompaniaOrderByWithRelationInput | CompaniaOrderByWithRelationInput[]
+    orderBy?: CentroCostoOrderByWithRelationInput | CentroCostoOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Companias.
+     * Sets the position for listing CentroCostos.
      */
-    cursor?: CompaniaWhereUniqueInput
+    cursor?: CentroCostoWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Companias from the position of the cursor.
+     * Take `±n` CentroCostos from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Companias.
+     * Skip the first `n` CentroCostos.
      */
     skip?: number
-    distinct?: CompaniaScalarFieldEnum | CompaniaScalarFieldEnum[]
+    distinct?: CentroCostoScalarFieldEnum | CentroCostoScalarFieldEnum[]
   }
 
   /**
-   * Compania create
+   * CentroCosto create
    */
-  export type CompaniaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CentroCostoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Compania
+     * Select specific fields to fetch from the CentroCosto
      */
-    select?: CompaniaSelect<ExtArgs> | null
+    select?: CentroCostoSelect<ExtArgs> | null
     /**
-     * The data needed to create a Compania.
+     * The data needed to create a CentroCosto.
      */
-    data?: XOR<CompaniaCreateInput, CompaniaUncheckedCreateInput>
+    data?: XOR<CentroCostoCreateInput, CentroCostoUncheckedCreateInput>
   }
 
   /**
-   * Compania createMany
+   * CentroCosto createMany
    */
-  export type CompaniaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CentroCostoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many Companias.
+     * The data used to create many CentroCostos.
      */
-    data: CompaniaCreateManyInput | CompaniaCreateManyInput[]
+    data: CentroCostoCreateManyInput | CentroCostoCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Compania createManyAndReturn
+   * CentroCosto createManyAndReturn
    */
-  export type CompaniaCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CentroCostoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Compania
+     * Select specific fields to fetch from the CentroCosto
      */
-    select?: CompaniaSelectCreateManyAndReturn<ExtArgs> | null
+    select?: CentroCostoSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * The data used to create many Companias.
+     * The data used to create many CentroCostos.
      */
-    data: CompaniaCreateManyInput | CompaniaCreateManyInput[]
+    data: CentroCostoCreateManyInput | CentroCostoCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Compania update
+   * CentroCosto update
    */
-  export type CompaniaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CentroCostoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Compania
+     * Select specific fields to fetch from the CentroCosto
      */
-    select?: CompaniaSelect<ExtArgs> | null
+    select?: CentroCostoSelect<ExtArgs> | null
     /**
-     * The data needed to update a Compania.
+     * The data needed to update a CentroCosto.
      */
-    data: XOR<CompaniaUpdateInput, CompaniaUncheckedUpdateInput>
+    data: XOR<CentroCostoUpdateInput, CentroCostoUncheckedUpdateInput>
     /**
-     * Choose, which Compania to update.
+     * Choose, which CentroCosto to update.
      */
-    where: CompaniaWhereUniqueInput
+    where: CentroCostoWhereUniqueInput
   }
 
   /**
-   * Compania updateMany
+   * CentroCosto updateMany
    */
-  export type CompaniaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CentroCostoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update Companias.
+     * The data used to update CentroCostos.
      */
-    data: XOR<CompaniaUpdateManyMutationInput, CompaniaUncheckedUpdateManyInput>
+    data: XOR<CentroCostoUpdateManyMutationInput, CentroCostoUncheckedUpdateManyInput>
     /**
-     * Filter which Companias to update
+     * Filter which CentroCostos to update
      */
-    where?: CompaniaWhereInput
+    where?: CentroCostoWhereInput
   }
 
   /**
-   * Compania upsert
+   * CentroCosto upsert
    */
-  export type CompaniaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CentroCostoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Compania
+     * Select specific fields to fetch from the CentroCosto
      */
-    select?: CompaniaSelect<ExtArgs> | null
+    select?: CentroCostoSelect<ExtArgs> | null
     /**
-     * The filter to search for the Compania to update in case it exists.
+     * The filter to search for the CentroCosto to update in case it exists.
      */
-    where: CompaniaWhereUniqueInput
+    where: CentroCostoWhereUniqueInput
     /**
-     * In case the Compania found by the `where` argument doesn't exist, create a new Compania with this data.
+     * In case the CentroCosto found by the `where` argument doesn't exist, create a new CentroCosto with this data.
      */
-    create: XOR<CompaniaCreateInput, CompaniaUncheckedCreateInput>
+    create: XOR<CentroCostoCreateInput, CentroCostoUncheckedCreateInput>
     /**
-     * In case the Compania was found with the provided `where` argument, update it with this data.
+     * In case the CentroCosto was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<CompaniaUpdateInput, CompaniaUncheckedUpdateInput>
+    update: XOR<CentroCostoUpdateInput, CentroCostoUncheckedUpdateInput>
   }
 
   /**
-   * Compania delete
+   * CentroCosto delete
    */
-  export type CompaniaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CentroCostoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Compania
+     * Select specific fields to fetch from the CentroCosto
      */
-    select?: CompaniaSelect<ExtArgs> | null
+    select?: CentroCostoSelect<ExtArgs> | null
     /**
-     * Filter which Compania to delete.
+     * Filter which CentroCosto to delete.
      */
-    where: CompaniaWhereUniqueInput
+    where: CentroCostoWhereUniqueInput
   }
 
   /**
-   * Compania deleteMany
+   * CentroCosto deleteMany
    */
-  export type CompaniaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CentroCostoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Companias to delete
+     * Filter which CentroCostos to delete
      */
-    where?: CompaniaWhereInput
+    where?: CentroCostoWhereInput
   }
 
   /**
-   * Compania without action
+   * CentroCosto without action
    */
-  export type CompaniaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CentroCostoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Compania
+     * Select specific fields to fetch from the CentroCosto
      */
-    select?: CompaniaSelect<ExtArgs> | null
+    select?: CentroCostoSelect<ExtArgs> | null
   }
 
 
@@ -1904,16 +2014,15 @@ export namespace Prisma {
   }
 
   export type FacturaAvgAggregateOutputType = {
-    id: number | null
+    numeroControl: number | null
   }
 
   export type FacturaSumAggregateOutputType = {
-    id: number | null
+    numeroControl: number | null
   }
 
   export type FacturaMinAggregateOutputType = {
-    id: number | null
-    numeroControl: string | null
+    numeroControl: number | null
     cia: string | null
     ciaNit: string | null
     nit: string | null
@@ -1921,9 +2030,8 @@ export namespace Prisma {
     numeroFactura: string | null
     fechaRadicado: Date | null
     fechaFactura: Date | null
-    facturaCredito: string | null
-    acuseReciboSCI: string | null
-    legalizaAnticipo: string | null
+    facturaCredito: boolean | null
+    acuseReciboSCI: boolean | null
     entregadaA: string | null
     fechaEntrega: Date | null
     fechaRecepcionCausacion: Date | null
@@ -1940,8 +2048,7 @@ export namespace Prisma {
   }
 
   export type FacturaMaxAggregateOutputType = {
-    id: number | null
-    numeroControl: string | null
+    numeroControl: number | null
     cia: string | null
     ciaNit: string | null
     nit: string | null
@@ -1949,9 +2056,8 @@ export namespace Prisma {
     numeroFactura: string | null
     fechaRadicado: Date | null
     fechaFactura: Date | null
-    facturaCredito: string | null
-    acuseReciboSCI: string | null
-    legalizaAnticipo: string | null
+    facturaCredito: boolean | null
+    acuseReciboSCI: boolean | null
     entregadaA: string | null
     fechaEntrega: Date | null
     fechaRecepcionCausacion: Date | null
@@ -1968,7 +2074,6 @@ export namespace Prisma {
   }
 
   export type FacturaCountAggregateOutputType = {
-    id: number
     numeroControl: number
     cia: number
     ciaNit: number
@@ -1979,7 +2084,6 @@ export namespace Prisma {
     fechaFactura: number
     facturaCredito: number
     acuseReciboSCI: number
-    legalizaAnticipo: number
     entregadaA: number
     fechaEntrega: number
     fechaRecepcionCausacion: number
@@ -1998,15 +2102,14 @@ export namespace Prisma {
 
 
   export type FacturaAvgAggregateInputType = {
-    id?: true
+    numeroControl?: true
   }
 
   export type FacturaSumAggregateInputType = {
-    id?: true
+    numeroControl?: true
   }
 
   export type FacturaMinAggregateInputType = {
-    id?: true
     numeroControl?: true
     cia?: true
     ciaNit?: true
@@ -2017,7 +2120,6 @@ export namespace Prisma {
     fechaFactura?: true
     facturaCredito?: true
     acuseReciboSCI?: true
-    legalizaAnticipo?: true
     entregadaA?: true
     fechaEntrega?: true
     fechaRecepcionCausacion?: true
@@ -2034,7 +2136,6 @@ export namespace Prisma {
   }
 
   export type FacturaMaxAggregateInputType = {
-    id?: true
     numeroControl?: true
     cia?: true
     ciaNit?: true
@@ -2045,7 +2146,6 @@ export namespace Prisma {
     fechaFactura?: true
     facturaCredito?: true
     acuseReciboSCI?: true
-    legalizaAnticipo?: true
     entregadaA?: true
     fechaEntrega?: true
     fechaRecepcionCausacion?: true
@@ -2062,7 +2162,6 @@ export namespace Prisma {
   }
 
   export type FacturaCountAggregateInputType = {
-    id?: true
     numeroControl?: true
     cia?: true
     ciaNit?: true
@@ -2073,7 +2172,6 @@ export namespace Prisma {
     fechaFactura?: true
     facturaCredito?: true
     acuseReciboSCI?: true
-    legalizaAnticipo?: true
     entregadaA?: true
     fechaEntrega?: true
     fechaRecepcionCausacion?: true
@@ -2177,20 +2275,18 @@ export namespace Prisma {
   }
 
   export type FacturaGroupByOutputType = {
-    id: number
-    numeroControl: string
-    cia: string
-    ciaNit: string
-    nit: string
-    proveedor: string
-    numeroFactura: string
-    fechaRadicado: Date
-    fechaFactura: Date
-    facturaCredito: string
-    acuseReciboSCI: string
-    legalizaAnticipo: string
-    entregadaA: string
-    fechaEntrega: Date
+    numeroControl: number
+    cia: string | null
+    ciaNit: string | null
+    nit: string | null
+    proveedor: string | null
+    numeroFactura: string | null
+    fechaRadicado: Date | null
+    fechaFactura: Date | null
+    facturaCredito: boolean | null
+    acuseReciboSCI: boolean | null
+    entregadaA: string | null
+    fechaEntrega: Date | null
     fechaRecepcionCausacion: Date | null
     recibidaPor: string | null
     fechaRevisionCausacion: Date | null
@@ -2224,7 +2320,6 @@ export namespace Prisma {
 
 
   export type FacturaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
     numeroControl?: boolean
     cia?: boolean
     ciaNit?: boolean
@@ -2235,7 +2330,6 @@ export namespace Prisma {
     fechaFactura?: boolean
     facturaCredito?: boolean
     acuseReciboSCI?: boolean
-    legalizaAnticipo?: boolean
     entregadaA?: boolean
     fechaEntrega?: boolean
     fechaRecepcionCausacion?: boolean
@@ -2252,7 +2346,6 @@ export namespace Prisma {
   }, ExtArgs["result"]["factura"]>
 
   export type FacturaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
     numeroControl?: boolean
     cia?: boolean
     ciaNit?: boolean
@@ -2263,7 +2356,6 @@ export namespace Prisma {
     fechaFactura?: boolean
     facturaCredito?: boolean
     acuseReciboSCI?: boolean
-    legalizaAnticipo?: boolean
     entregadaA?: boolean
     fechaEntrega?: boolean
     fechaRecepcionCausacion?: boolean
@@ -2280,7 +2372,6 @@ export namespace Prisma {
   }, ExtArgs["result"]["factura"]>
 
   export type FacturaSelectScalar = {
-    id?: boolean
     numeroControl?: boolean
     cia?: boolean
     ciaNit?: boolean
@@ -2291,7 +2382,6 @@ export namespace Prisma {
     fechaFactura?: boolean
     facturaCredito?: boolean
     acuseReciboSCI?: boolean
-    legalizaAnticipo?: boolean
     entregadaA?: boolean
     fechaEntrega?: boolean
     fechaRecepcionCausacion?: boolean
@@ -2312,20 +2402,18 @@ export namespace Prisma {
     name: "Factura"
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
-      id: number
-      numeroControl: string
-      cia: string
-      ciaNit: string
-      nit: string
-      proveedor: string
-      numeroFactura: string
-      fechaRadicado: Date
-      fechaFactura: Date
-      facturaCredito: string
-      acuseReciboSCI: string
-      legalizaAnticipo: string
-      entregadaA: string
-      fechaEntrega: Date
+      numeroControl: number
+      cia: string | null
+      ciaNit: string | null
+      nit: string | null
+      proveedor: string | null
+      numeroFactura: string | null
+      fechaRadicado: Date | null
+      fechaFactura: Date | null
+      facturaCredito: boolean | null
+      acuseReciboSCI: boolean | null
+      entregadaA: string | null
+      fechaEntrega: Date | null
       fechaRecepcionCausacion: Date | null
       recibidaPor: string | null
       fechaRevisionCausacion: Date | null
@@ -2420,8 +2508,8 @@ export namespace Prisma {
      * // Get first 10 Facturas
      * const facturas = await prisma.factura.findMany({ take: 10 })
      * 
-     * // Only select the `id`
-     * const facturaWithIdOnly = await prisma.factura.findMany({ select: { id: true } })
+     * // Only select the `numeroControl`
+     * const facturaWithNumeroControlOnly = await prisma.factura.findMany({ select: { numeroControl: true } })
      * 
      */
     findMany<T extends FacturaFindManyArgs>(args?: SelectSubset<T, FacturaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FacturaPayload<ExtArgs>, T, "findMany">>
@@ -2465,9 +2553,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Create many Facturas and only return the `id`
-     * const facturaWithIdOnly = await prisma.factura.createManyAndReturn({ 
-     *   select: { id: true },
+     * // Create many Facturas and only return the `numeroControl`
+     * const facturaWithNumeroControlOnly = await prisma.factura.createManyAndReturn({ 
+     *   select: { numeroControl: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -2730,8 +2818,7 @@ export namespace Prisma {
    * Fields of the Factura model
    */ 
   interface FacturaFieldRefs {
-    readonly id: FieldRef<"Factura", 'Int'>
-    readonly numeroControl: FieldRef<"Factura", 'String'>
+    readonly numeroControl: FieldRef<"Factura", 'Int'>
     readonly cia: FieldRef<"Factura", 'String'>
     readonly ciaNit: FieldRef<"Factura", 'String'>
     readonly nit: FieldRef<"Factura", 'String'>
@@ -2739,9 +2826,8 @@ export namespace Prisma {
     readonly numeroFactura: FieldRef<"Factura", 'String'>
     readonly fechaRadicado: FieldRef<"Factura", 'DateTime'>
     readonly fechaFactura: FieldRef<"Factura", 'DateTime'>
-    readonly facturaCredito: FieldRef<"Factura", 'String'>
-    readonly acuseReciboSCI: FieldRef<"Factura", 'String'>
-    readonly legalizaAnticipo: FieldRef<"Factura", 'String'>
+    readonly facturaCredito: FieldRef<"Factura", 'Boolean'>
+    readonly acuseReciboSCI: FieldRef<"Factura", 'Boolean'>
     readonly entregadaA: FieldRef<"Factura", 'String'>
     readonly fechaEntrega: FieldRef<"Factura", 'DateTime'>
     readonly fechaRecepcionCausacion: FieldRef<"Factura", 'DateTime'>
@@ -2925,7 +3011,7 @@ export namespace Prisma {
     /**
      * The data needed to create a Factura.
      */
-    data: XOR<FacturaCreateInput, FacturaUncheckedCreateInput>
+    data?: XOR<FacturaCreateInput, FacturaUncheckedCreateInput>
   }
 
   /**
@@ -3044,6 +3130,894 @@ export namespace Prisma {
 
 
   /**
+   * Model Negociador
+   */
+
+  export type AggregateNegociador = {
+    _count: NegociadorCountAggregateOutputType | null
+    _avg: NegociadorAvgAggregateOutputType | null
+    _sum: NegociadorSumAggregateOutputType | null
+    _min: NegociadorMinAggregateOutputType | null
+    _max: NegociadorMaxAggregateOutputType | null
+  }
+
+  export type NegociadorAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type NegociadorSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type NegociadorMinAggregateOutputType = {
+    id: number | null
+    negociador: string | null
+    cargo: string | null
+  }
+
+  export type NegociadorMaxAggregateOutputType = {
+    id: number | null
+    negociador: string | null
+    cargo: string | null
+  }
+
+  export type NegociadorCountAggregateOutputType = {
+    id: number
+    negociador: number
+    cargo: number
+    _all: number
+  }
+
+
+  export type NegociadorAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type NegociadorSumAggregateInputType = {
+    id?: true
+  }
+
+  export type NegociadorMinAggregateInputType = {
+    id?: true
+    negociador?: true
+    cargo?: true
+  }
+
+  export type NegociadorMaxAggregateInputType = {
+    id?: true
+    negociador?: true
+    cargo?: true
+  }
+
+  export type NegociadorCountAggregateInputType = {
+    id?: true
+    negociador?: true
+    cargo?: true
+    _all?: true
+  }
+
+  export type NegociadorAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Negociador to aggregate.
+     */
+    where?: NegociadorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Negociadors to fetch.
+     */
+    orderBy?: NegociadorOrderByWithRelationInput | NegociadorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: NegociadorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Negociadors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Negociadors.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Negociadors
+    **/
+    _count?: true | NegociadorCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: NegociadorAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: NegociadorSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: NegociadorMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: NegociadorMaxAggregateInputType
+  }
+
+  export type GetNegociadorAggregateType<T extends NegociadorAggregateArgs> = {
+        [P in keyof T & keyof AggregateNegociador]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateNegociador[P]>
+      : GetScalarType<T[P], AggregateNegociador[P]>
+  }
+
+
+
+
+  export type NegociadorGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NegociadorWhereInput
+    orderBy?: NegociadorOrderByWithAggregationInput | NegociadorOrderByWithAggregationInput[]
+    by: NegociadorScalarFieldEnum[] | NegociadorScalarFieldEnum
+    having?: NegociadorScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: NegociadorCountAggregateInputType | true
+    _avg?: NegociadorAvgAggregateInputType
+    _sum?: NegociadorSumAggregateInputType
+    _min?: NegociadorMinAggregateInputType
+    _max?: NegociadorMaxAggregateInputType
+  }
+
+  export type NegociadorGroupByOutputType = {
+    id: number
+    negociador: string | null
+    cargo: string | null
+    _count: NegociadorCountAggregateOutputType | null
+    _avg: NegociadorAvgAggregateOutputType | null
+    _sum: NegociadorSumAggregateOutputType | null
+    _min: NegociadorMinAggregateOutputType | null
+    _max: NegociadorMaxAggregateOutputType | null
+  }
+
+  type GetNegociadorGroupByPayload<T extends NegociadorGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<NegociadorGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof NegociadorGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], NegociadorGroupByOutputType[P]>
+            : GetScalarType<T[P], NegociadorGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type NegociadorSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    negociador?: boolean
+    cargo?: boolean
+  }, ExtArgs["result"]["negociador"]>
+
+  export type NegociadorSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    negociador?: boolean
+    cargo?: boolean
+  }, ExtArgs["result"]["negociador"]>
+
+  export type NegociadorSelectScalar = {
+    id?: boolean
+    negociador?: boolean
+    cargo?: boolean
+  }
+
+
+  export type $NegociadorPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Negociador"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      negociador: string | null
+      cargo: string | null
+    }, ExtArgs["result"]["negociador"]>
+    composites: {}
+  }
+
+  type NegociadorGetPayload<S extends boolean | null | undefined | NegociadorDefaultArgs> = $Result.GetResult<Prisma.$NegociadorPayload, S>
+
+  type NegociadorCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<NegociadorFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: NegociadorCountAggregateInputType | true
+    }
+
+  export interface NegociadorDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Negociador'], meta: { name: 'Negociador' } }
+    /**
+     * Find zero or one Negociador that matches the filter.
+     * @param {NegociadorFindUniqueArgs} args - Arguments to find a Negociador
+     * @example
+     * // Get one Negociador
+     * const negociador = await prisma.negociador.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends NegociadorFindUniqueArgs>(args: SelectSubset<T, NegociadorFindUniqueArgs<ExtArgs>>): Prisma__NegociadorClient<$Result.GetResult<Prisma.$NegociadorPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Negociador that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {NegociadorFindUniqueOrThrowArgs} args - Arguments to find a Negociador
+     * @example
+     * // Get one Negociador
+     * const negociador = await prisma.negociador.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends NegociadorFindUniqueOrThrowArgs>(args: SelectSubset<T, NegociadorFindUniqueOrThrowArgs<ExtArgs>>): Prisma__NegociadorClient<$Result.GetResult<Prisma.$NegociadorPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Negociador that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NegociadorFindFirstArgs} args - Arguments to find a Negociador
+     * @example
+     * // Get one Negociador
+     * const negociador = await prisma.negociador.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends NegociadorFindFirstArgs>(args?: SelectSubset<T, NegociadorFindFirstArgs<ExtArgs>>): Prisma__NegociadorClient<$Result.GetResult<Prisma.$NegociadorPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Negociador that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NegociadorFindFirstOrThrowArgs} args - Arguments to find a Negociador
+     * @example
+     * // Get one Negociador
+     * const negociador = await prisma.negociador.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends NegociadorFindFirstOrThrowArgs>(args?: SelectSubset<T, NegociadorFindFirstOrThrowArgs<ExtArgs>>): Prisma__NegociadorClient<$Result.GetResult<Prisma.$NegociadorPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Negociadors that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NegociadorFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Negociadors
+     * const negociadors = await prisma.negociador.findMany()
+     * 
+     * // Get first 10 Negociadors
+     * const negociadors = await prisma.negociador.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const negociadorWithIdOnly = await prisma.negociador.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends NegociadorFindManyArgs>(args?: SelectSubset<T, NegociadorFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NegociadorPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Negociador.
+     * @param {NegociadorCreateArgs} args - Arguments to create a Negociador.
+     * @example
+     * // Create one Negociador
+     * const Negociador = await prisma.negociador.create({
+     *   data: {
+     *     // ... data to create a Negociador
+     *   }
+     * })
+     * 
+     */
+    create<T extends NegociadorCreateArgs>(args: SelectSubset<T, NegociadorCreateArgs<ExtArgs>>): Prisma__NegociadorClient<$Result.GetResult<Prisma.$NegociadorPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Negociadors.
+     * @param {NegociadorCreateManyArgs} args - Arguments to create many Negociadors.
+     * @example
+     * // Create many Negociadors
+     * const negociador = await prisma.negociador.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends NegociadorCreateManyArgs>(args?: SelectSubset<T, NegociadorCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Negociadors and returns the data saved in the database.
+     * @param {NegociadorCreateManyAndReturnArgs} args - Arguments to create many Negociadors.
+     * @example
+     * // Create many Negociadors
+     * const negociador = await prisma.negociador.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Negociadors and only return the `id`
+     * const negociadorWithIdOnly = await prisma.negociador.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends NegociadorCreateManyAndReturnArgs>(args?: SelectSubset<T, NegociadorCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NegociadorPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Negociador.
+     * @param {NegociadorDeleteArgs} args - Arguments to delete one Negociador.
+     * @example
+     * // Delete one Negociador
+     * const Negociador = await prisma.negociador.delete({
+     *   where: {
+     *     // ... filter to delete one Negociador
+     *   }
+     * })
+     * 
+     */
+    delete<T extends NegociadorDeleteArgs>(args: SelectSubset<T, NegociadorDeleteArgs<ExtArgs>>): Prisma__NegociadorClient<$Result.GetResult<Prisma.$NegociadorPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Negociador.
+     * @param {NegociadorUpdateArgs} args - Arguments to update one Negociador.
+     * @example
+     * // Update one Negociador
+     * const negociador = await prisma.negociador.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends NegociadorUpdateArgs>(args: SelectSubset<T, NegociadorUpdateArgs<ExtArgs>>): Prisma__NegociadorClient<$Result.GetResult<Prisma.$NegociadorPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Negociadors.
+     * @param {NegociadorDeleteManyArgs} args - Arguments to filter Negociadors to delete.
+     * @example
+     * // Delete a few Negociadors
+     * const { count } = await prisma.negociador.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends NegociadorDeleteManyArgs>(args?: SelectSubset<T, NegociadorDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Negociadors.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NegociadorUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Negociadors
+     * const negociador = await prisma.negociador.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends NegociadorUpdateManyArgs>(args: SelectSubset<T, NegociadorUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Negociador.
+     * @param {NegociadorUpsertArgs} args - Arguments to update or create a Negociador.
+     * @example
+     * // Update or create a Negociador
+     * const negociador = await prisma.negociador.upsert({
+     *   create: {
+     *     // ... data to create a Negociador
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Negociador we want to update
+     *   }
+     * })
+     */
+    upsert<T extends NegociadorUpsertArgs>(args: SelectSubset<T, NegociadorUpsertArgs<ExtArgs>>): Prisma__NegociadorClient<$Result.GetResult<Prisma.$NegociadorPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Negociadors.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NegociadorCountArgs} args - Arguments to filter Negociadors to count.
+     * @example
+     * // Count the number of Negociadors
+     * const count = await prisma.negociador.count({
+     *   where: {
+     *     // ... the filter for the Negociadors we want to count
+     *   }
+     * })
+    **/
+    count<T extends NegociadorCountArgs>(
+      args?: Subset<T, NegociadorCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], NegociadorCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Negociador.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NegociadorAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends NegociadorAggregateArgs>(args: Subset<T, NegociadorAggregateArgs>): Prisma.PrismaPromise<GetNegociadorAggregateType<T>>
+
+    /**
+     * Group by Negociador.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NegociadorGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends NegociadorGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: NegociadorGroupByArgs['orderBy'] }
+        : { orderBy?: NegociadorGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, NegociadorGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetNegociadorGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Negociador model
+   */
+  readonly fields: NegociadorFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Negociador.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__NegociadorClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Negociador model
+   */ 
+  interface NegociadorFieldRefs {
+    readonly id: FieldRef<"Negociador", 'Int'>
+    readonly negociador: FieldRef<"Negociador", 'String'>
+    readonly cargo: FieldRef<"Negociador", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Negociador findUnique
+   */
+  export type NegociadorFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Negociador
+     */
+    select?: NegociadorSelect<ExtArgs> | null
+    /**
+     * Filter, which Negociador to fetch.
+     */
+    where: NegociadorWhereUniqueInput
+  }
+
+  /**
+   * Negociador findUniqueOrThrow
+   */
+  export type NegociadorFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Negociador
+     */
+    select?: NegociadorSelect<ExtArgs> | null
+    /**
+     * Filter, which Negociador to fetch.
+     */
+    where: NegociadorWhereUniqueInput
+  }
+
+  /**
+   * Negociador findFirst
+   */
+  export type NegociadorFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Negociador
+     */
+    select?: NegociadorSelect<ExtArgs> | null
+    /**
+     * Filter, which Negociador to fetch.
+     */
+    where?: NegociadorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Negociadors to fetch.
+     */
+    orderBy?: NegociadorOrderByWithRelationInput | NegociadorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Negociadors.
+     */
+    cursor?: NegociadorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Negociadors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Negociadors.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Negociadors.
+     */
+    distinct?: NegociadorScalarFieldEnum | NegociadorScalarFieldEnum[]
+  }
+
+  /**
+   * Negociador findFirstOrThrow
+   */
+  export type NegociadorFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Negociador
+     */
+    select?: NegociadorSelect<ExtArgs> | null
+    /**
+     * Filter, which Negociador to fetch.
+     */
+    where?: NegociadorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Negociadors to fetch.
+     */
+    orderBy?: NegociadorOrderByWithRelationInput | NegociadorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Negociadors.
+     */
+    cursor?: NegociadorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Negociadors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Negociadors.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Negociadors.
+     */
+    distinct?: NegociadorScalarFieldEnum | NegociadorScalarFieldEnum[]
+  }
+
+  /**
+   * Negociador findMany
+   */
+  export type NegociadorFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Negociador
+     */
+    select?: NegociadorSelect<ExtArgs> | null
+    /**
+     * Filter, which Negociadors to fetch.
+     */
+    where?: NegociadorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Negociadors to fetch.
+     */
+    orderBy?: NegociadorOrderByWithRelationInput | NegociadorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Negociadors.
+     */
+    cursor?: NegociadorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Negociadors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Negociadors.
+     */
+    skip?: number
+    distinct?: NegociadorScalarFieldEnum | NegociadorScalarFieldEnum[]
+  }
+
+  /**
+   * Negociador create
+   */
+  export type NegociadorCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Negociador
+     */
+    select?: NegociadorSelect<ExtArgs> | null
+    /**
+     * The data needed to create a Negociador.
+     */
+    data?: XOR<NegociadorCreateInput, NegociadorUncheckedCreateInput>
+  }
+
+  /**
+   * Negociador createMany
+   */
+  export type NegociadorCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Negociadors.
+     */
+    data: NegociadorCreateManyInput | NegociadorCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Negociador createManyAndReturn
+   */
+  export type NegociadorCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Negociador
+     */
+    select?: NegociadorSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Negociadors.
+     */
+    data: NegociadorCreateManyInput | NegociadorCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Negociador update
+   */
+  export type NegociadorUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Negociador
+     */
+    select?: NegociadorSelect<ExtArgs> | null
+    /**
+     * The data needed to update a Negociador.
+     */
+    data: XOR<NegociadorUpdateInput, NegociadorUncheckedUpdateInput>
+    /**
+     * Choose, which Negociador to update.
+     */
+    where: NegociadorWhereUniqueInput
+  }
+
+  /**
+   * Negociador updateMany
+   */
+  export type NegociadorUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Negociadors.
+     */
+    data: XOR<NegociadorUpdateManyMutationInput, NegociadorUncheckedUpdateManyInput>
+    /**
+     * Filter which Negociadors to update
+     */
+    where?: NegociadorWhereInput
+  }
+
+  /**
+   * Negociador upsert
+   */
+  export type NegociadorUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Negociador
+     */
+    select?: NegociadorSelect<ExtArgs> | null
+    /**
+     * The filter to search for the Negociador to update in case it exists.
+     */
+    where: NegociadorWhereUniqueInput
+    /**
+     * In case the Negociador found by the `where` argument doesn't exist, create a new Negociador with this data.
+     */
+    create: XOR<NegociadorCreateInput, NegociadorUncheckedCreateInput>
+    /**
+     * In case the Negociador was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<NegociadorUpdateInput, NegociadorUncheckedUpdateInput>
+  }
+
+  /**
+   * Negociador delete
+   */
+  export type NegociadorDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Negociador
+     */
+    select?: NegociadorSelect<ExtArgs> | null
+    /**
+     * Filter which Negociador to delete.
+     */
+    where: NegociadorWhereUniqueInput
+  }
+
+  /**
+   * Negociador deleteMany
+   */
+  export type NegociadorDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Negociadors to delete
+     */
+    where?: NegociadorWhereInput
+  }
+
+  /**
+   * Negociador without action
+   */
+  export type NegociadorDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Negociador
+     */
+    select?: NegociadorSelect<ExtArgs> | null
+  }
+
+
+  /**
    * Model Persona
    */
 
@@ -3067,18 +4041,21 @@ export namespace Prisma {
     id: number | null
     nombre: string | null
     correo: string | null
+    cargo: string | null
   }
 
   export type PersonaMaxAggregateOutputType = {
     id: number | null
     nombre: string | null
     correo: string | null
+    cargo: string | null
   }
 
   export type PersonaCountAggregateOutputType = {
     id: number
     nombre: number
     correo: number
+    cargo: number
     _all: number
   }
 
@@ -3095,18 +4072,21 @@ export namespace Prisma {
     id?: true
     nombre?: true
     correo?: true
+    cargo?: true
   }
 
   export type PersonaMaxAggregateInputType = {
     id?: true
     nombre?: true
     correo?: true
+    cargo?: true
   }
 
   export type PersonaCountAggregateInputType = {
     id?: true
     nombre?: true
     correo?: true
+    cargo?: true
     _all?: true
   }
 
@@ -3200,6 +4180,7 @@ export namespace Prisma {
     id: number
     nombre: string | null
     correo: string | null
+    cargo: string | null
     _count: PersonaCountAggregateOutputType | null
     _avg: PersonaAvgAggregateOutputType | null
     _sum: PersonaSumAggregateOutputType | null
@@ -3225,18 +4206,21 @@ export namespace Prisma {
     id?: boolean
     nombre?: boolean
     correo?: boolean
+    cargo?: boolean
   }, ExtArgs["result"]["persona"]>
 
   export type PersonaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     nombre?: boolean
     correo?: boolean
+    cargo?: boolean
   }, ExtArgs["result"]["persona"]>
 
   export type PersonaSelectScalar = {
     id?: boolean
     nombre?: boolean
     correo?: boolean
+    cargo?: boolean
   }
 
 
@@ -3247,6 +4231,7 @@ export namespace Prisma {
       id: number
       nombre: string | null
       correo: string | null
+      cargo: string | null
     }, ExtArgs["result"]["persona"]>
     composites: {}
   }
@@ -3643,6 +4628,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Persona", 'Int'>
     readonly nombre: FieldRef<"Persona", 'String'>
     readonly correo: FieldRef<"Persona", 'String'>
+    readonly cargo: FieldRef<"Persona", 'String'>
   }
     
 
@@ -3945,16 +4931,17 @@ export namespace Prisma {
   export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-  export const CompaniaScalarFieldEnum: {
+  export const CentroCostoScalarFieldEnum: {
     id: 'id',
-    cia: 'cia'
+    centroCosto: 'centroCosto',
+    ciaCC: 'ciaCC',
+    responsable: 'responsable'
   };
 
-  export type CompaniaScalarFieldEnum = (typeof CompaniaScalarFieldEnum)[keyof typeof CompaniaScalarFieldEnum]
+  export type CentroCostoScalarFieldEnum = (typeof CentroCostoScalarFieldEnum)[keyof typeof CentroCostoScalarFieldEnum]
 
 
   export const FacturaScalarFieldEnum: {
-    id: 'id',
     numeroControl: 'numeroControl',
     cia: 'cia',
     ciaNit: 'ciaNit',
@@ -3965,7 +4952,6 @@ export namespace Prisma {
     fechaFactura: 'fechaFactura',
     facturaCredito: 'facturaCredito',
     acuseReciboSCI: 'acuseReciboSCI',
-    legalizaAnticipo: 'legalizaAnticipo',
     entregadaA: 'entregadaA',
     fechaEntrega: 'fechaEntrega',
     fechaRecepcionCausacion: 'fechaRecepcionCausacion',
@@ -3984,10 +4970,20 @@ export namespace Prisma {
   export type FacturaScalarFieldEnum = (typeof FacturaScalarFieldEnum)[keyof typeof FacturaScalarFieldEnum]
 
 
+  export const NegociadorScalarFieldEnum: {
+    id: 'id',
+    negociador: 'negociador',
+    cargo: 'cargo'
+  };
+
+  export type NegociadorScalarFieldEnum = (typeof NegociadorScalarFieldEnum)[keyof typeof NegociadorScalarFieldEnum]
+
+
   export const PersonaScalarFieldEnum: {
     id: 'id',
     nombre: 'nombre',
-    correo: 'correo'
+    correo: 'correo',
+    cargo: 'cargo'
   };
 
   export type PersonaScalarFieldEnum = (typeof PersonaScalarFieldEnum)[keyof typeof PersonaScalarFieldEnum]
@@ -4088,63 +5084,71 @@ export namespace Prisma {
    */
 
 
-  export type CompaniaWhereInput = {
-    AND?: CompaniaWhereInput | CompaniaWhereInput[]
-    OR?: CompaniaWhereInput[]
-    NOT?: CompaniaWhereInput | CompaniaWhereInput[]
-    id?: IntFilter<"Compania"> | number
-    cia?: StringNullableFilter<"Compania"> | string | null
+  export type CentroCostoWhereInput = {
+    AND?: CentroCostoWhereInput | CentroCostoWhereInput[]
+    OR?: CentroCostoWhereInput[]
+    NOT?: CentroCostoWhereInput | CentroCostoWhereInput[]
+    id?: IntFilter<"CentroCosto"> | number
+    centroCosto?: StringNullableFilter<"CentroCosto"> | string | null
+    ciaCC?: StringNullableFilter<"CentroCosto"> | string | null
+    responsable?: StringNullableFilter<"CentroCosto"> | string | null
   }
 
-  export type CompaniaOrderByWithRelationInput = {
+  export type CentroCostoOrderByWithRelationInput = {
     id?: SortOrder
-    cia?: SortOrderInput | SortOrder
+    centroCosto?: SortOrderInput | SortOrder
+    ciaCC?: SortOrderInput | SortOrder
+    responsable?: SortOrderInput | SortOrder
   }
 
-  export type CompaniaWhereUniqueInput = Prisma.AtLeast<{
+  export type CentroCostoWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    AND?: CompaniaWhereInput | CompaniaWhereInput[]
-    OR?: CompaniaWhereInput[]
-    NOT?: CompaniaWhereInput | CompaniaWhereInput[]
-    cia?: StringNullableFilter<"Compania"> | string | null
+    AND?: CentroCostoWhereInput | CentroCostoWhereInput[]
+    OR?: CentroCostoWhereInput[]
+    NOT?: CentroCostoWhereInput | CentroCostoWhereInput[]
+    centroCosto?: StringNullableFilter<"CentroCosto"> | string | null
+    ciaCC?: StringNullableFilter<"CentroCosto"> | string | null
+    responsable?: StringNullableFilter<"CentroCosto"> | string | null
   }, "id">
 
-  export type CompaniaOrderByWithAggregationInput = {
+  export type CentroCostoOrderByWithAggregationInput = {
     id?: SortOrder
-    cia?: SortOrderInput | SortOrder
-    _count?: CompaniaCountOrderByAggregateInput
-    _avg?: CompaniaAvgOrderByAggregateInput
-    _max?: CompaniaMaxOrderByAggregateInput
-    _min?: CompaniaMinOrderByAggregateInput
-    _sum?: CompaniaSumOrderByAggregateInput
+    centroCosto?: SortOrderInput | SortOrder
+    ciaCC?: SortOrderInput | SortOrder
+    responsable?: SortOrderInput | SortOrder
+    _count?: CentroCostoCountOrderByAggregateInput
+    _avg?: CentroCostoAvgOrderByAggregateInput
+    _max?: CentroCostoMaxOrderByAggregateInput
+    _min?: CentroCostoMinOrderByAggregateInput
+    _sum?: CentroCostoSumOrderByAggregateInput
   }
 
-  export type CompaniaScalarWhereWithAggregatesInput = {
-    AND?: CompaniaScalarWhereWithAggregatesInput | CompaniaScalarWhereWithAggregatesInput[]
-    OR?: CompaniaScalarWhereWithAggregatesInput[]
-    NOT?: CompaniaScalarWhereWithAggregatesInput | CompaniaScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Compania"> | number
-    cia?: StringNullableWithAggregatesFilter<"Compania"> | string | null
+  export type CentroCostoScalarWhereWithAggregatesInput = {
+    AND?: CentroCostoScalarWhereWithAggregatesInput | CentroCostoScalarWhereWithAggregatesInput[]
+    OR?: CentroCostoScalarWhereWithAggregatesInput[]
+    NOT?: CentroCostoScalarWhereWithAggregatesInput | CentroCostoScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"CentroCosto"> | number
+    centroCosto?: StringNullableWithAggregatesFilter<"CentroCosto"> | string | null
+    ciaCC?: StringNullableWithAggregatesFilter<"CentroCosto"> | string | null
+    responsable?: StringNullableWithAggregatesFilter<"CentroCosto"> | string | null
   }
 
   export type FacturaWhereInput = {
     AND?: FacturaWhereInput | FacturaWhereInput[]
     OR?: FacturaWhereInput[]
     NOT?: FacturaWhereInput | FacturaWhereInput[]
-    id?: IntFilter<"Factura"> | number
-    numeroControl?: StringFilter<"Factura"> | string
-    cia?: StringFilter<"Factura"> | string
-    ciaNit?: StringFilter<"Factura"> | string
-    nit?: StringFilter<"Factura"> | string
-    proveedor?: StringFilter<"Factura"> | string
-    numeroFactura?: StringFilter<"Factura"> | string
-    fechaRadicado?: DateTimeFilter<"Factura"> | Date | string
-    fechaFactura?: DateTimeFilter<"Factura"> | Date | string
-    facturaCredito?: StringFilter<"Factura"> | string
-    acuseReciboSCI?: StringFilter<"Factura"> | string
-    legalizaAnticipo?: StringFilter<"Factura"> | string
-    entregadaA?: StringFilter<"Factura"> | string
-    fechaEntrega?: DateTimeFilter<"Factura"> | Date | string
+    numeroControl?: IntFilter<"Factura"> | number
+    cia?: StringNullableFilter<"Factura"> | string | null
+    ciaNit?: StringNullableFilter<"Factura"> | string | null
+    nit?: StringNullableFilter<"Factura"> | string | null
+    proveedor?: StringNullableFilter<"Factura"> | string | null
+    numeroFactura?: StringNullableFilter<"Factura"> | string | null
+    fechaRadicado?: DateTimeNullableFilter<"Factura"> | Date | string | null
+    fechaFactura?: DateTimeNullableFilter<"Factura"> | Date | string | null
+    facturaCredito?: BoolNullableFilter<"Factura"> | boolean | null
+    acuseReciboSCI?: BoolNullableFilter<"Factura"> | boolean | null
+    entregadaA?: StringNullableFilter<"Factura"> | string | null
+    fechaEntrega?: DateTimeNullableFilter<"Factura"> | Date | string | null
     fechaRecepcionCausacion?: DateTimeNullableFilter<"Factura"> | Date | string | null
     recibidaPor?: StringNullableFilter<"Factura"> | string | null
     fechaRevisionCausacion?: DateTimeNullableFilter<"Factura"> | Date | string | null
@@ -4159,20 +5163,18 @@ export namespace Prisma {
   }
 
   export type FacturaOrderByWithRelationInput = {
-    id?: SortOrder
     numeroControl?: SortOrder
-    cia?: SortOrder
-    ciaNit?: SortOrder
-    nit?: SortOrder
-    proveedor?: SortOrder
-    numeroFactura?: SortOrder
-    fechaRadicado?: SortOrder
-    fechaFactura?: SortOrder
-    facturaCredito?: SortOrder
-    acuseReciboSCI?: SortOrder
-    legalizaAnticipo?: SortOrder
-    entregadaA?: SortOrder
-    fechaEntrega?: SortOrder
+    cia?: SortOrderInput | SortOrder
+    ciaNit?: SortOrderInput | SortOrder
+    nit?: SortOrderInput | SortOrder
+    proveedor?: SortOrderInput | SortOrder
+    numeroFactura?: SortOrderInput | SortOrder
+    fechaRadicado?: SortOrderInput | SortOrder
+    fechaFactura?: SortOrderInput | SortOrder
+    facturaCredito?: SortOrderInput | SortOrder
+    acuseReciboSCI?: SortOrderInput | SortOrder
+    entregadaA?: SortOrderInput | SortOrder
+    fechaEntrega?: SortOrderInput | SortOrder
     fechaRecepcionCausacion?: SortOrderInput | SortOrder
     recibidaPor?: SortOrderInput | SortOrder
     fechaRevisionCausacion?: SortOrderInput | SortOrder
@@ -4187,23 +5189,21 @@ export namespace Prisma {
   }
 
   export type FacturaWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
-    numeroControl?: string
+    numeroControl?: number
     AND?: FacturaWhereInput | FacturaWhereInput[]
     OR?: FacturaWhereInput[]
     NOT?: FacturaWhereInput | FacturaWhereInput[]
-    cia?: StringFilter<"Factura"> | string
-    ciaNit?: StringFilter<"Factura"> | string
-    nit?: StringFilter<"Factura"> | string
-    proveedor?: StringFilter<"Factura"> | string
-    numeroFactura?: StringFilter<"Factura"> | string
-    fechaRadicado?: DateTimeFilter<"Factura"> | Date | string
-    fechaFactura?: DateTimeFilter<"Factura"> | Date | string
-    facturaCredito?: StringFilter<"Factura"> | string
-    acuseReciboSCI?: StringFilter<"Factura"> | string
-    legalizaAnticipo?: StringFilter<"Factura"> | string
-    entregadaA?: StringFilter<"Factura"> | string
-    fechaEntrega?: DateTimeFilter<"Factura"> | Date | string
+    cia?: StringNullableFilter<"Factura"> | string | null
+    ciaNit?: StringNullableFilter<"Factura"> | string | null
+    nit?: StringNullableFilter<"Factura"> | string | null
+    proveedor?: StringNullableFilter<"Factura"> | string | null
+    numeroFactura?: StringNullableFilter<"Factura"> | string | null
+    fechaRadicado?: DateTimeNullableFilter<"Factura"> | Date | string | null
+    fechaFactura?: DateTimeNullableFilter<"Factura"> | Date | string | null
+    facturaCredito?: BoolNullableFilter<"Factura"> | boolean | null
+    acuseReciboSCI?: BoolNullableFilter<"Factura"> | boolean | null
+    entregadaA?: StringNullableFilter<"Factura"> | string | null
+    fechaEntrega?: DateTimeNullableFilter<"Factura"> | Date | string | null
     fechaRecepcionCausacion?: DateTimeNullableFilter<"Factura"> | Date | string | null
     recibidaPor?: StringNullableFilter<"Factura"> | string | null
     fechaRevisionCausacion?: DateTimeNullableFilter<"Factura"> | Date | string | null
@@ -4215,23 +5215,21 @@ export namespace Prisma {
     enProceso?: BoolNullableFilter<"Factura"> | boolean | null
     finalizado?: BoolNullableFilter<"Factura"> | boolean | null
     causado?: BoolNullableFilter<"Factura"> | boolean | null
-  }, "id" | "numeroControl">
+  }, "numeroControl">
 
   export type FacturaOrderByWithAggregationInput = {
-    id?: SortOrder
     numeroControl?: SortOrder
-    cia?: SortOrder
-    ciaNit?: SortOrder
-    nit?: SortOrder
-    proveedor?: SortOrder
-    numeroFactura?: SortOrder
-    fechaRadicado?: SortOrder
-    fechaFactura?: SortOrder
-    facturaCredito?: SortOrder
-    acuseReciboSCI?: SortOrder
-    legalizaAnticipo?: SortOrder
-    entregadaA?: SortOrder
-    fechaEntrega?: SortOrder
+    cia?: SortOrderInput | SortOrder
+    ciaNit?: SortOrderInput | SortOrder
+    nit?: SortOrderInput | SortOrder
+    proveedor?: SortOrderInput | SortOrder
+    numeroFactura?: SortOrderInput | SortOrder
+    fechaRadicado?: SortOrderInput | SortOrder
+    fechaFactura?: SortOrderInput | SortOrder
+    facturaCredito?: SortOrderInput | SortOrder
+    acuseReciboSCI?: SortOrderInput | SortOrder
+    entregadaA?: SortOrderInput | SortOrder
+    fechaEntrega?: SortOrderInput | SortOrder
     fechaRecepcionCausacion?: SortOrderInput | SortOrder
     recibidaPor?: SortOrderInput | SortOrder
     fechaRevisionCausacion?: SortOrderInput | SortOrder
@@ -4254,20 +5252,18 @@ export namespace Prisma {
     AND?: FacturaScalarWhereWithAggregatesInput | FacturaScalarWhereWithAggregatesInput[]
     OR?: FacturaScalarWhereWithAggregatesInput[]
     NOT?: FacturaScalarWhereWithAggregatesInput | FacturaScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Factura"> | number
-    numeroControl?: StringWithAggregatesFilter<"Factura"> | string
-    cia?: StringWithAggregatesFilter<"Factura"> | string
-    ciaNit?: StringWithAggregatesFilter<"Factura"> | string
-    nit?: StringWithAggregatesFilter<"Factura"> | string
-    proveedor?: StringWithAggregatesFilter<"Factura"> | string
-    numeroFactura?: StringWithAggregatesFilter<"Factura"> | string
-    fechaRadicado?: DateTimeWithAggregatesFilter<"Factura"> | Date | string
-    fechaFactura?: DateTimeWithAggregatesFilter<"Factura"> | Date | string
-    facturaCredito?: StringWithAggregatesFilter<"Factura"> | string
-    acuseReciboSCI?: StringWithAggregatesFilter<"Factura"> | string
-    legalizaAnticipo?: StringWithAggregatesFilter<"Factura"> | string
-    entregadaA?: StringWithAggregatesFilter<"Factura"> | string
-    fechaEntrega?: DateTimeWithAggregatesFilter<"Factura"> | Date | string
+    numeroControl?: IntWithAggregatesFilter<"Factura"> | number
+    cia?: StringNullableWithAggregatesFilter<"Factura"> | string | null
+    ciaNit?: StringNullableWithAggregatesFilter<"Factura"> | string | null
+    nit?: StringNullableWithAggregatesFilter<"Factura"> | string | null
+    proveedor?: StringNullableWithAggregatesFilter<"Factura"> | string | null
+    numeroFactura?: StringNullableWithAggregatesFilter<"Factura"> | string | null
+    fechaRadicado?: DateTimeNullableWithAggregatesFilter<"Factura"> | Date | string | null
+    fechaFactura?: DateTimeNullableWithAggregatesFilter<"Factura"> | Date | string | null
+    facturaCredito?: BoolNullableWithAggregatesFilter<"Factura"> | boolean | null
+    acuseReciboSCI?: BoolNullableWithAggregatesFilter<"Factura"> | boolean | null
+    entregadaA?: StringNullableWithAggregatesFilter<"Factura"> | string | null
+    fechaEntrega?: DateTimeNullableWithAggregatesFilter<"Factura"> | Date | string | null
     fechaRecepcionCausacion?: DateTimeNullableWithAggregatesFilter<"Factura"> | Date | string | null
     recibidaPor?: StringNullableWithAggregatesFilter<"Factura"> | string | null
     fechaRevisionCausacion?: DateTimeNullableWithAggregatesFilter<"Factura"> | Date | string | null
@@ -4281,6 +5277,50 @@ export namespace Prisma {
     causado?: BoolNullableWithAggregatesFilter<"Factura"> | boolean | null
   }
 
+  export type NegociadorWhereInput = {
+    AND?: NegociadorWhereInput | NegociadorWhereInput[]
+    OR?: NegociadorWhereInput[]
+    NOT?: NegociadorWhereInput | NegociadorWhereInput[]
+    id?: IntFilter<"Negociador"> | number
+    negociador?: StringNullableFilter<"Negociador"> | string | null
+    cargo?: StringNullableFilter<"Negociador"> | string | null
+  }
+
+  export type NegociadorOrderByWithRelationInput = {
+    id?: SortOrder
+    negociador?: SortOrderInput | SortOrder
+    cargo?: SortOrderInput | SortOrder
+  }
+
+  export type NegociadorWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: NegociadorWhereInput | NegociadorWhereInput[]
+    OR?: NegociadorWhereInput[]
+    NOT?: NegociadorWhereInput | NegociadorWhereInput[]
+    negociador?: StringNullableFilter<"Negociador"> | string | null
+    cargo?: StringNullableFilter<"Negociador"> | string | null
+  }, "id">
+
+  export type NegociadorOrderByWithAggregationInput = {
+    id?: SortOrder
+    negociador?: SortOrderInput | SortOrder
+    cargo?: SortOrderInput | SortOrder
+    _count?: NegociadorCountOrderByAggregateInput
+    _avg?: NegociadorAvgOrderByAggregateInput
+    _max?: NegociadorMaxOrderByAggregateInput
+    _min?: NegociadorMinOrderByAggregateInput
+    _sum?: NegociadorSumOrderByAggregateInput
+  }
+
+  export type NegociadorScalarWhereWithAggregatesInput = {
+    AND?: NegociadorScalarWhereWithAggregatesInput | NegociadorScalarWhereWithAggregatesInput[]
+    OR?: NegociadorScalarWhereWithAggregatesInput[]
+    NOT?: NegociadorScalarWhereWithAggregatesInput | NegociadorScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Negociador"> | number
+    negociador?: StringNullableWithAggregatesFilter<"Negociador"> | string | null
+    cargo?: StringNullableWithAggregatesFilter<"Negociador"> | string | null
+  }
+
   export type PersonaWhereInput = {
     AND?: PersonaWhereInput | PersonaWhereInput[]
     OR?: PersonaWhereInput[]
@@ -4288,12 +5328,14 @@ export namespace Prisma {
     id?: IntFilter<"Persona"> | number
     nombre?: StringNullableFilter<"Persona"> | string | null
     correo?: StringNullableFilter<"Persona"> | string | null
+    cargo?: StringNullableFilter<"Persona"> | string | null
   }
 
   export type PersonaOrderByWithRelationInput = {
     id?: SortOrder
     nombre?: SortOrderInput | SortOrder
     correo?: SortOrderInput | SortOrder
+    cargo?: SortOrderInput | SortOrder
   }
 
   export type PersonaWhereUniqueInput = Prisma.AtLeast<{
@@ -4303,12 +5345,14 @@ export namespace Prisma {
     NOT?: PersonaWhereInput | PersonaWhereInput[]
     nombre?: StringNullableFilter<"Persona"> | string | null
     correo?: StringNullableFilter<"Persona"> | string | null
+    cargo?: StringNullableFilter<"Persona"> | string | null
   }, "id">
 
   export type PersonaOrderByWithAggregationInput = {
     id?: SortOrder
     nombre?: SortOrderInput | SortOrder
     correo?: SortOrderInput | SortOrder
+    cargo?: SortOrderInput | SortOrder
     _count?: PersonaCountOrderByAggregateInput
     _avg?: PersonaAvgOrderByAggregateInput
     _max?: PersonaMaxOrderByAggregateInput
@@ -4323,55 +5367,67 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Persona"> | number
     nombre?: StringNullableWithAggregatesFilter<"Persona"> | string | null
     correo?: StringNullableWithAggregatesFilter<"Persona"> | string | null
+    cargo?: StringNullableWithAggregatesFilter<"Persona"> | string | null
   }
 
-  export type CompaniaCreateInput = {
+  export type CentroCostoCreateInput = {
+    centroCosto?: string | null
+    ciaCC?: string | null
+    responsable?: string | null
+  }
+
+  export type CentroCostoUncheckedCreateInput = {
     id?: number
-    cia?: string | null
+    centroCosto?: string | null
+    ciaCC?: string | null
+    responsable?: string | null
   }
 
-  export type CompaniaUncheckedCreateInput = {
-    id?: number
-    cia?: string | null
+  export type CentroCostoUpdateInput = {
+    centroCosto?: NullableStringFieldUpdateOperationsInput | string | null
+    ciaCC?: NullableStringFieldUpdateOperationsInput | string | null
+    responsable?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type CompaniaUpdateInput = {
-    cia?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type CompaniaUncheckedUpdateInput = {
+  export type CentroCostoUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    cia?: NullableStringFieldUpdateOperationsInput | string | null
+    centroCosto?: NullableStringFieldUpdateOperationsInput | string | null
+    ciaCC?: NullableStringFieldUpdateOperationsInput | string | null
+    responsable?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type CompaniaCreateManyInput = {
+  export type CentroCostoCreateManyInput = {
     id?: number
-    cia?: string | null
+    centroCosto?: string | null
+    ciaCC?: string | null
+    responsable?: string | null
   }
 
-  export type CompaniaUpdateManyMutationInput = {
-    cia?: NullableStringFieldUpdateOperationsInput | string | null
+  export type CentroCostoUpdateManyMutationInput = {
+    centroCosto?: NullableStringFieldUpdateOperationsInput | string | null
+    ciaCC?: NullableStringFieldUpdateOperationsInput | string | null
+    responsable?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type CompaniaUncheckedUpdateManyInput = {
+  export type CentroCostoUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    cia?: NullableStringFieldUpdateOperationsInput | string | null
+    centroCosto?: NullableStringFieldUpdateOperationsInput | string | null
+    ciaCC?: NullableStringFieldUpdateOperationsInput | string | null
+    responsable?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type FacturaCreateInput = {
-    numeroControl: string
-    cia: string
-    ciaNit: string
-    nit: string
-    proveedor: string
-    numeroFactura: string
-    fechaRadicado: Date | string
-    fechaFactura: Date | string
-    facturaCredito: string
-    acuseReciboSCI: string
-    legalizaAnticipo?: string
-    entregadaA: string
-    fechaEntrega: Date | string
+    cia?: string | null
+    ciaNit?: string | null
+    nit?: string | null
+    proveedor?: string | null
+    numeroFactura?: string | null
+    fechaRadicado?: Date | string | null
+    fechaFactura?: Date | string | null
+    facturaCredito?: boolean | null
+    acuseReciboSCI?: boolean | null
+    entregadaA?: string | null
+    fechaEntrega?: Date | string | null
     fechaRecepcionCausacion?: Date | string | null
     recibidaPor?: string | null
     fechaRevisionCausacion?: Date | string | null
@@ -4386,20 +5442,18 @@ export namespace Prisma {
   }
 
   export type FacturaUncheckedCreateInput = {
-    id?: number
-    numeroControl: string
-    cia: string
-    ciaNit: string
-    nit: string
-    proveedor: string
-    numeroFactura: string
-    fechaRadicado: Date | string
-    fechaFactura: Date | string
-    facturaCredito: string
-    acuseReciboSCI: string
-    legalizaAnticipo?: string
-    entregadaA: string
-    fechaEntrega: Date | string
+    numeroControl?: number
+    cia?: string | null
+    ciaNit?: string | null
+    nit?: string | null
+    proveedor?: string | null
+    numeroFactura?: string | null
+    fechaRadicado?: Date | string | null
+    fechaFactura?: Date | string | null
+    facturaCredito?: boolean | null
+    acuseReciboSCI?: boolean | null
+    entregadaA?: string | null
+    fechaEntrega?: Date | string | null
     fechaRecepcionCausacion?: Date | string | null
     recibidaPor?: string | null
     fechaRevisionCausacion?: Date | string | null
@@ -4414,19 +5468,17 @@ export namespace Prisma {
   }
 
   export type FacturaUpdateInput = {
-    numeroControl?: StringFieldUpdateOperationsInput | string
-    cia?: StringFieldUpdateOperationsInput | string
-    ciaNit?: StringFieldUpdateOperationsInput | string
-    nit?: StringFieldUpdateOperationsInput | string
-    proveedor?: StringFieldUpdateOperationsInput | string
-    numeroFactura?: StringFieldUpdateOperationsInput | string
-    fechaRadicado?: DateTimeFieldUpdateOperationsInput | Date | string
-    fechaFactura?: DateTimeFieldUpdateOperationsInput | Date | string
-    facturaCredito?: StringFieldUpdateOperationsInput | string
-    acuseReciboSCI?: StringFieldUpdateOperationsInput | string
-    legalizaAnticipo?: StringFieldUpdateOperationsInput | string
-    entregadaA?: StringFieldUpdateOperationsInput | string
-    fechaEntrega?: DateTimeFieldUpdateOperationsInput | Date | string
+    cia?: NullableStringFieldUpdateOperationsInput | string | null
+    ciaNit?: NullableStringFieldUpdateOperationsInput | string | null
+    nit?: NullableStringFieldUpdateOperationsInput | string | null
+    proveedor?: NullableStringFieldUpdateOperationsInput | string | null
+    numeroFactura?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaRadicado?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaFactura?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    facturaCredito?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    acuseReciboSCI?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    entregadaA?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaEntrega?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fechaRecepcionCausacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     recibidaPor?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRevisionCausacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4441,20 +5493,18 @@ export namespace Prisma {
   }
 
   export type FacturaUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    numeroControl?: StringFieldUpdateOperationsInput | string
-    cia?: StringFieldUpdateOperationsInput | string
-    ciaNit?: StringFieldUpdateOperationsInput | string
-    nit?: StringFieldUpdateOperationsInput | string
-    proveedor?: StringFieldUpdateOperationsInput | string
-    numeroFactura?: StringFieldUpdateOperationsInput | string
-    fechaRadicado?: DateTimeFieldUpdateOperationsInput | Date | string
-    fechaFactura?: DateTimeFieldUpdateOperationsInput | Date | string
-    facturaCredito?: StringFieldUpdateOperationsInput | string
-    acuseReciboSCI?: StringFieldUpdateOperationsInput | string
-    legalizaAnticipo?: StringFieldUpdateOperationsInput | string
-    entregadaA?: StringFieldUpdateOperationsInput | string
-    fechaEntrega?: DateTimeFieldUpdateOperationsInput | Date | string
+    numeroControl?: IntFieldUpdateOperationsInput | number
+    cia?: NullableStringFieldUpdateOperationsInput | string | null
+    ciaNit?: NullableStringFieldUpdateOperationsInput | string | null
+    nit?: NullableStringFieldUpdateOperationsInput | string | null
+    proveedor?: NullableStringFieldUpdateOperationsInput | string | null
+    numeroFactura?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaRadicado?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaFactura?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    facturaCredito?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    acuseReciboSCI?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    entregadaA?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaEntrega?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fechaRecepcionCausacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     recibidaPor?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRevisionCausacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4469,20 +5519,18 @@ export namespace Prisma {
   }
 
   export type FacturaCreateManyInput = {
-    id?: number
-    numeroControl: string
-    cia: string
-    ciaNit: string
-    nit: string
-    proveedor: string
-    numeroFactura: string
-    fechaRadicado: Date | string
-    fechaFactura: Date | string
-    facturaCredito: string
-    acuseReciboSCI: string
-    legalizaAnticipo?: string
-    entregadaA: string
-    fechaEntrega: Date | string
+    numeroControl?: number
+    cia?: string | null
+    ciaNit?: string | null
+    nit?: string | null
+    proveedor?: string | null
+    numeroFactura?: string | null
+    fechaRadicado?: Date | string | null
+    fechaFactura?: Date | string | null
+    facturaCredito?: boolean | null
+    acuseReciboSCI?: boolean | null
+    entregadaA?: string | null
+    fechaEntrega?: Date | string | null
     fechaRecepcionCausacion?: Date | string | null
     recibidaPor?: string | null
     fechaRevisionCausacion?: Date | string | null
@@ -4497,19 +5545,17 @@ export namespace Prisma {
   }
 
   export type FacturaUpdateManyMutationInput = {
-    numeroControl?: StringFieldUpdateOperationsInput | string
-    cia?: StringFieldUpdateOperationsInput | string
-    ciaNit?: StringFieldUpdateOperationsInput | string
-    nit?: StringFieldUpdateOperationsInput | string
-    proveedor?: StringFieldUpdateOperationsInput | string
-    numeroFactura?: StringFieldUpdateOperationsInput | string
-    fechaRadicado?: DateTimeFieldUpdateOperationsInput | Date | string
-    fechaFactura?: DateTimeFieldUpdateOperationsInput | Date | string
-    facturaCredito?: StringFieldUpdateOperationsInput | string
-    acuseReciboSCI?: StringFieldUpdateOperationsInput | string
-    legalizaAnticipo?: StringFieldUpdateOperationsInput | string
-    entregadaA?: StringFieldUpdateOperationsInput | string
-    fechaEntrega?: DateTimeFieldUpdateOperationsInput | Date | string
+    cia?: NullableStringFieldUpdateOperationsInput | string | null
+    ciaNit?: NullableStringFieldUpdateOperationsInput | string | null
+    nit?: NullableStringFieldUpdateOperationsInput | string | null
+    proveedor?: NullableStringFieldUpdateOperationsInput | string | null
+    numeroFactura?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaRadicado?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaFactura?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    facturaCredito?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    acuseReciboSCI?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    entregadaA?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaEntrega?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fechaRecepcionCausacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     recibidaPor?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRevisionCausacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4524,20 +5570,18 @@ export namespace Prisma {
   }
 
   export type FacturaUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    numeroControl?: StringFieldUpdateOperationsInput | string
-    cia?: StringFieldUpdateOperationsInput | string
-    ciaNit?: StringFieldUpdateOperationsInput | string
-    nit?: StringFieldUpdateOperationsInput | string
-    proveedor?: StringFieldUpdateOperationsInput | string
-    numeroFactura?: StringFieldUpdateOperationsInput | string
-    fechaRadicado?: DateTimeFieldUpdateOperationsInput | Date | string
-    fechaFactura?: DateTimeFieldUpdateOperationsInput | Date | string
-    facturaCredito?: StringFieldUpdateOperationsInput | string
-    acuseReciboSCI?: StringFieldUpdateOperationsInput | string
-    legalizaAnticipo?: StringFieldUpdateOperationsInput | string
-    entregadaA?: StringFieldUpdateOperationsInput | string
-    fechaEntrega?: DateTimeFieldUpdateOperationsInput | Date | string
+    numeroControl?: IntFieldUpdateOperationsInput | number
+    cia?: NullableStringFieldUpdateOperationsInput | string | null
+    ciaNit?: NullableStringFieldUpdateOperationsInput | string | null
+    nit?: NullableStringFieldUpdateOperationsInput | string | null
+    proveedor?: NullableStringFieldUpdateOperationsInput | string | null
+    numeroFactura?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaRadicado?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaFactura?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    facturaCredito?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    acuseReciboSCI?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    entregadaA?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaEntrega?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fechaRecepcionCausacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     recibidaPor?: NullableStringFieldUpdateOperationsInput | string | null
     fechaRevisionCausacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4551,44 +5595,89 @@ export namespace Prisma {
     causado?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
-  export type PersonaCreateInput = {
+  export type NegociadorCreateInput = {
+    negociador?: string | null
+    cargo?: string | null
+  }
+
+  export type NegociadorUncheckedCreateInput = {
     id?: number
+    negociador?: string | null
+    cargo?: string | null
+  }
+
+  export type NegociadorUpdateInput = {
+    negociador?: NullableStringFieldUpdateOperationsInput | string | null
+    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type NegociadorUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    negociador?: NullableStringFieldUpdateOperationsInput | string | null
+    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type NegociadorCreateManyInput = {
+    id?: number
+    negociador?: string | null
+    cargo?: string | null
+  }
+
+  export type NegociadorUpdateManyMutationInput = {
+    negociador?: NullableStringFieldUpdateOperationsInput | string | null
+    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type NegociadorUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    negociador?: NullableStringFieldUpdateOperationsInput | string | null
+    cargo?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type PersonaCreateInput = {
     nombre?: string | null
     correo?: string | null
+    cargo?: string | null
   }
 
   export type PersonaUncheckedCreateInput = {
     id?: number
     nombre?: string | null
     correo?: string | null
+    cargo?: string | null
   }
 
   export type PersonaUpdateInput = {
     nombre?: NullableStringFieldUpdateOperationsInput | string | null
     correo?: NullableStringFieldUpdateOperationsInput | string | null
+    cargo?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PersonaUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     nombre?: NullableStringFieldUpdateOperationsInput | string | null
     correo?: NullableStringFieldUpdateOperationsInput | string | null
+    cargo?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PersonaCreateManyInput = {
     id?: number
     nombre?: string | null
     correo?: string | null
+    cargo?: string | null
   }
 
   export type PersonaUpdateManyMutationInput = {
     nombre?: NullableStringFieldUpdateOperationsInput | string | null
     correo?: NullableStringFieldUpdateOperationsInput | string | null
+    cargo?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PersonaUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     nombre?: NullableStringFieldUpdateOperationsInput | string | null
     correo?: NullableStringFieldUpdateOperationsInput | string | null
+    cargo?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -4622,26 +5711,32 @@ export namespace Prisma {
     nulls?: NullsOrder
   }
 
-  export type CompaniaCountOrderByAggregateInput = {
+  export type CentroCostoCountOrderByAggregateInput = {
     id?: SortOrder
-    cia?: SortOrder
+    centroCosto?: SortOrder
+    ciaCC?: SortOrder
+    responsable?: SortOrder
   }
 
-  export type CompaniaAvgOrderByAggregateInput = {
+  export type CentroCostoAvgOrderByAggregateInput = {
     id?: SortOrder
   }
 
-  export type CompaniaMaxOrderByAggregateInput = {
+  export type CentroCostoMaxOrderByAggregateInput = {
     id?: SortOrder
-    cia?: SortOrder
+    centroCosto?: SortOrder
+    ciaCC?: SortOrder
+    responsable?: SortOrder
   }
 
-  export type CompaniaMinOrderByAggregateInput = {
+  export type CentroCostoMinOrderByAggregateInput = {
     id?: SortOrder
-    cia?: SortOrder
+    centroCosto?: SortOrder
+    ciaCC?: SortOrder
+    responsable?: SortOrder
   }
 
-  export type CompaniaSumOrderByAggregateInput = {
+  export type CentroCostoSumOrderByAggregateInput = {
     id?: SortOrder
   }
 
@@ -4679,32 +5774,6 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type StringFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringFilter<$PrismaModel> | string
-  }
-
-  export type DateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
   export type DateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -4722,7 +5791,6 @@ export namespace Prisma {
   }
 
   export type FacturaCountOrderByAggregateInput = {
-    id?: SortOrder
     numeroControl?: SortOrder
     cia?: SortOrder
     ciaNit?: SortOrder
@@ -4733,7 +5801,6 @@ export namespace Prisma {
     fechaFactura?: SortOrder
     facturaCredito?: SortOrder
     acuseReciboSCI?: SortOrder
-    legalizaAnticipo?: SortOrder
     entregadaA?: SortOrder
     fechaEntrega?: SortOrder
     fechaRecepcionCausacion?: SortOrder
@@ -4750,11 +5817,10 @@ export namespace Prisma {
   }
 
   export type FacturaAvgOrderByAggregateInput = {
-    id?: SortOrder
+    numeroControl?: SortOrder
   }
 
   export type FacturaMaxOrderByAggregateInput = {
-    id?: SortOrder
     numeroControl?: SortOrder
     cia?: SortOrder
     ciaNit?: SortOrder
@@ -4765,7 +5831,6 @@ export namespace Prisma {
     fechaFactura?: SortOrder
     facturaCredito?: SortOrder
     acuseReciboSCI?: SortOrder
-    legalizaAnticipo?: SortOrder
     entregadaA?: SortOrder
     fechaEntrega?: SortOrder
     fechaRecepcionCausacion?: SortOrder
@@ -4782,7 +5847,6 @@ export namespace Prisma {
   }
 
   export type FacturaMinOrderByAggregateInput = {
-    id?: SortOrder
     numeroControl?: SortOrder
     cia?: SortOrder
     ciaNit?: SortOrder
@@ -4793,7 +5857,6 @@ export namespace Prisma {
     fechaFactura?: SortOrder
     facturaCredito?: SortOrder
     acuseReciboSCI?: SortOrder
-    legalizaAnticipo?: SortOrder
     entregadaA?: SortOrder
     fechaEntrega?: SortOrder
     fechaRecepcionCausacion?: SortOrder
@@ -4810,39 +5873,7 @@ export namespace Prisma {
   }
 
   export type FacturaSumOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type StringWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedStringFilter<$PrismaModel>
-    _max?: NestedStringFilter<$PrismaModel>
-  }
-
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
+    numeroControl?: SortOrder
   }
 
   export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -4867,10 +5898,37 @@ export namespace Prisma {
     _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
+  export type NegociadorCountOrderByAggregateInput = {
+    id?: SortOrder
+    negociador?: SortOrder
+    cargo?: SortOrder
+  }
+
+  export type NegociadorAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type NegociadorMaxOrderByAggregateInput = {
+    id?: SortOrder
+    negociador?: SortOrder
+    cargo?: SortOrder
+  }
+
+  export type NegociadorMinOrderByAggregateInput = {
+    id?: SortOrder
+    negociador?: SortOrder
+    cargo?: SortOrder
+  }
+
+  export type NegociadorSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
   export type PersonaCountOrderByAggregateInput = {
     id?: SortOrder
     nombre?: SortOrder
     correo?: SortOrder
+    cargo?: SortOrder
   }
 
   export type PersonaAvgOrderByAggregateInput = {
@@ -4881,12 +5939,14 @@ export namespace Prisma {
     id?: SortOrder
     nombre?: SortOrder
     correo?: SortOrder
+    cargo?: SortOrder
   }
 
   export type PersonaMinOrderByAggregateInput = {
     id?: SortOrder
     nombre?: SortOrder
     correo?: SortOrder
+    cargo?: SortOrder
   }
 
   export type PersonaSumOrderByAggregateInput = {
@@ -4903,14 +5963,6 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
-  }
-
-  export type StringFieldUpdateOperationsInput = {
-    set?: string
-  }
-
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -5001,31 +6053,6 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedStringFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringFilter<$PrismaModel> | string
-  }
-
-  export type NestedDateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -5040,37 +6067,6 @@ export namespace Prisma {
   export type NestedBoolNullableFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
     not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
-  }
-
-  export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedStringFilter<$PrismaModel>
-    _max?: NestedStringFilter<$PrismaModel>
-  }
-
-  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -5101,13 +6097,17 @@ export namespace Prisma {
    * Aliases for legacy arg types
    */
     /**
-     * @deprecated Use CompaniaDefaultArgs instead
+     * @deprecated Use CentroCostoDefaultArgs instead
      */
-    export type CompaniaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CompaniaDefaultArgs<ExtArgs>
+    export type CentroCostoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CentroCostoDefaultArgs<ExtArgs>
     /**
      * @deprecated Use FacturaDefaultArgs instead
      */
     export type FacturaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = FacturaDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use NegociadorDefaultArgs instead
+     */
+    export type NegociadorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = NegociadorDefaultArgs<ExtArgs>
     /**
      * @deprecated Use PersonaDefaultArgs instead
      */

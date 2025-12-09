@@ -13,8 +13,8 @@ export const resolvers = {
       return await facturaService.obtenerTodasLasFacturas(filtros || {});
     },
 
-    factura: async (_, { id }) => {
-      return await facturaService.obtenerFacturaCompleta(id);
+    factura: async (_, { numeroControl }) => {
+      return await facturaService.obtenerFacturaCompleta(numeroControl);
     },
 
     proximoNumeroControl: async () => {
@@ -87,8 +87,8 @@ export const resolvers = {
       return await facturaService.crearFactura(input, archivoData);
     },
 
-    actualizarFactura: async (_, { id, input }) => {
-      return await facturaService.actualizarFactura(id, input);
+    actualizarFactura: async (_, { numeroControl, input }) => {
+      return await facturaService.actualizarFactura(numeroControl, input);
     }
   }
 };

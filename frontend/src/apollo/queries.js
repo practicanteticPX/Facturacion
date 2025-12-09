@@ -3,36 +3,42 @@ import { gql } from '@apollo/client';
 export const GET_FACTURAS = gql`
   query GetFacturas($filtros: FiltrosFacturaInput) {
     facturas(filtros: $filtros) {
-      id
-      numeroControl
-      cia
-      ciaNit
-      nit
-      proveedor
-      numeroFactura
-      fechaRadicado
-      fechaFactura
-      facturaCredito
-      acuseReciboSCI
-      legalizaAnticipo
-      entregadaA
-      fechaEntrega
-      fechaRecepcionCausacion
-      recibidaPor
-      fechaRevisionCausacion
-      numeroCausacion
-      fechaCausacion
-      observaciones
-      creadoEn
-      actualizadoEn
+      facturas {
+        numeroControl
+        cia
+        ciaNit
+        nit
+        proveedor
+        numeroFactura
+        fechaRadicado
+        fechaFactura
+        facturaCredito
+        acuseReciboSCI
+        entregadaA
+        fechaEntrega
+        fechaRecepcionCausacion
+        recibidaPor
+        fechaRevisionCausacion
+        numeroCausacion
+        fechaCausacion
+        observaciones
+        creadoEn
+        actualizadoEn
+        enProceso
+        finalizado
+        causado
+      }
+      total
+      page
+      pageSize
+      hasMore
     }
   }
 `;
 
 export const GET_FACTURA = gql`
-  query GetFactura($id: Int!) {
-    factura(id: $id) {
-      id
+  query GetFactura($numeroControl: Int!) {
+    factura(numeroControl: $numeroControl) {
       numeroControl
       cia
       ciaNit
@@ -43,7 +49,6 @@ export const GET_FACTURA = gql`
       fechaFactura
       facturaCredito
       acuseReciboSCI
-      legalizaAnticipo
       entregadaA
       fechaEntrega
       fechaRecepcionCausacion
@@ -54,6 +59,9 @@ export const GET_FACTURA = gql`
       observaciones
       creadoEn
       actualizadoEn
+      enProceso
+      finalizado
+      causado
     }
   }
 `;
@@ -105,7 +113,6 @@ export const GET_OPCIONES_OBSERVACIONES = gql`
 export const CREAR_FACTURA = gql`
   mutation CrearFactura($input: CrearFacturaInput!, $archivo: Upload) {
     crearFactura(input: $input, archivo: $archivo) {
-      id
       numeroControl
       cia
       ciaNit
@@ -116,17 +123,17 @@ export const CREAR_FACTURA = gql`
       fechaFactura
       facturaCredito
       acuseReciboSCI
-      legalizaAnticipo
       entregadaA
       fechaEntrega
+      creadoEn
+      actualizadoEn
     }
   }
 `;
 
 export const ACTUALIZAR_FACTURA = gql`
-  mutation ActualizarFactura($id: Int!, $input: ActualizarFacturaInput!) {
-    actualizarFactura(id: $id, input: $input) {
-      id
+  mutation ActualizarFactura($numeroControl: Int!, $input: ActualizarFacturaInput!) {
+    actualizarFactura(numeroControl: $numeroControl, input: $input) {
       numeroControl
       cia
       ciaNit
@@ -137,7 +144,6 @@ export const ACTUALIZAR_FACTURA = gql`
       fechaFactura
       facturaCredito
       acuseReciboSCI
-      legalizaAnticipo
       entregadaA
       fechaEntrega
       fechaRecepcionCausacion
@@ -146,6 +152,8 @@ export const ACTUALIZAR_FACTURA = gql`
       numeroCausacion
       fechaCausacion
       observaciones
+      creadoEn
+      actualizadoEn
     }
   }
 `;

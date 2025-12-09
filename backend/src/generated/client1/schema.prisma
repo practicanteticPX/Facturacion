@@ -11,32 +11,42 @@ datasource db {
   schemas  = ["crud_facturas"]
 }
 
+model CentroCosto {
+  id          Int     @id @default(autoincrement())
+  centroCosto String? @map("CentroCosto") @db.VarChar(255)
+  ciaCC       String? @map("Cia_CC") @db.VarChar(50)
+  responsable String? @map("Responsable") @db.VarChar(255)
+
+  @@map("T_CentrosCostos")
+  @@schema("crud_facturas")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model Compania {
   id  Int     @default(autoincrement())
   cia String? @db.VarChar
 
-  @@unique([id])
   @@map("T_Cias")
+  @@ignore
   @@schema("crud_facturas")
 }
 
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model Factura {
-  id                      Int       @id(map: "t_facturas_pkey") @default(autoincrement())
-  numeroControl           String    @unique(map: "uk_numero_control") @map("numero_control") @db.VarChar(50)
-  cia                     String    @db.VarChar(2)
-  ciaNit                  String    @map("cia_nit") @db.VarChar(50)
-  nit                     String    @db.VarChar(20)
-  proveedor               String    @db.VarChar(255)
-  numeroFactura           String    @map("numero_factura") @db.VarChar(50)
-  fechaRadicado           DateTime  @map("fecha_radicado") @db.Date
-  fechaFactura            DateTime  @map("fecha_factura") @db.Date
-  facturaCredito          String    @map("factura_credito") @db.VarChar(2)
-  acuseReciboSCI          String    @map("acuse_recibo_sci") @db.VarChar(2)
-  legalizaAnticipo        String    @default("No") @map("legaliza_anticipo") @db.VarChar(2)
-  entregadaA              String    @map("entregada_a") @db.VarChar(255)
-  fechaEntrega            DateTime  @map("fecha_entrega") @db.Date
+  numeroControl           Int       @id(map: "t_facturas_pkey") @default(autoincrement()) @map("numero_control")
+  cia                     String?   @db.VarChar(2)
+  ciaNit                  String?   @map("cia_nit") @db.VarChar(50)
+  nit                     String?   @db.VarChar(50)
+  proveedor               String?   @db.VarChar(100)
+  numeroFactura           String?   @map("numero_factura") @db.VarChar(50)
+  fechaRadicado           DateTime? @map("fecha_radicado") @db.Date
+  fechaFactura            DateTime? @map("fecha_factura") @db.Date
+  facturaCredito          Boolean?  @map("factura_credito")
+  acuseReciboSCI          Boolean?  @map("acuse_recibo_sci")
+  entregadaA              String?   @map("entregada_a") @db.VarChar(50)
+  fechaEntrega            DateTime? @map("fecha_entrega") @db.Date
   fechaRecepcionCausacion DateTime? @map("fecha_recepcion_causacion") @db.Date
-  recibidaPor             String?   @map("recibida_por") @db.VarChar(255)
+  recibidaPor             String?   @map("recibida_por") @db.VarChar(50)
   fechaRevisionCausacion  DateTime? @map("fecha_revision_causacion") @db.Date
   numeroCausacion         String?   @map("numero_causacion") @db.VarChar(50)
   fechaCausacion          DateTime? @map("fecha_causacion") @db.Date
@@ -49,17 +59,26 @@ model Factura {
 
   @@index([cia], map: "idx_facturas_cia")
   @@index([nit], map: "idx_facturas_nit")
-  @@index([numeroControl], map: "idx_facturas_numero_control")
+  @@index([numeroControl], map: "idx_numero_control")
   @@map("T_Facturas")
   @@schema("crud_facturas")
 }
 
-model Persona {
-  id     Int     @default(autoincrement())
-  nombre String? @db.VarChar
-  correo String? @db.VarChar
+model Negociador {
+  id         Int     @id @default(autoincrement())
+  negociador String? @db.VarChar(255)
+  cargo      String? @db.VarChar(255)
 
-  @@unique([id])
+  @@map("T_Negociadores")
+  @@schema("crud_facturas")
+}
+
+model Persona {
+  id     Int     @id @default(autoincrement())
+  nombre String? @db.VarChar(255)
+  correo String? @db.VarChar(255)
+  cargo  String? @db.VarChar(255)
+
   @@map("T_Personas")
   @@schema("crud_facturas")
 }

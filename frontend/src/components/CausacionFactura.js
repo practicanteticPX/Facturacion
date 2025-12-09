@@ -58,7 +58,7 @@ function CausacionFactura() {
   const { data: opcionesObservacionesData } = useQuery(GET_OPCIONES_OBSERVACIONES);
 
   const { data: facturaData, loading: loadingFactura } = useQuery(GET_FACTURA, {
-    variables: { id: parseInt(id) },
+    variables: { numeroControl: parseInt(id) },
     onCompleted: (data) => {
       if (data?.factura) {
         const factura = data.factura;
@@ -75,7 +75,7 @@ function CausacionFactura() {
   });
 
   const [actualizarFactura, { loading: loadingActualizar }] = useMutation(ACTUALIZAR_FACTURA, {
-    refetchQueries: [{ query: GET_FACTURAS }, { query: GET_FACTURA, variables: { id: parseInt(id) } }],
+    refetchQueries: [{ query: GET_FACTURAS }, { query: GET_FACTURA, variables: { numeroControl: parseInt(id) } }],
     onCompleted: () => {
       setMensaje({ tipo: 'success', texto: 'Causación actualizada exitosamente' });
       setTimeout(() => {
@@ -110,7 +110,7 @@ function CausacionFactura() {
 
       await actualizarFactura({
         variables: {
-          id: parseInt(id),
+          numeroControl: parseInt(id),
           input
         }
       });

@@ -137,13 +137,13 @@ class EmailService {
         let firmaPath;
 
         // Ruta local en el backend (preferida)
-        const rutaLocal = path.join(__dirname, '../assets/Juliet Acevedo.gif');
+        const rutaLocal = path.join(__dirname, '../assets/Juliet Acevedo Medina.png');
 
         // Ruta en desarrollo (desde backend hacia frontend)
-        const rutaDesarrollo = path.join(__dirname, '../../../frontend/src/assets/Juliet Acevedo.gif');
+        const rutaDesarrollo = path.join(__dirname, '../../../frontend/src/assets/Juliet Acevedo Medina.png');
 
         // Ruta en Docker
-        const rutaDocker = '/app/backend/src/assets/Juliet Acevedo.gif';
+        const rutaDocker = '/app/backend/src/assets/Juliet Acevedo Medina.png';
 
         if (fs.existsSync(rutaLocal)) {
           firmaPath = rutaLocal;
@@ -158,17 +158,17 @@ class EmailService {
         console.log('📎 Cargando firma desde:', firmaPath);
         const firmaBuffer = fs.readFileSync(firmaPath);
         attachments.push({
-          filename: 'Juliet Acevedo.gif',
+          filename: 'Juliet Acevedo Medina.png',
           content: firmaBuffer,
-          contentType: 'image/gif',
+          contentType: 'image/png',
           cid: 'firma' // Content ID para referenciar en el HTML
         });
       } catch (error) {
         console.warn('⚠ No se pudo cargar la imagen de firma:', error.message);
         console.warn('⚠ Intentó buscar en las siguientes rutas:', {
-          local: path.join(__dirname, '../assets/Juliet Acevedo.gif'),
-          desarrollo: path.join(__dirname, '../../../frontend/src/assets/Juliet Acevedo.gif'),
-          docker: '/app/backend/src/assets/Juliet Acevedo.gif'
+          local: path.join(__dirname, '../assets/Juliet Acevedo Medina.png'),
+          desarrollo: path.join(__dirname, '../../../frontend/src/assets/Juliet Acevedo Medina.png'),
+          docker: '/app/backend/src/assets/Juliet Acevedo Medina.png'
         });
       }
 

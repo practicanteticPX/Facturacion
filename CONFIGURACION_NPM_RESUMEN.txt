@@ -1,0 +1,61 @@
+==========================================================
+CONFIGURACIÓN NGINX PROXY MANAGER - RESUMEN RÁPIDO
+==========================================================
+
+📋 PASO 1: Crear Proxy Host en NPM
+----------------------------------
+1. Abre NPM: http://tu-ip:81
+2. Ve a "Proxy Hosts" → "Add Proxy Host"
+
+▶ Tab "Details":
+   - Domain Names: recepcion-facturacion.com
+   - Scheme: http
+   - Forward Hostname: 192.168.0.30
+   - Forward Port: 3001
+   - ✅ Block Common Exploits
+   - ✅ Websockets Support
+
+▶ Tab "SSL":
+   - SSL Certificate: (Selecciona tu certificado)
+   - ✅ Force SSL
+   - ✅ HTTP/2 Support
+   - ✅ HSTS Enabled
+
+▶ Tab "Advanced" - COPIAR ESTA CONFIGURACIÓN:
+   (Ver archivo CONFIGURACION_NPM.md líneas 52-124)
+
+   RESUMEN:
+   - location /graphql { ... } → Backend (puerto 4001)
+   - location / { ... }        → Frontend (puerto 3001)
+
+3. Guardar
+
+==========================================================
+
+📋 PASO 2: Verificar
+----------------------------------
+1. https://recepcion-facturacion.com → Carga el frontend
+2. https://recepcion-facturacion.com/graphql → API (puede dar error de método, es normal)
+3. Consola del navegador (F12):
+   🔗 Apollo Client conectándose a: https://recepcion-facturacion.com/graphql
+
+==========================================================
+
+✅ RESULTADO:
+- Frontend: https://recepcion-facturacion.com
+- Backend:  https://recepcion-facturacion.com/graphql
+- Todo en HTTPS con un solo dominio
+
+==========================================================
+
+⚠️ IMPORTANTE:
+Si el certificado es autofirmado, debes aceptarlo en el navegador:
+1. Visita https://recepcion-facturacion.com
+2. Click "Avanzado" → "Continuar de todas formas"
+
+==========================================================
+
+📁 DOCUMENTACIÓN COMPLETA:
+Ver archivo: CONFIGURACION_NPM.md
+
+==========================================================

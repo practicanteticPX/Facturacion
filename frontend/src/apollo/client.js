@@ -1,7 +1,42 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 
+/**
+ * Construye la URL del backend GraphQL de forma dinámica
+ * Prioridad:
+ * 1. Variable de entorno REACT_APP_GRAPHQL_URL (si está definida)
+ * 2. Detectar automáticamente desde window.location
+ *
+ * IMPORTANTE: Por defecto usa HTTP para el backend, incluso si el frontend está en HTTPS
+ * Para usar HTTPS en el backend, define REACT_APP_GRAPHQL_URL con https://
+ */
+const getGraphQLUrl = () => {
+  // Si hay variable de entorno, usarla
+  if (process.env.REACT_APP_GRAPHQL_URL) {
+    return process.env.REACT_APP_GRAPHQL_URL;
+  }
+
+  // Detectar automáticamente basado en la URL actual del navegador
+  if (typeof window !== 'undefined') {
+    const hostname = window.location.hostname; // dominio o IP
+    const backendPort = '4001'; // Puerto del backend
+
+    // SIEMPRE usar HTTP para el backend (a menos que esté configurado con variable de entorno)
+    // Esto evita errores de mixed content cuando el frontend está en HTTPS
+    const protocol = 'http:';
+
+    return `${protocol}//${hostname}:${backendPort}/graphql`;
+  }
+
+  // Fallback por defecto (solo si no hay window, por ejemplo en SSR)
+  return 'http://localhost:4001/graphql';
+};
+
+const GRAPHQL_URL = getGraphQLUrl();
+
+console.log('🔗 Apollo Client conectándose a:', GRAPHQL_URL);
+
 const client = new ApolloClient({
-  uri: process.env.REACT_APP_GRAPHQL_URL || 'http://192.168.0.30:4001/graphql',
+  uri: GRAPHQL_URL,
   cache: new InMemoryCache(),
   defaultOptions: {
     watchQuery: {
@@ -50,8 +85,8 @@ export const executeMutationWithFile = async (mutation, variables) => {
     formData.append(index, file);
   });
 
-  // Enviar request con fetch
-  const response = await fetch(client.link.options.uri || process.env.REACT_APP_GRAPHQL_URL || 'http://192.168.0.30:4001/graphql', {
+  // Enviar request con fetch usando la misma URL dinámica
+  const response = await fetch(GRAPHQL_URL, {
     method: 'POST',
     headers: {
       'apollo-require-preflight': 'true',

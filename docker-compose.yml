@@ -6,10 +6,12 @@ services:
     ports:
       - "192.168.0.30:4001:4001"
     environment:
-      - DATABASE_URL=postgresql://admin:$$40M1n*!!2023@192.168.0.254:5432/SERV_QPREX
-      - DATABASE_URL_2=postgresql://admin:$$40M1n*!!2023@192.168.0.254:5432/DB_QPREX
+      - DATABASE_URL=postgresql://svc_app@10.50.7.4:5432/SERV_QPREX
+      - DATABASE_URL_2=postgresql://svc_app@10.50.7.4:5432/DB_QPREX
+      - CERTS_PATH=/app/certs
       - PORT=4001
-      - FRONTEND_URL=http://192.168.0.30:3001
+      # FRONTEND_URL ya no es necesaria - CORS ahora acepta HTTP/HTTPS desde cualquier origen
+      # - FRONTEND_URL=http://192.168.0.30:3001
       - AD_PROTOCOL=ldap
       - AD_HOSTNAME=192.168.0.253
       - AD_PORT=389
@@ -22,6 +24,7 @@ services:
     volumes:
       - ./backend:/app
       - /app/node_modules
+      - ./certs:/app/certs:ro
     restart: unless-stopped
 
   frontend:
@@ -31,7 +34,8 @@ services:
     ports:
       - "192.168.0.30:3001:3001"
     environment:
-      - REACT_APP_GRAPHQL_URL=http://192.168.0.30:4001/graphql
+      # Backend con HTTPS en el mismo host, ruta /graphql
+      - REACT_APP_GRAPHQL_URL=https://recepcion-facturacion.com/graphql
       - HOST=0.0.0.0
       - PORT=3001
     volumes:

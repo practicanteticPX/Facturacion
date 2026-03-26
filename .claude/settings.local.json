@@ -39,7 +39,8 @@
       "Bash(if not exist \"d:\\CRUD\\backend\\src\\assets\" mkdir \"d:\\CRUD\\backend\\src\\assets\")",
       "Bash(find:*)",
       "Bash(PGPASSWORD='$40M1n*!!2023' psql -h 192.168.0.254 -U admin -d SERV_QPREX -f backend/prisma/migrations/add_missing_columns_to_t_facturas.sql)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(node test-db.js)"
     ],
     "deny": [],
     "ask": []

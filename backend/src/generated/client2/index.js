@@ -134,7 +134,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "D:\\CRUD\\backend\\src\\generated\\client2",
+      "value": "D:\\facturacion\\backend\\src\\generated\\client2",
       "fromEnvVar": null
     },
     "config": {
@@ -149,12 +149,17 @@ const config = {
       {
         "fromEnvVar": null,
         "value": "linux-musl-openssl-3.0.x"
+      },
+      {
+        "fromEnvVar": null,
+        "value": "windows"
       }
     ],
     "previewFeatures": [
+      "driverAdapters",
       "multiSchema"
     ],
-    "sourceFilePath": "D:\\CRUD\\backend\\prisma\\schema2.prisma",
+    "sourceFilePath": "D:\\facturacion\\backend\\prisma\\schema2.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -177,8 +182,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider        = \"prisma-client-js\"\n  output          = \"../src/generated/client2\"\n  previewFeatures = [\"multiSchema\"]\n  binaryTargets   = [\"native\", \"linux-musl-openssl-3.0.x\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL_2\")\n  schemas  = [\"public\"]\n}\n\n// Tabla de proveedores en esquema public de DB_QPREX (SOLO LECTURA)\nmodel Proveedor {\n  id                  Int     @id @default(autoincrement())\n  Cia                 String? @db.Char(2)\n  Nit                 String? @db.VarChar(15)\n  DigitoVerificacion  String? @db.Char(1)\n  Nombre              String? @db.VarChar(30)\n  Direccion           String? @db.VarChar(30)\n  Ciudad              String? @db.VarChar(15)\n  Telefono            String? @db.VarChar(7)\n  IdentificadorCC_NIT String? @map(\"IdentificadorCC-NIT\") @db.Char(1)\n  CodigoPais          String? @db.VarChar(3)\n\n  @@map(\"T_Dim_Cedulas_Nits\")\n  @@schema(\"public\")\n}\n",
-  "inlineSchemaHash": "6fe3f1c33c7f3bc11a3c873e4013718b5ef1ed78634bdaa7a946898a373e3bdc",
+  "inlineSchema": "generator client {\n  provider        = \"prisma-client-js\"\n  output          = \"../src/generated/client2\"\n  previewFeatures = [\"multiSchema\", \"driverAdapters\"]\n  binaryTargets   = [\"native\", \"linux-musl-openssl-3.0.x\", \"windows\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL_2\")\n  schemas  = [\"public\"]\n}\n\n// Tabla de proveedores en esquema public de DB_QPREX (SOLO LECTURA)\nmodel Proveedor {\n  id                  Int     @id @default(autoincrement())\n  Cia                 String? @db.Char(2)\n  Nit                 String? @db.VarChar(15)\n  DigitoVerificacion  String? @db.Char(1)\n  Nombre              String? @db.VarChar(30)\n  Direccion           String? @db.VarChar(30)\n  Ciudad              String? @db.VarChar(15)\n  Telefono            String? @db.VarChar(7)\n  IdentificadorCC_NIT String? @map(\"IdentificadorCC-NIT\") @db.Char(1)\n  CodigoPais          String? @db.VarChar(3)\n\n  @@map(\"T_Dim_Cedulas_Nits\")\n  @@schema(\"public\")\n}\n",
+  "inlineSchemaHash": "cbe910c2822e5246de0e9bfb0af19e9e780a1a364afd7b402f77fda3e9cec7af",
   "copyEngine": true
 }
 

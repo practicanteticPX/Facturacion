@@ -45,6 +45,12 @@
   border: 1px solid #fca5a5;
 }
 
+.editar-alert-info {
+  background-color: #dbeafe;
+  color: #1e40af;
+  border: 1px solid #93c5fd;
+}
+
 .editar-form {
   width: 100%;
 }

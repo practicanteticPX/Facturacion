@@ -169,7 +169,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/app/src/generated/client1",
+      "value": "D:\\facturacion\\backend\\src\\generated\\client1",
       "fromEnvVar": null
     },
     "config": {
@@ -178,22 +178,27 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "linux-musl-openssl-3.0.x",
+        "value": "windows",
         "native": true
       },
       {
         "fromEnvVar": null,
         "value": "linux-musl-openssl-3.0.x"
+      },
+      {
+        "fromEnvVar": null,
+        "value": "windows"
       }
     ],
     "previewFeatures": [
+      "driverAdapters",
       "multiSchema"
     ],
-    "sourceFilePath": "/app/prisma/schema.prisma",
+    "sourceFilePath": "D:\\facturacion\\backend\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../.env",
+    "rootEnvPath": null,
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../../../prisma",
@@ -212,8 +217,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider        = \"prisma-client-js\"\n  output          = \"../src/generated/client1\"\n  previewFeatures = [\"multiSchema\"]\n  binaryTargets   = [\"native\", \"linux-musl-openssl-3.0.x\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n  schemas  = [\"crud_facturas\"]\n}\n\nmodel CentroCosto {\n  id          Int     @id @default(autoincrement())\n  centroCosto String? @map(\"CentroCosto\") @db.VarChar(255)\n  ciaCC       String? @map(\"Cia_CC\") @db.VarChar(50)\n  responsable String? @map(\"Responsable\") @db.VarChar(255)\n\n  @@map(\"T_CentrosCostos\")\n  @@schema(\"crud_facturas\")\n}\n\n/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.\nmodel Compania {\n  id  Int     @default(autoincrement())\n  cia String? @db.VarChar\n\n  @@map(\"T_Cias\")\n  @@ignore\n  @@schema(\"crud_facturas\")\n}\n\n/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments\nmodel Factura {\n  numeroControl           Int       @id(map: \"t_facturas_pkey\") @default(autoincrement()) @map(\"numero_control\")\n  cia                     String?   @db.VarChar(2)\n  ciaNit                  String?   @map(\"cia_nit\") @db.VarChar(50)\n  nit                     String?   @db.VarChar(50)\n  proveedor               String?   @db.VarChar(100)\n  numeroFactura           String?   @map(\"numero_factura\") @db.VarChar(50)\n  fechaRadicado           DateTime? @map(\"fecha_radicado\") @db.Date\n  fechaFactura            DateTime? @map(\"fecha_factura\") @db.Date\n  facturaCredito          Boolean?  @map(\"factura_credito\")\n  acuseReciboSCI          Boolean?  @map(\"acuse_recibo_sci\")\n  entregadaA              String?   @map(\"entregada_a\") @db.VarChar(50)\n  fechaEntrega            DateTime? @map(\"fecha_entrega\") @db.Date\n  fechaRecepcionCausacion DateTime? @map(\"fecha_recepcion_causacion\") @db.Date\n  recibidaPor             String?   @map(\"recibida_por\") @db.VarChar(50)\n  fechaRevisionCausacion  DateTime? @map(\"fecha_revision_causacion\") @db.Date\n  numeroCausacion         String?   @map(\"numero_causacion\") @db.VarChar(50)\n  fechaCausacion          DateTime? @map(\"fecha_causacion\") @db.Date\n  observaciones           String?   @db.VarChar(50)\n  creadoEn                DateTime? @default(now()) @map(\"created_at\") @db.Timestamptz(6)\n  actualizadoEn           DateTime? @default(now()) @map(\"updated_at\") @db.Timestamptz(6)\n  enProceso               Boolean?  @default(false) @map(\"en_proceso\")\n  finalizado              Boolean?  @default(false) @map(\"finalizado\")\n  causado                 Boolean?  @default(false) @map(\"causado\")\n\n  @@index([cia], map: \"idx_facturas_cia\")\n  @@index([nit], map: \"idx_facturas_nit\")\n  @@index([numeroControl], map: \"idx_numero_control\")\n  @@map(\"T_Facturas\")\n  @@schema(\"crud_facturas\")\n}\n\nmodel Negociador {\n  id         Int     @id @default(autoincrement())\n  negociador String? @db.VarChar(255)\n  cargo      String? @db.VarChar(255)\n\n  @@map(\"T_Negociadores\")\n  @@schema(\"crud_facturas\")\n}\n\nmodel Persona {\n  id     Int     @id @default(autoincrement())\n  nombre String? @db.VarChar(255)\n  correo String? @db.VarChar(255)\n  cargo  String? @db.VarChar(255)\n\n  @@map(\"T_Personas\")\n  @@schema(\"crud_facturas\")\n}\n",
-  "inlineSchemaHash": "78d838c9f0af683a3fa181678347cfe210416109746318a3107afe95d1e6551b",
+  "inlineSchema": "generator client {\n  provider        = \"prisma-client-js\"\n  output          = \"../src/generated/client1\"\n  previewFeatures = [\"multiSchema\", \"driverAdapters\"]\n  binaryTargets   = [\"native\", \"linux-musl-openssl-3.0.x\", \"windows\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n  schemas  = [\"crud_facturas\"]\n}\n\nmodel CentroCosto {\n  id          Int     @id @default(autoincrement())\n  centroCosto String? @map(\"CentroCosto\") @db.VarChar(255)\n  ciaCC       String? @map(\"Cia_CC\") @db.VarChar(50)\n  responsable String? @map(\"Responsable\") @db.VarChar(255)\n\n  @@map(\"T_CentrosCostos\")\n  @@schema(\"crud_facturas\")\n}\n\n/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.\nmodel Compania {\n  id  Int     @default(autoincrement())\n  cia String? @db.VarChar\n\n  @@map(\"T_Cias\")\n  @@ignore\n  @@schema(\"crud_facturas\")\n}\n\n/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments\nmodel Factura {\n  numeroControl           Int       @id(map: \"t_facturas_pkey\") @default(autoincrement()) @map(\"numero_control\")\n  cia                     String?   @db.VarChar(2)\n  ciaNit                  String?   @map(\"cia_nit\") @db.VarChar(50)\n  nit                     String?   @db.VarChar(50)\n  proveedor               String?   @db.VarChar(100)\n  numeroFactura           String?   @map(\"numero_factura\") @db.VarChar(50)\n  fechaRadicado           DateTime? @map(\"fecha_radicado\") @db.Date\n  fechaFactura            DateTime? @map(\"fecha_factura\") @db.Date\n  facturaCredito          Boolean?  @map(\"factura_credito\")\n  acuseReciboSCI          Boolean?  @map(\"acuse_recibo_sci\")\n  entregadaA              String?   @map(\"entregada_a\") @db.VarChar(50)\n  fechaEntrega            DateTime? @map(\"fecha_entrega\") @db.Date\n  fechaRecepcionCausacion DateTime? @map(\"fecha_recepcion_causacion\") @db.Date\n  recibidaPor             String?   @map(\"recibida_por\") @db.VarChar(50)\n  fechaRevisionCausacion  DateTime? @map(\"fecha_revision_causacion\") @db.Date\n  numeroCausacion         String?   @map(\"numero_causacion\") @db.VarChar(50)\n  fechaCausacion          DateTime? @map(\"fecha_causacion\") @db.Date\n  observaciones           String?   @db.VarChar(50)\n  creadoEn                DateTime? @default(now()) @map(\"created_at\") @db.Timestamptz(6)\n  actualizadoEn           DateTime? @default(now()) @map(\"updated_at\") @db.Timestamptz(6)\n  enProceso               Boolean?  @default(false) @map(\"en_proceso\")\n  finalizado              Boolean?  @default(false) @map(\"finalizado\")\n  causado                 Boolean?  @default(false) @map(\"causado\")\n\n  @@index([cia], map: \"idx_facturas_cia\")\n  @@index([nit], map: \"idx_facturas_nit\")\n  @@index([numeroControl], map: \"idx_numero_control\")\n  @@map(\"T_Facturas\")\n  @@schema(\"crud_facturas\")\n}\n\nmodel Negociador {\n  id         Int     @id @default(autoincrement())\n  negociador String? @db.VarChar(255)\n  cargo      String? @db.VarChar(255)\n\n  @@map(\"T_Negociadores\")\n  @@schema(\"crud_facturas\")\n}\n\nmodel Persona {\n  id     Int     @id @default(autoincrement())\n  nombre String? @db.VarChar(255)\n  correo String? @db.VarChar(255)\n  cargo  String? @db.VarChar(255)\n\n  @@map(\"T_Personas\")\n  @@schema(\"crud_facturas\")\n}\n",
+  "inlineSchemaHash": "6681bef55456336ded0b13e6dae948862c465d6da34653019d2deec364223e20",
   "copyEngine": true
 }
 config.dirname = '/'

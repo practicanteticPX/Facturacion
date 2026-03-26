@@ -6,10 +6,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="Recepción Facturación" />
+    <!-- Google Sans - Fuente principal de TODA la aplicación -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Asap:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <title>Recepción Facturación</title>
+
+    <!-- Sistema anti-FOUT (Flash of Unstyled Text) -->
+    <style>
+      html {
+        visibility: hidden;
+        opacity: 0;
+      }
+      html.fonts-loaded {
+        visibility: visible;
+        opacity: 1;
+        transition: opacity 0.3s ease-in-out;
+      }
+    </style>
+    <script>
+      (function() {
+        var fontsToLoad = [
+          new FontFace('Google Sans', 'url(https://fonts.gstatic.com/s/googlesans/v58/4Ua_rENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RFD48TE63OOYKtrwEIJllpyk.woff2)', { weight: '400' }),
+          new FontFace('Google Sans', 'url(https://fonts.gstatic.com/s/googlesans/v58/4Ua_rENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RFD48TE63OOYStrwEIJllpyk.woff2)', { weight: '500' }),
+          new FontFace('Google Sans', 'url(https://fonts.gstatic.com/s/googlesans/v58/4Ua_rENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iqcsih3SAyH6cAwhX9RFD48TE63OOYLtbwEIJllpyk.woff2)', { weight: '600' })
+        ];
+
+        Promise.all(fontsToLoad.map(function(font) {
+          return font.load().then(function(loadedFont) {
+            document.fonts.add(loadedFont);
+          });
+        })).then(function() {
+          document.documentElement.classList.add('fonts-loaded');
+        }).catch(function(error) {
+          console.error('Error cargando fuentes:', error);
+          setTimeout(function() {
+            document.documentElement.classList.add('fonts-loaded');
+          }, 300);
+        });
+
+        setTimeout(function() {
+          if (!document.documentElement.classList.contains('fonts-loaded')) {
+            document.documentElement.classList.add('fonts-loaded');
+          }
+        }, 300);
+      })();
+    </script>
   </head>
   <body>
     <noscript>Necesitas habilitar JavaScript para ejecutar esta aplicación.</noscript>

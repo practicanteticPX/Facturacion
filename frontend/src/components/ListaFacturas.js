@@ -13,7 +13,14 @@ import './ListaFacturas.css';
  */
 function ListaFacturas() {
   const navigate = useNavigate();
-  const [filtros, setFiltros] = useState({
+  // Filtros que el usuario está escribiendo (no aplicados aún)
+  const [filtrosInputs, setFiltrosInputs] = useState({
+    cia: '',
+    nit: '',
+    numeroControl: ''
+  });
+  // Filtros realmente aplicados en la búsqueda
+  const [filtrosAplicados, setFiltrosAplicados] = useState({
     cia: '',
     nit: '',
     numeroControl: ''
@@ -25,9 +32,9 @@ function ListaFacturas() {
   const { data, loading, error, refetch } = useQuery(GET_FACTURAS, {
     variables: {
       filtros: {
-        ...(filtros.cia && { cia: filtros.cia }),
-        ...(filtros.nit && { nit: filtros.nit }),
-        ...(filtros.numeroControl && { numeroControl: filtros.numeroControl }),
+        ...(filtrosAplicados.cia && { cia: filtrosAplicados.cia }),
+        ...(filtrosAplicados.nit && { nit: filtrosAplicados.nit }),
+        ...(filtrosAplicados.numeroControl && { numeroControl: filtrosAplicados.numeroControl }),
         page,
         pageSize
       }
@@ -36,47 +43,33 @@ function ListaFacturas() {
 
   const handleFiltroChange = (e) => {
     const { name, value } = e.target;
-    setFiltros(prev => ({
+    setFiltrosInputs(prev => ({
       ...prev,
       [name]: value
     }));
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      aplicarFiltros();
+    }
+  };
+
   const aplicarFiltros = () => {
+    // Aplicar los filtros escritos por el usuario
+    setFiltrosAplicados(filtrosInputs);
     setPage(1); // Resetear a la primera página al aplicar filtros
-    refetch({
-      filtros: {
-        ...(filtros.cia && { cia: filtros.cia }),
-        ...(filtros.nit && { nit: filtros.nit }),
-        ...(filtros.numeroControl && { numeroControl: filtros.numeroControl }),
-        page: 1,
-        pageSize
-      }
-    });
   };
 
   const limpiarFiltros = () => {
-    setFiltros({ cia: '', nit: '', numeroControl: '' });
+    const filtrosVacios = { cia: '', nit: '', numeroControl: '' };
+    setFiltrosInputs(filtrosVacios);
+    setFiltrosAplicados(filtrosVacios);
     setPage(1);
-    refetch({
-      filtros: {
-        page: 1,
-        pageSize
-      }
-    });
   };
 
   const irAPagina = (nuevaPagina) => {
     setPage(nuevaPagina);
-    refetch({
-      filtros: {
-        ...(filtros.cia && { cia: filtros.cia }),
-        ...(filtros.nit && { nit: filtros.nit }),
-        ...(filtros.numeroControl && { numeroControl: filtros.numeroControl }),
-        page: nuevaPagina,
-        pageSize
-      }
-    });
   };
 
   const formatearFecha = (fecha) => {
@@ -103,8 +96,8 @@ function ListaFacturas() {
           <div className="lista-form-group">
             <Label>Compañía</Label>
             <Select
-              value={filtros.cia || "all"}
-              onValueChange={(value) => setFiltros(prev => ({ ...prev, cia: value === "all" ? "" : value }))}
+              value={filtrosInputs.cia || "all"}
+              onValueChange={(value) => setFiltrosInputs(prev => ({ ...prev, cia: value === "all" ? "" : value }))}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Todas las compañías" />
@@ -123,8 +116,9 @@ function ListaFacturas() {
             <input
               type="text"
               name="nit"
-              value={filtros.nit}
+              value={filtrosInputs.nit}
               onChange={handleFiltroChange}
+              onKeyPress={handleKeyPress}
               className="lista-input"
               placeholder="Ej: 900123456-1"
             />
@@ -135,8 +129,9 @@ function ListaFacturas() {
             <input
               type="text"
               name="numeroControl"
-              value={filtros.numeroControl}
+              value={filtrosInputs.numeroControl}
               onChange={handleFiltroChange}
+              onKeyPress={handleKeyPress}
               className="lista-input"
               placeholder="Ej: 2024001"
             />
@@ -193,8 +188,9 @@ function ListaFacturas() {
                         onClick={() => navigate(`/facturas/${factura.numeroControl}`)}
                         variant="ghost"
                         size="sm"
+                        title={factura.enProceso ? 'Ver factura (solo lectura)' : 'Editar factura'}
                       >
-                        Editar
+                        {factura.enProceso ? 'Ver' : 'Editar'}
                       </Button>
                       <Button
                         onClick={() => navigate(`/facturas/${factura.numeroControl}/causacion`)}

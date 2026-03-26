@@ -1,21 +1,32 @@
+/* Importar Google Sans - Fuente para toda la app */
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;600;700&display=swap');
+
+/* OVERRIDE TOTAL - Aplicar Google Sans a ABSOLUTAMENTE TODO con !important */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Google Sans', sans-serif !important;
+  font-weight: 500 !important;
+}
+
+*::before,
+*::after {
+  font-family: 'Google Sans', sans-serif !important;
+  font-weight: 500 !important;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Google Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif !important;
+  font-weight: 500 !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #f0f2f5;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: 'Google Sans', source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace !important;
+  font-weight: 500 !important;
 }
 
 .container {
@@ -26,9 +37,38 @@ code {
 
 button {
   cursor: pointer;
-  font-family: inherit;
+  font-family: 'Google Sans', sans-serif !important;
+  font-weight: 500 !important;
 }
 
 input, select, textarea {
-  font-family: inherit;
+  font-family: 'Google Sans', sans-serif !important;
+  font-weight: 500 !important;
+}
+
+/* Aplicar Google Sans a TODOS los elementos con máxima prioridad */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Google Sans', sans-serif !important;
+  font-weight: 700 !important;
+}
+
+p, span, div, a, li, td, th, label, option {
+  font-family: 'Google Sans', sans-serif !important;
+  font-weight: 500 !important;
+}
+
+/* Override para elementos específicos que podrían tener estilos propios */
+table, tr, tbody, thead, tfoot {
+  font-family: 'Google Sans', sans-serif !important;
+  font-weight: 500 !important;
+}
+
+form, fieldset, legend {
+  font-family: 'Google Sans', sans-serif !important;
+  font-weight: 500 !important;
+}
+
+nav, header, footer, section, article, aside {
+  font-family: 'Google Sans', sans-serif !important;
+  font-weight: 500 !important;
 }

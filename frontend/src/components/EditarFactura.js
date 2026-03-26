@@ -66,6 +66,7 @@ function EditarFactura() {
   const [proveedorNombre, setProveedorNombre] = useState('');
   const [ciaNit, setCiaNit] = useState('');
   const [mensaje, setMensaje] = useState({ tipo: '', texto: '' });
+  const [enProceso, setEnProceso] = useState(false);
 
   const { data: companiasData } = useQuery(GET_COMPANIAS);
   const { data: personasData } = useQuery(GET_PERSONAS);
@@ -75,6 +76,16 @@ function EditarFactura() {
     onCompleted: (data) => {
       if (data?.factura) {
         const factura = data.factura;
+
+        // Verificar si la factura está en proceso (solo lectura)
+        if (factura.enProceso) {
+          setEnProceso(true);
+          setMensaje({
+            tipo: 'info',
+            texto: 'Esta factura está en proceso y solo se puede visualizar (modo solo lectura)'
+          });
+        }
+
         setFormData({
           numeroControl: factura.numeroControl || '',
           cia: factura.cia || '',
@@ -161,8 +172,9 @@ function EditarFactura() {
     try {
       const input = {};
 
+      // Excluir numeroControl porque es un parámetro separado en la mutation
       Object.keys(formData).forEach(key => {
-        if (formData[key] !== '' && formData[key] !== null && formData[key] !== undefined) {
+        if (key !== 'numeroControl' && formData[key] !== '' && formData[key] !== null && formData[key] !== undefined) {
           input[key] = formData[key];
         }
       });
@@ -182,7 +194,7 @@ function EditarFactura() {
 
   return (
     <div className="editar-card">
-      <h2 className="editar-title">Editar Factura #{id}</h2>
+      <h2 className="editar-title">{enProceso ? 'Ver' : 'Editar'} Factura #{id}</h2>
 
       {mensaje.texto && (
         <div className={`editar-alert editar-alert-${mensaje.tipo}`}>
@@ -212,6 +224,7 @@ function EditarFactura() {
                 value={formData.cia}
                 onValueChange={(value) => handleChange({ target: { name: 'cia', value } })}
                 required
+                disabled={enProceso}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Seleccione" />
@@ -244,6 +257,7 @@ function EditarFactura() {
                 onChange={handleChange}
                 className="editar-input"
                 required
+                disabled={enProceso}
               />
             </div>
 
@@ -256,6 +270,7 @@ function EditarFactura() {
                 onChange={handleChange}
                 className="editar-input"
                 required
+                disabled={enProceso}
               />
             </div>
 
@@ -331,6 +346,7 @@ function EditarFactura() {
               <Select
                 value={formData.facturaCredito ? 'Si' : 'No'}
                 onValueChange={(value) => handleChange({ target: { name: 'facturaCredito', value } })}
+                disabled={enProceso}
               >
                 <SelectTrigger>
                   <SelectValue />
@@ -347,6 +363,7 @@ function EditarFactura() {
               <Select
                 value={formData.acuseReciboSCI ? 'Si' : 'No'}
                 onValueChange={(value) => handleChange({ target: { name: 'acuseReciboSCI', value } })}
+                disabled={enProceso}
               >
                 <SelectTrigger>
                   <SelectValue />
@@ -370,12 +387,12 @@ function EditarFactura() {
             onClick={() => navigate('/facturas')}
             variant="outline"
           >
-            Cancelar
+            {enProceso ? 'Volver' : 'Cancelar'}
           </Button>
           <Button
             type="submit"
             variant="default"
-            disabled={loadingActualizar}
+            disabled={loadingActualizar || enProceso}
           >
             {loadingActualizar ? 'Guardando...' : 'Guardar Cambios'}
           </Button>

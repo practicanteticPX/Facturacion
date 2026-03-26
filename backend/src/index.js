@@ -42,13 +42,30 @@ const startServer = async () => {
       '/graphql',
       cors({
         origin: (origin, callback) => {
-          const isLocalNetwork = !origin ||
-            origin.includes('192.168.0.30') ||
-            origin.match(/^http:\/\/192\.168\.\d{1,3}\.\d{1,3}:\d+$/) ||
-            origin.match(/^http:\/\/10\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d+$/) ||
-            origin.match(/^http:\/\/172\.(1[6-9]|2[0-9]|3[0-1])\.\d{1,3}\.\d{1,3}:\d+$/);
+          // Si no hay origin (request directo), permitir
+          if (!origin) {
+            return callback(null, true);
+          }
 
-          callback(null, isLocalNetwork);
+          // Permitir cualquier origen que use HTTP o HTTPS
+          // Esto incluye: localhost, IPs (192.168.x.x, 10.x.x.x, 172.x.x.x), dominios
+          const allowedPatterns = [
+            /^https?:\/\/localhost(:\d+)?$/,                                    // localhost con cualquier puerto
+            /^https?:\/\/127\.0\.0\.1(:\d+)?$/,                                // loopback
+            /^https?:\/\/192\.168\.\d{1,3}\.\d{1,3}(:\d+)?$/,                 // Red local 192.168.x.x
+            /^https?:\/\/10\.\d{1,3}\.\d{1,3}\.\d{1,3}(:\d+)?$/,              // Red local 10.x.x.x
+            /^https?:\/\/172\.(1[6-9]|2[0-9]|3[0-1])\.\d{1,3}\.\d{1,3}(:\d+)?$/, // Red local 172.16-31.x.x
+            /^https?:\/\/[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*(:\d+)?$/ // Cualquier dominio
+          ];
+
+          const isAllowed = allowedPatterns.some(pattern => pattern.test(origin));
+
+          if (isAllowed) {
+            callback(null, true);
+          } else {
+            console.warn(`⚠️ CORS: Origen no permitido: ${origin}`);
+            callback(new Error('No permitido por CORS'));
+          }
         },
         credentials: true
       }),

@@ -133,7 +133,7 @@ class FacturaService {
 
       const factura = await prismaServ.factura.create({
         data: {
-          numeroControl: nuevoNumeroControl,
+          numeroControl: parseInt(nuevoNumeroControl),
           cia: datos.cia,
           ciaNit: ciaNit,
           nit: datos.nit,
@@ -216,7 +216,11 @@ class FacturaService {
       }
 
       if (filtros.numeroControl) {
-        where.numeroControl = { contains: filtros.numeroControl };
+        // numeroControl es Int, convertir y buscar por igualdad
+        const numeroControlInt = parseInt(filtros.numeroControl);
+        if (!isNaN(numeroControlInt)) {
+          where.numeroControl = numeroControlInt;
+        }
       }
 
       // Paginación: valores por defecto
@@ -269,6 +273,11 @@ class FacturaService {
         throw new Error(`Factura con número de control ${numeroControl} no encontrada`);
       }
 
+      // Validar que la factura no esté en proceso
+      if (facturaExistente.enProceso) {
+        throw new Error('No se puede editar una factura que está en proceso');
+      }
+
       if (datos.cia) {
         await companiaService.validarCompaniaExiste(datos.cia);
       }
@@ -293,7 +302,7 @@ class FacturaService {
       const datosActualizacion = {};
 
       const camposPermitidos = [
-        'numeroControl', 'cia', 'nit', 'numeroFactura', 'fechaRadicado', 'fechaFactura',
+        'cia', 'nit', 'numeroFactura', 'fechaRadicado', 'fechaFactura',
         'facturaCredito', 'acuseReciboSCI', 'entregadaA', 'fechaEntrega',
         'fechaRecepcionCausacion', 'recibidaPor', 'fechaRevisionCausacion',
         'numeroCausacion', 'fechaCausacion', 'observaciones'

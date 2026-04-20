@@ -122,7 +122,7 @@ El archivo `.env` ya contiene las conexiones correctas:
 DATABASE_URL="postgresql://admin:$40M1n*!!2023@192.168.0.254:5432/SERV_QPREX"
 DATABASE_URL_2="postgresql://admin:$40M1n*!!2023@192.168.0.254:5432/DB_QPREX"
 PORT=4001
-FRONTEND_URL=http://192.168.0.30:3001
+FRONTEND_URL=http://10.50.8.10:3001
 ```
 
 ### 3. Instalar Dependencias y Generar Clientes Prisma
@@ -153,7 +153,7 @@ cd backend
 npm run dev
 ```
 
-El servidor GraphQL estará disponible en: `http://192.168.0.30:4001/graphql`
+El servidor GraphQL estará disponible en: `http://10.50.8.10:4001/graphql`
 
 #### Terminal 2 - Frontend:
 ```bash
@@ -161,7 +161,7 @@ cd frontend
 npm start
 ```
 
-La aplicación web estará disponible en: `http://192.168.0.30:3001`
+La aplicación web estará disponible en: `http://10.50.8.10:3001`
 
 ### Modo Producción (con Docker)
 
@@ -171,8 +171,8 @@ docker-compose up --build
 ```
 
 Esto levantará ambos servicios:
-- Backend: `http://192.168.0.30:4001/graphql`
-- Frontend: `http://192.168.0.30:3001`
+- Backend: `http://10.50.8.10:4001/graphql`
+- Frontend: `http://10.50.8.10:3001`
 
 Para detener los contenedores:
 ```bash
@@ -207,7 +207,7 @@ Edita el archivo [.env](.env) y actualiza la variable `REACT_APP_GRAPHQL_URL` co
 
 ```env
 # Cambia esto:
-REACT_APP_GRAPHQL_URL=http://192.168.0.30:4001/graphql
+REACT_APP_GRAPHQL_URL=http://10.50.8.10:4001/graphql
 
 # Por esto (usando tu IP local):
 REACT_APP_GRAPHQL_URL=http://192.168.0.100:4001/graphql
@@ -263,7 +263,7 @@ sudo ufw allow 4001/tcp
 ### Redes Soportadas
 
 El CORS del backend está configurado para aceptar conexiones desde:
-- 192.168.0.30 (127.0.0.1)
+- 10.50.8.10 (127.0.0.1)
 - Redes privadas clase C: `192.168.x.x`
 - Redes privadas clase A: `10.x.x.x`
 - Redes privadas clase B: `172.16.x.x - 172.31.x.x`

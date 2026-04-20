@@ -8,6 +8,17 @@ import {
   validarCamposRequeridos
 } from '../utils/validators.js';
 
+// Excluye creadoEn/actualizadoEn: son TIMESTAMPTZ y el adapter WASM de Prisma
+// no puede parsear el formato que envía PostgreSQL ('2025-12-09 15:33:35.83334-05')
+const FACTURA_SELECT = {
+  numeroControl: true, cia: true, ciaNit: true, nit: true, proveedor: true,
+  numeroFactura: true, fechaRadicado: true, fechaFactura: true,
+  facturaCredito: true, acuseReciboSCI: true, entregadaA: true,
+  fechaEntrega: true, fechaRecepcionCausacion: true, recibidaPor: true,
+  fechaRevisionCausacion: true, numeroCausacion: true, fechaCausacion: true,
+  observaciones: true, enProceso: true, finalizado: true, causado: true,
+};
+
 class FacturaService {
   convertirBooleanos(factura) {
     // Los booleanos ya vienen correctamente de la base de datos
@@ -145,15 +156,18 @@ class FacturaService {
           acuseReciboSCI: datos.acuseReciboSCI || false,
           entregadaA: datos.entregadaA || '',
           fechaEntrega: datos.fechaEntrega ? new Date(datos.fechaEntrega) : new Date()
-        }
+        },
+        // Evita que Prisma lea created_at/updated_at al devolver la fila insertada.
+        // Con el adapter pg actual, TIMESTAMPTZ puede llegar en un formato que no parsea bien.
+        select: { numeroControl: true }
       });
 
-      // Enviar correo si hay destinatario y archivo adjunto
+      // Enviar correo si hay destinatario. El adjunto es opcional.
       console.log('📧 Verificando envío de correo...');
       console.log('📧 EntregadaA:', datos.entregadaA);
       console.log('📧 Archivo:', archivo ? `SÍ (${archivo.filename})` : 'NO');
 
-      if (datos.entregadaA && archivo) {
+      if (datos.entregadaA) {
         try {
           console.log('📧 Obteniendo correo de:', datos.entregadaA);
           const correoDestinatario = await personaService.obtenerCorreoPorNombre(datos.entregadaA);
@@ -176,7 +190,7 @@ class FacturaService {
         }
       } else {
         console.log('⚠️ No se enviará correo:',
-          !datos.entregadaA ? 'No hay destinatario' : 'No hay archivo adjunto'
+          'No hay destinatario'
         );
       }
 
@@ -189,7 +203,8 @@ class FacturaService {
 
   async obtenerFacturaCompleta(numeroControl) {
     const factura = await prismaServ.factura.findUnique({
-      where: { numeroControl: parseInt(numeroControl) }
+      where: { numeroControl: parseInt(numeroControl) },
+      select: FACTURA_SELECT
     });
 
     if (!factura) {
@@ -234,8 +249,9 @@ class FacturaService {
       // Consultar facturas con paginación
       const facturas = await prismaServ.factura.findMany({
         where,
+        select: FACTURA_SELECT,
         orderBy: {
-          numeroControl: 'desc'  // Ordenar por número de control descendente (más recientes primero)
+          numeroControl: 'desc'
         },
         skip,
         take: pageSize
@@ -266,7 +282,8 @@ class FacturaService {
   async actualizarFactura(numeroControl, datos) {
     try {
       const facturaExistente = await prismaServ.factura.findUnique({
-        where: { numeroControl: parseInt(numeroControl) }
+        where: { numeroControl: parseInt(numeroControl) },
+        select: FACTURA_SELECT
       });
 
       if (!facturaExistente) {
@@ -347,7 +364,8 @@ class FacturaService {
 
       const facturaActualizada = await prismaServ.factura.update({
         where: { numeroControl: parseInt(numeroControl) },
-        data: datosActualizacion
+        data: datosActualizacion,
+        select: { numeroControl: true }
       });
 
       return await this.obtenerFacturaCompleta(facturaActualizada.numeroControl);

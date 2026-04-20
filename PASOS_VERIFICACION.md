@@ -20,7 +20,7 @@ http://tu-ip:81
 # BACKEND API - /graphql
 # ============================================
 location /graphql {
-    proxy_pass http://192.168.0.30:4001/graphql;
+    proxy_pass http://10.50.8.10:4001/graphql;
     proxy_http_version 1.1;
 
     proxy_set_header Upgrade $http_upgrade;
@@ -55,7 +55,7 @@ location /graphql {
 # FRONTEND - / (raíz y todas las demás rutas)
 # ============================================
 location / {
-    proxy_pass http://192.168.0.30:3001;
+    proxy_pass http://10.50.8.10:3001;
     proxy_http_version 1.1;
 
     proxy_set_header Upgrade $http_upgrade;
@@ -127,7 +127,7 @@ https://recepcion-facturacion.com
 
 **❌ INCORRECTO:** Si ves algo como:
 - `https://recepcion-facturacion.com:4001/graphql` (con puerto)
-- `http://192.168.0.30:4001/graphql` (con IP y puerto)
+- `http://10.50.8.10:4001/graphql` (con IP y puerto)
 
 ### D. Tab "Network"
 
@@ -181,7 +181,7 @@ docker-compose up -d frontend
 docker-compose ps
 
 # 2. Backend responde directamente?
-curl -X POST http://192.168.0.30:4001/graphql \
+curl -X POST http://10.50.8.10:4001/graphql \
   -H "Content-Type: application/json" \
   -d "{\"query\":\"{ __typename }\"}"
 

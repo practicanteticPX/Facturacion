@@ -18,8 +18,8 @@ Nginx Proxy Manager (Puerto 80/443)
         ↓
    recepcion-facturacion.com (HTTPS)
         ↓
-        ├─→ / (raíz) → Frontend (192.168.0.30:3001)
-        └─→ /graphql  → Backend (192.168.0.30:4001)
+        ├─→ / (raíz) → Frontend (10.50.8.10:3001)
+        └─→ /graphql  → Backend (10.50.8.10:4001)
 ```
 
 ## 🔧 Configuración Paso a Paso
@@ -31,7 +31,7 @@ Nginx Proxy Manager (Puerto 80/443)
 #### Tab: Details
 - **Domain Names:** `recepcion-facturacion.com`
 - **Scheme:** `http`
-- **Forward Hostname / IP:** `192.168.0.30`
+- **Forward Hostname / IP:** `10.50.8.10`
 - **Forward Port:** `3001` (Frontend por defecto)
 - **Cache Assets:** ✅ (opcional, solo aplica al frontend)
 - **Block Common Exploits:** ✅
@@ -55,7 +55,7 @@ Pega esta configuración que maneja tanto frontend como backend:
 # ============================================
 location /graphql {
     # Proxy al contenedor backend
-    proxy_pass http://192.168.0.30:4001/graphql;
+    proxy_pass http://10.50.8.10:4001/graphql;
     proxy_http_version 1.1;
 
     # WebSockets para GraphQL subscriptions
@@ -98,7 +98,7 @@ location /graphql {
 # ============================================
 location / {
     # Proxy al contenedor frontend
-    proxy_pass http://192.168.0.30:3001;
+    proxy_pass http://10.50.8.10:3001;
     proxy_http_version 1.1;
 
     # WebSockets para hot reload en desarrollo
@@ -163,14 +163,14 @@ cat recepcion-facturacion.crt  # Este va en "Certificate"
 **Linux/Mac:** `/etc/hosts`
 
 ```
-192.168.0.30  recepcion-facturacion.com
+10.50.8.10  recepcion-facturacion.com
 ```
 
 ### Opción 2: DNS Local (Pi-hole, Router, etc.)
 
 Configura en tu servidor DNS local:
 ```
-recepcion-facturacion.com  → 192.168.0.30
+recepcion-facturacion.com  → 10.50.8.10
 ```
 
 ---
@@ -254,7 +254,7 @@ Prueba hacer login en la aplicación. Si funciona sin errores SSL o CORS, ¡todo
 
 **Solución:**
 1. Verifica que el backend esté corriendo: `docker-compose ps`
-2. Prueba acceder directamente: `curl http://192.168.0.30:4001/graphql`
+2. Prueba acceder directamente: `curl http://10.50.8.10:4001/graphql`
 3. Verifica los logs: `docker-compose logs backend`
 
 ### Error: "CORS"
@@ -298,6 +298,6 @@ URLs finales:
 2. NPM recibe la petición en puerto 443 (HTTPS)
 3. NPM verifica el certificado SSL
 4. NPM redirige a:
-   - `192.168.0.30:3001` para rutas del frontend (/, /login, /facturas, etc.)
-   - `192.168.0.30:4001` para `/graphql` (API GraphQL)
+   - `10.50.8.10:3001` para rutas del frontend (/, /login, /facturas, etc.)
+   - `10.50.8.10:4001` para `/graphql` (API GraphQL)
 5. La aplicación funciona completamente en HTTPS sin errores

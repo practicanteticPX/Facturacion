@@ -10,7 +10,7 @@ CONFIGURACIÓN NGINX PROXY MANAGER - RESUMEN RÁPIDO
 ▶ Tab "Details":
    - Domain Names: recepcion-facturacion.com
    - Scheme: http
-   - Forward Hostname: 192.168.0.30
+   - Forward Hostname: 10.50.8.10
    - Forward Port: 3001
    - ✅ Block Common Exploits
    - ✅ Websockets Support

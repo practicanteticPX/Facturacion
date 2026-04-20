@@ -182,8 +182,8 @@ Ahora la aplicación funciona correctamente para:
 3. ✅ Verificado que otros componentes no tengan el mismo problema
 4. ✅ Reiniciado el contenedor frontend
 5. ✅ Contenedores corriendo correctamente:
-   - Backend: `192.168.0.30:4001` ✅
-   - Frontend: `192.168.0.30:3001` ✅
+   - Backend: `10.50.8.10:4001` ✅
+   - Frontend: `10.50.8.10:3001` ✅
 
 ---
 
@@ -195,5 +195,5 @@ La aplicación ahora funciona correctamente tanto para:
 - ✅ **Causación** de facturas
 
 **Puedes acceder a la aplicación en:**
-- Directo: `http://192.168.0.30:3001`
+- Directo: `http://10.50.8.10:3001`
 - Con dominio: `https://recepcion-facturacion.com` (si NPM está configurado)

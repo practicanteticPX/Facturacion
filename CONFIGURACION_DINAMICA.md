@@ -14,8 +14,8 @@ La aplicación ahora soporta **configuración automática y dinámica** de URLs,
 El frontend detecta automáticamente la URL del backend basándose en `window.location`:
 
 ```javascript
-// Si accedes desde: http://192.168.0.30:3001
-// Frontend se conecta a: http://192.168.0.30:4001/graphql
+// Si accedes desde: http://10.50.8.10:3001
+// Frontend se conecta a: http://10.50.8.10:4001/graphql
 
 // Si accedes desde: https://midominio.com:3001
 // Frontend se conecta a: https://midominio.com:4001/graphql
@@ -48,8 +48,8 @@ El backend acepta peticiones desde cualquier origen que use HTTP o HTTPS, incluy
 ### 2. Red Local con IP
 
 ```bash
-# Frontend en http://192.168.0.30:3001
-# Backend en http://192.168.0.30:4001
+# Frontend en http://10.50.8.10:3001
+# Backend en http://10.50.8.10:4001
 # ✅ Funciona automáticamente
 ```
 
@@ -96,7 +96,7 @@ REACT_APP_GRAPHQL_URL=http://backend-server:4001/graphql
 
 ```env
 # Ya no es necesaria - CORS acepta cualquier origen HTTP/HTTPS
-# FRONTEND_URL=http://192.168.0.30:3001
+# FRONTEND_URL=http://10.50.8.10:3001
 ```
 
 ## Configuración de Docker
@@ -107,12 +107,12 @@ REACT_APP_GRAPHQL_URL=http://backend-server:4001/graphql
 services:
   backend:
     ports:
-      - "192.168.0.30:4001:4001"  # Cambiar IP según tu red
+      - "10.50.8.10:4001:4001"  # Cambiar IP según tu red
       # O usar: "4001:4001" para escuchar en todas las interfaces
 
   frontend:
     ports:
-      - "192.168.0.30:3001:3001"  # Cambiar IP según tu red
+      - "10.50.8.10:3001:3001"  # Cambiar IP según tu red
       # O usar: "3001:3001" para escuchar en todas las interfaces
 ```
 
@@ -168,7 +168,7 @@ server {
 Abre las DevTools del navegador y verás:
 
 ```
-🔗 Apollo Client conectándose a: http://192.168.0.30:4001/graphql
+🔗 Apollo Client conectándose a: http://10.50.8.10:4001/graphql
 ```
 
 Este mensaje te indica a qué URL se está conectando el frontend.
@@ -178,7 +178,7 @@ Este mensaje te indica a qué URL se está conectando el frontend.
 En los logs del backend verás cuando acepta peticiones CORS:
 
 ```
-✅ CORS permitido desde: http://192.168.0.30:3001
+✅ CORS permitido desde: http://10.50.8.10:3001
 ```
 
 O advertencias si algo falla:

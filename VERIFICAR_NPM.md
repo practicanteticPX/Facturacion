@@ -7,7 +7,7 @@
 #### A. Tab "Proxy Hosts"
 Debe haber **UN SOLO** proxy host:
 - **Domain Names:** `recepcion-facturacion.com`
-- **Forward Hostname:** `192.168.0.30`
+- **Forward Hostname:** `10.50.8.10`
 - **Forward Port:** `3001`
 - **Estado:** ✅ Enabled (verde)
 
@@ -17,7 +17,7 @@ Debe haber **UN SOLO** proxy host:
 ```
 Domain Names: recepcion-facturacion.com
 Scheme: http
-Forward Hostname: 192.168.0.30
+Forward Hostname: 10.50.8.10
 Forward Port: 3001
 ✅ Block Common Exploits
 ✅ Websockets Support
@@ -39,7 +39,7 @@ Debe tener esta configuración completa:
 # BACKEND API - /graphql
 # ============================================
 location /graphql {
-    proxy_pass http://192.168.0.30:4001/graphql;
+    proxy_pass http://10.50.8.10:4001/graphql;
     proxy_http_version 1.1;
 
     proxy_set_header Upgrade $http_upgrade;
@@ -74,7 +74,7 @@ location /graphql {
 # FRONTEND - / (raíz y todas las demás rutas)
 # ============================================
 location / {
-    proxy_pass http://192.168.0.30:3001;
+    proxy_pass http://10.50.8.10:3001;
     proxy_http_version 1.1;
 
     proxy_set_header Upgrade $http_upgrade;
@@ -99,7 +99,7 @@ location / {
 
 ### A. Test Backend Directo (debe funcionar):
 ```bash
-curl -X POST http://192.168.0.30:4001/graphql \
+curl -X POST http://10.50.8.10:4001/graphql \
   -H "Content-Type: application/json" \
   -d '{"query":"{ __typename }"}'
 ```
@@ -117,7 +117,7 @@ Debe responder con JSON de GraphQL.
 
 ### C. Test Frontend Directo (debe funcionar):
 ```
-http://192.168.0.30:3001
+http://10.50.8.10:3001
 ```
 
 Debe cargar la aplicación.
@@ -154,7 +154,7 @@ Debe cargar la aplicación con HTTPS.
 **Soluciones:**
 - Verifica que el backend esté corriendo: `docker-compose ps`
 - Verifica logs: `docker-compose logs backend`
-- Verifica conectividad: `curl http://192.168.0.30:4001/graphql`
+- Verifica conectividad: `curl http://10.50.8.10:4001/graphql`
 
 ### ❌ Caso 3: "404 Not Found" en /graphql
 **Problema:** La configuración de locations en NPM no está guardada o activa.

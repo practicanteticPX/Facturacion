@@ -19,9 +19,9 @@ function buildSSL() {
   const certsPath = process.env.CERTS_PATH ?? path.resolve(__dirname, '../../..', 'certs');
   return {
     rejectUnauthorized: false,
-    ca:   fs.readFileSync(path.join(certsPath, 'root.crt')),
-    cert: fs.readFileSync(path.join(certsPath, 'postgresql.crt')),
-    key:  fs.readFileSync(path.join(certsPath, 'postgresql.key')),
+    ca:   fs.readFileSync(path.join(certsPath, 'ca-cert.pem')),
+    cert: fs.readFileSync(path.join(certsPath, 'admin-cert.pem')),
+    key:  fs.readFileSync(path.join(certsPath, 'admin-key.pk8')),
   };
 }
 

@@ -27,6 +27,35 @@ const obtenerFechaActual = () => {
   return `${year}-${month}-${day}`;
 };
 
+const LABELS_ERRORES = {
+  cia: 'Cia',
+  nit: 'NIT',
+  numeroFactura: 'No. Factura',
+  fechaRadicado: 'Fecha Radicado',
+  fechaFactura: 'Fecha Factura',
+  facturaCredito: 'Factura a Crédito',
+  acuseReciboSCI: 'Acuse Recibo SCI',
+  entregadaA: 'Entregada a',
+  fechaEntrega: 'Fecha de Entrega',
+  archivo: 'PDF de la factura'
+};
+
+const formatearMensajeError = (mensajeOriginal = '') => {
+  if (!mensajeOriginal) {
+    return 'Ocurrió un error al inscribir la factura';
+  }
+
+  const mensaje = mensajeOriginal.replace(/^Error:\s*/i, '').trim();
+
+  const matchCampoObligatorio = mensaje.match(/^El campo ([A-Za-z0-9_]+) es (requerido|obligatorio)$/i);
+  if (matchCampoObligatorio) {
+    const campo = matchCampoObligatorio[1];
+    return `El campo ${LABELS_ERRORES[campo] || campo} es obligatorio`;
+  }
+
+  return mensaje;
+};
+
 /**
  * InscripcionFactura Component
  * Formulario para crear nuevas facturas en el sistema
@@ -141,6 +170,13 @@ function InscripcionFactura() {
 
   const handleFilesChange = (files) => {
     setArchivosAdjuntos(files);
+    if (files.length > 0) {
+      setMensaje(prev => (
+        prev.tipo === 'error' && prev.texto.includes('PDF')
+          ? { tipo: '', texto: '' }
+          : prev
+      ));
+    }
     console.log('Archivos adjuntos:', files);
   };
 
@@ -167,6 +203,12 @@ function InscripcionFactura() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMensaje({ tipo: '', texto: '' });
+
+    if (!archivosAdjuntos || archivosAdjuntos.length === 0) {
+      setMensaje({ tipo: 'error', texto: 'Debe adjuntar el PDF de la factura para poder inscribirla' });
+      return;
+    }
+
     setLoadingCrear(true);
 
     try {
@@ -183,11 +225,10 @@ function InscripcionFactura() {
       if (formData.entregadaA) input.entregadaA = formData.entregadaA;
       if (formData.fechaEntrega) input.fechaEntrega = formData.fechaEntrega;
 
-      // Preparar variables con archivo si existe
-      const variables = { input };
-      if (archivosAdjuntos && archivosAdjuntos.length > 0) {
-        variables.archivo = archivosAdjuntos[0];
-      }
+      const variables = {
+        input,
+        archivo: archivosAdjuntos[0]
+      };
 
       await executeMutationWithFile(CREAR_FACTURA, variables);
 
@@ -197,7 +238,7 @@ function InscripcionFactura() {
       }, 1500);
     } catch (error) {
       console.error('Error creando factura:', error);
-      setMensaje({ tipo: 'error', texto: error.message });
+      setMensaje({ tipo: 'error', texto: formatearMensajeError(error.message) });
     } finally {
       setLoadingCrear(false);
     }
@@ -405,12 +446,12 @@ function InscripcionFactura() {
           </div>
 
           <div className="inscripcion-form-group">
-            <label className="inscripcion-label">Adjuntar Factura</label>
+            <label className="inscripcion-label inscripcion-label-required">Adjuntar Factura</label>
             <FileUpload
               onFilesChange={handleFilesChange}
               acceptedTypes=".pdf"
               maxSizeMB={10}
-              multiple={true}
+              multiple={false}
             />
           </div>
           </div>

@@ -21,6 +21,8 @@ services:
       - "AD_BIND_PASS=!T8909pX*-"
       - JWT_SECRET=prexxa-facturas-secret-2024-change-in-production
       - JWT_EXPIRES_IN=8h
+      - DOCUPREX_API_URL=http://10.50.8.10:5001
+      - DOCUPREX_INGEST_TOKEN=docuprex-facturacion-sync-2026
     volumes:
       - ./backend:/app
       - /app/node_modules

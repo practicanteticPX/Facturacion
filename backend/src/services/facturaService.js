@@ -2,7 +2,7 @@ import { prismaServ } from '../config/database.js';
 import proveedorService from './proveedorService.js';
 import personaService from './personaService.js';
 import companiaService from './companiaService.js';
-import emailService from './emailService.js';
+import docuprexService from './docuprexService.js';
 import {
   validarObservaciones,
   validarCamposRequeridos
@@ -130,6 +130,10 @@ class FacturaService {
       ];
       validarCamposRequeridos(datos, camposRequeridos);
 
+      if (!archivo) {
+        throw new Error('Debe adjuntar el PDF de la factura para poder inscribirla');
+      }
+
       await companiaService.validarCompaniaExiste(datos.cia);
 
       const nombreProveedor = await proveedorService.validarYObtenerNombreProveedor(datos.nit);
@@ -161,6 +165,43 @@ class FacturaService {
         // Con el adapter pg actual, TIMESTAMPTZ puede llegar en un formato que no parsea bien.
         select: { numeroControl: true }
       });
+
+      console.log('Ingreso directo a DocuPrex: verificando datos...');
+      console.log('EntregadaA:', datos.entregadaA);
+      console.log('Archivo:', archivo ? `SI (${archivo.filename})` : 'NO');
+
+      if (datos.entregadaA && archivo) {
+        try {
+          const correoDestinatario = await personaService.obtenerCorreoPorNombre(datos.entregadaA);
+
+          await docuprexService.enviarFacturaADocuprex({
+            factura: {
+              numeroControl: nuevoNumeroControl,
+              cia: datos.cia,
+              proveedor: nombreProveedor,
+              numeroFactura: datos.numeroFactura,
+              fechaFactura: datos.fechaFactura,
+              fechaEntrega: datos.fechaEntrega ? new Date(datos.fechaEntrega).toISOString() : new Date().toISOString(),
+              entregadaA: datos.entregadaA
+            },
+            correoDestinatario,
+            archivo
+          });
+
+          console.log(`Factura enviada a DocuPrex exitosamente para ${correoDestinatario}`);
+        } catch (docuprexError) {
+          console.error('Error al enviar factura a DocuPrex (factura creada exitosamente):', docuprexError);
+          console.error('Stack trace:', docuprexError.stack);
+        }
+
+        return await this.obtenerFacturaCompleta(factura.numeroControl);
+      }
+
+      console.log(
+        'No se enviara a DocuPrex:',
+        !datos.entregadaA ? 'No hay destinatario' : 'No aplica'
+      );
+      return await this.obtenerFacturaCompleta(factura.numeroControl);
 
       // Enviar correo si hay destinatario. El adjunto es opcional.
       console.log('📧 Verificando envío de correo...');

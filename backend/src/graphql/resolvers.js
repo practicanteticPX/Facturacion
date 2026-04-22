@@ -80,7 +80,7 @@ export const resolvers = {
           console.log(`✓ Archivo procesado: ${filename} (${mimetype}, ${buffer.length} bytes)`);
         } catch (error) {
           console.error('❌ Error procesando archivo:', error);
-          // Continuar sin archivo si hay error
+          throw new Error('No se pudo procesar el PDF adjunto. Intente cargarlo nuevamente');
         }
       }
 

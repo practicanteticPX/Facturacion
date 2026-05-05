@@ -1,4 +1,4 @@
-import { prismaServ } from '../config/database.js';
+﻿import { prismaServ } from '../config/database.js';
 import proveedorService from './proveedorService.js';
 import personaService from './personaService.js';
 import companiaService from './companiaService.js';
@@ -9,7 +9,7 @@ import {
 } from '../utils/validators.js';
 
 // Excluye creadoEn/actualizadoEn: son TIMESTAMPTZ y el adapter WASM de Prisma
-// no puede parsear el formato que envía PostgreSQL ('2025-12-09 15:33:35.83334-05')
+// no puede parsear el formato que envÃ­a PostgreSQL ('2025-12-09 15:33:35.83334-05')
 const FACTURA_SELECT = {
   numeroControl: true, cia: true, ciaNit: true, nit: true, proveedor: true,
   numeroFactura: true, fechaRadicado: true, fechaFactura: true,
@@ -58,63 +58,53 @@ class FacturaService {
     });
   }
 
+  async obtenerNumeroControlDesdeSecuencia(reservar = false) {
+    const [result] = reservar
+      ? await prismaServ.$queryRaw`
+          SELECT nextval(pg_get_serial_sequence('crud_facturas."T_Facturas"', 'numero_control'))::int AS numero
+        `
+      : await prismaServ.$queryRaw`
+          WITH sequence_info AS (
+            SELECT pg_get_serial_sequence('crud_facturas."T_Facturas"', 'numero_control') AS sequence_name
+          )
+          SELECT (
+            CASE
+              WHEN s.last_value IS NULL THEN s.start_value
+              ELSE s.last_value + s.increment_by
+            END
+          )::int AS numero
+          FROM pg_sequences s
+          JOIN sequence_info si
+            ON format('%I.%I', s.schemaname, s.sequencename) = si.sequence_name
+        `;
+
+    const numeroControl = Number(result?.numero);
+
+    if (!Number.isInteger(numeroControl) || numeroControl <= 0) {
+      throw new Error('No se pudo obtener un numero de control valido desde la secuencia');
+    }
+
+    return numeroControl.toString();
+  }
+
   async obtenerProximoNumeroControl() {
     try {
-      // Obtener todos los números de control para encontrar el máximo correctamente
-      const facturas = await prismaServ.factura.findMany({
-        select: {
-          numeroControl: true
-        }
-      });
-
-      // Si no hay facturas, empezar desde 1
-      if (facturas.length === 0) {
-        return '1';
-      }
-
-      // Convertir todos los números de control a enteros y encontrar el máximo
-      const numerosControl = facturas
-        .map(f => parseInt(f.numeroControl))
-        .filter(n => !isNaN(n)); // Filtrar valores no numéricos
-
-      const maxNumero = numerosControl.length > 0
-        ? Math.max(...numerosControl)
-        : 0;
-
-      // El próximo número es el máximo + 1
-      const proximoNumero = maxNumero + 1;
-
-      // Verificar que el número no exista (seguridad adicional)
-      const existe = await prismaServ.factura.findFirst({
-        where: {
-          numeroControl: proximoNumero
-        }
-      });
-
-      // Si existe (caso extremo), buscar el siguiente disponible
-      if (existe) {
-        console.warn(`⚠️ Número de control ${proximoNumero} ya existe, buscando siguiente disponible...`);
-        let numeroDisponible = proximoNumero + 1;
-        let existeNumero = true;
-
-        while (existeNumero) {
-          existeNumero = await prismaServ.factura.findFirst({
-            where: {
-              numeroControl: numeroDisponible
-            }
-          });
-          if (existeNumero) {
-            numeroDisponible++;
-          }
-        }
-
-        return numeroDisponible.toString();
-      }
-
-      console.log(`✅ Próximo número de control: ${proximoNumero}`);
-      return proximoNumero.toString();
+      const proximoNumero = await this.obtenerNumeroControlDesdeSecuencia(false);
+      console.log(`Proximo numero de control: ${proximoNumero}`);
+      return proximoNumero;
     } catch (error) {
-      console.error('Error obteniendo próximo número de control:', error);
+      console.error('Error obteniendo proximo numero de control:', error);
+      throw error;
+    }
+  }
+
+  async reservarNumeroControl() {
+    try {
+      const numeroControl = await this.obtenerNumeroControlDesdeSecuencia(true);
+      console.log(`Numero de control reservado: ${numeroControl}`);
+      return numeroControl;
+    } catch (error) {
+      console.error('Error reservando numero de control:', error);
       throw error;
     }
   }
@@ -142,7 +132,7 @@ class FacturaService {
         await personaService.validarPersonaExiste(datos.entregadaA);
       }
 
-      const nuevoNumeroControl = await this.obtenerProximoNumeroControl();
+      const nuevoNumeroControl = await this.reservarNumeroControl();
 
       const ciaNit = proveedorService.generarCiaNit(datos.cia, datos.nit);
 
@@ -204,17 +194,17 @@ class FacturaService {
       return await this.obtenerFacturaCompleta(factura.numeroControl);
 
       // Enviar correo si hay destinatario. El adjunto es opcional.
-      console.log('📧 Verificando envío de correo...');
-      console.log('📧 EntregadaA:', datos.entregadaA);
-      console.log('📧 Archivo:', archivo ? `SÍ (${archivo.filename})` : 'NO');
+      console.log('ðŸ“§ Verificando envÃ­o de correo...');
+      console.log('ðŸ“§ EntregadaA:', datos.entregadaA);
+      console.log('ðŸ“§ Archivo:', archivo ? `SÃ (${archivo.filename})` : 'NO');
 
       if (datos.entregadaA) {
         try {
-          console.log('📧 Obteniendo correo de:', datos.entregadaA);
+          console.log('ðŸ“§ Obteniendo correo de:', datos.entregadaA);
           const correoDestinatario = await personaService.obtenerCorreoPorNombre(datos.entregadaA);
-          console.log('📧 Correo obtenido:', correoDestinatario);
+          console.log('ðŸ“§ Correo obtenido:', correoDestinatario);
 
-          console.log('📧 Enviando correo...');
+          console.log('ðŸ“§ Enviando correo...');
           await emailService.enviarCorreoFactura({
             to: correoDestinatario,
             numeroControl: nuevoNumeroControl,
@@ -223,14 +213,14 @@ class FacturaService {
             archivo: archivo
           });
 
-          console.log(`✅ Correo de factura enviado exitosamente a ${correoDestinatario}`);
+          console.log(`âœ… Correo de factura enviado exitosamente a ${correoDestinatario}`);
         } catch (emailError) {
-          console.error('❌ Error al enviar correo de factura (factura creada exitosamente):', emailError);
-          console.error('❌ Stack trace:', emailError.stack);
+          console.error('âŒ Error al enviar correo de factura (factura creada exitosamente):', emailError);
+          console.error('âŒ Stack trace:', emailError.stack);
           // No lanzamos el error para que la factura se cree aunque falle el correo
         }
       } else {
-        console.log('⚠️ No se enviará correo:',
+        console.log('âš ï¸ No se enviarÃ¡ correo:',
           'No hay destinatario'
         );
       }
@@ -249,7 +239,7 @@ class FacturaService {
     });
 
     if (!factura) {
-      throw new Error(`Factura con número de control ${numeroControl} no encontrada`);
+      throw new Error(`Factura con nÃºmero de control ${numeroControl} no encontrada`);
     }
 
     return this.formatearFactura({
@@ -279,7 +269,7 @@ class FacturaService {
         }
       }
 
-      // Paginación: valores por defecto
+      // PaginaciÃ³n: valores por defecto
       const page = filtros.page || 1;
       const pageSize = filtros.pageSize || 100;
       const skip = (page - 1) * pageSize;
@@ -287,7 +277,7 @@ class FacturaService {
       // Consultar total de registros (para calcular hasMore)
       const total = await prismaServ.factura.count({ where });
 
-      // Consultar facturas con paginación
+      // Consultar facturas con paginaciÃ³n
       const facturas = await prismaServ.factura.findMany({
         where,
         select: FACTURA_SELECT,
@@ -298,7 +288,7 @@ class FacturaService {
         take: pageSize
       });
 
-      // El proveedor ya está almacenado en la tabla, no necesitamos hacer lookups individuales
+      // El proveedor ya estÃ¡ almacenado en la tabla, no necesitamos hacer lookups individuales
       const facturasCompletas = facturas.map((factura) => {
         return this.formatearFactura({
           ...factura,
@@ -328,12 +318,12 @@ class FacturaService {
       });
 
       if (!facturaExistente) {
-        throw new Error(`Factura con número de control ${numeroControl} no encontrada`);
+        throw new Error(`Factura con nÃºmero de control ${numeroControl} no encontrada`);
       }
 
-      // Validar que la factura no esté en proceso
+      // Validar que la factura no estÃ© en proceso
       if (facturaExistente.enProceso) {
-        throw new Error('No se puede editar una factura que está en proceso');
+        throw new Error('No se puede editar una factura que estÃ¡ en proceso');
       }
 
       if (datos.cia) {
@@ -371,17 +361,17 @@ class FacturaService {
       camposPermitidos.forEach(campo => {
         if (datos[campo] !== undefined) {
           if (campo.includes('fecha')) {
-            // Solo crear Date si la fecha no está vacía y es válida
+            // Solo crear Date si la fecha no estÃ¡ vacÃ­a y es vÃ¡lida
             if (datos[campo] && datos[campo].trim() !== '') {
               const fecha = new Date(datos[campo]);
-              // Verificar que la fecha sea válida
+              // Verificar que la fecha sea vÃ¡lida
               if (!isNaN(fecha.getTime())) {
                 datosActualizacion[campo] = fecha;
               } else {
                 datosActualizacion[campo] = null;
               }
             } else {
-              // Si está vacía, establecer como null
+              // Si estÃ¡ vacÃ­a, establecer como null
               datosActualizacion[campo] = null;
             }
           } else if (camposBooleanos.includes(campo)) {
@@ -418,3 +408,5 @@ class FacturaService {
 }
 
 export default new FacturaService();
+
+

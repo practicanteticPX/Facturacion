@@ -15,6 +15,17 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-producti
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '8h';
 
 const ALLOWED_DESCRIPTION = 'Ad y Finan';
+const ALLOWED_USER_EXCEPTIONS = [
+  'Cristina Gomez',
+  'c.gomez@prexxa.com.co',
+  'c.gomez'
+];
+
+const normalizeAccessValue = (value) => String(value || '')
+  .normalize('NFD')
+  .replace(/[\u0300-\u036f]/g, '')
+  .trim()
+  .toLowerCase();
 
 class AuthService {
   createLdapClient() {
@@ -83,11 +94,19 @@ class AuthService {
 
             console.log('  Descripción en AD:', JSON.stringify(description));
             console.log('  Descripción esperada:', JSON.stringify(ALLOWED_DESCRIPTION));
-            console.log('  ¿Coinciden?:', description === ALLOWED_DESCRIPTION);
+            const cn = userEntry.attributes.find(attr => attr.type === 'cn')?.values[0] || username;
+            const displayName = userEntry.attributes.find(attr => attr.type === 'displayName')?.values[0] || cn;
+            const email = userEntry.attributes.find(attr => attr.type === 'mail')?.values[0] || '';
+            const isAllowedByDescription = description === ALLOWED_DESCRIPTION;
+            const userAccessValues = [username, cn, displayName, email].map(normalizeAccessValue);
+            const isAllowedByException = ALLOWED_USER_EXCEPTIONS.some(exception => userAccessValues.includes(normalizeAccessValue(exception)));
+
+            console.log('  ?Coinciden?:', isAllowedByDescription);
+            console.log('  ?Tiene excepci?n?:', isAllowedByException);
             console.log('  Longitud descripción AD:', description.length);
             console.log('  Longitud descripción esperada:', ALLOWED_DESCRIPTION.length);
 
-            if (description !== ALLOWED_DESCRIPTION) {
+            if (!isAllowedByDescription && !isAllowedByException) {
               console.warn(`❌ Usuario ${username} intentó autenticarse pero no tiene el permiso adecuado.`);
               console.warn(`   Descripción encontrada: "${description}"`);
               console.warn(`   Descripción esperada: "${ALLOWED_DESCRIPTION}"`);
@@ -96,7 +115,9 @@ class AuthService {
               return;
             }
 
-            console.log('✓ Usuario autorizado - Descripción correcta');
+            console.log(isAllowedByDescription
+              ? '? Usuario autorizado - Descripci?n correcta'
+              : '? Usuario autorizado por excepci?n nominal');
 
             const userDN = userEntry.attributes.find(attr => attr.type === 'distinguishedName')?.values[0];
 
@@ -111,10 +132,6 @@ class AuthService {
                 reject(new Error('Usuario o contraseña incorrectos'));
                 return;
               }
-
-              const cn = userEntry.attributes.find(attr => attr.type === 'cn')?.values[0] || username;
-              const displayName = userEntry.attributes.find(attr => attr.type === 'displayName')?.values[0] || cn;
-              const email = userEntry.attributes.find(attr => attr.type === 'mail')?.values[0] || '';
 
               const userData = {
                 username,

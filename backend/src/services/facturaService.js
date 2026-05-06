@@ -1,4 +1,4 @@
-﻿import { prismaServ } from '../config/database.js';
+import { prismaServ } from '../config/database.js';
 import proveedorService from './proveedorService.js';
 import personaService from './personaService.js';
 import companiaService from './companiaService.js';
@@ -112,6 +112,7 @@ class FacturaService {
   async crearFactura(datos, archivo = null) {
     try {
       const camposRequeridos = [
+        'numeroControl',
         'cia',
         'nit',
         'numeroFactura',
@@ -132,13 +133,26 @@ class FacturaService {
         await personaService.validarPersonaExiste(datos.entregadaA);
       }
 
-      const nuevoNumeroControl = await this.reservarNumeroControl();
+      const nuevoNumeroControl = parseInt(datos.numeroControl, 10);
+
+      if (!Number.isInteger(nuevoNumeroControl) || nuevoNumeroControl <= 0) {
+        throw new Error('El campo numeroControl debe ser un numero entero positivo');
+      }
+
+      const facturaExistente = await prismaServ.factura.findUnique({
+        where: { numeroControl: nuevoNumeroControl },
+        select: { numeroControl: true }
+      });
+
+      if (facturaExistente) {
+        throw new Error(`Ya existe una factura con el numero de control ${nuevoNumeroControl}`);
+      }
 
       const ciaNit = proveedorService.generarCiaNit(datos.cia, datos.nit);
 
       const factura = await prismaServ.factura.create({
         data: {
-          numeroControl: parseInt(nuevoNumeroControl),
+          numeroControl: nuevoNumeroControl,
           cia: datos.cia,
           ciaNit: ciaNit,
           nit: datos.nit,
@@ -155,6 +169,17 @@ class FacturaService {
         // Con el adapter pg actual, TIMESTAMPTZ puede llegar en un formato que no parsea bien.
         select: { numeroControl: true }
       });
+
+      await prismaServ.$queryRaw`
+        SELECT setval(
+          pg_get_serial_sequence('crud_facturas."T_Facturas"', 'numero_control'),
+          GREATEST(
+            ${nuevoNumeroControl},
+            COALESCE((SELECT MAX(numero_control)::int FROM crud_facturas."T_Facturas"), ${nuevoNumeroControl})
+          ),
+          true
+        )
+      `;
 
       console.log('Ingreso directo a DocuPrex: verificando datos...');
       console.log('EntregadaA:', datos.entregadaA);
@@ -399,6 +424,8 @@ class FacturaService {
         select: { numeroControl: true }
       });
 
+
+
       return await this.obtenerFacturaCompleta(facturaActualizada.numeroControl);
     } catch (error) {
       console.error('Error actualizando factura:', error);
@@ -408,5 +435,10 @@ class FacturaService {
 }
 
 export default new FacturaService();
+
+
+
+
+
 
 

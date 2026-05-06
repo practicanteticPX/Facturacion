@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useQuery, useLazyQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import {
   CREAR_FACTURA,
   GET_PERSONAS,
   GET_COMPANIAS,
-  GET_PROVEEDOR,
-  GET_FACTURAS,
-  GET_PROXIMO_NUMERO_CONTROL
+  GET_PROVEEDOR
 } from '../apollo/queries';
 import { executeMutationWithFile } from '../apollo/client';
 import FileUpload from './FileUpload';
@@ -64,6 +62,7 @@ function InscripcionFactura() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
+    numeroControl: '',
     cia: '',
     nit: '',
     numeroFactura: '',
@@ -80,11 +79,13 @@ function InscripcionFactura() {
   const [mensaje, setMensaje] = useState({ tipo: '', texto: '' });
   const [mostrarSugerencias, setMostrarSugerencias] = useState(false);
   const [personasFiltradas, setPersonasFiltradas] = useState([]);
+  const [personaActivaIndex, setPersonaActivaIndex] = useState(-1);
+  const personaSuggestionRefs = useRef([]);
+  const personaSuggestionsListRef = useRef(null);
   const [archivosAdjuntos, setArchivosAdjuntos] = useState([]);
 
   const { data: personasData } = useQuery(GET_PERSONAS);
   const { data: companiasData } = useQuery(GET_COMPANIAS);
-  const { data: numeroControlData } = useQuery(GET_PROXIMO_NUMERO_CONTROL);
 
   const [buscarProveedor, { loading: loadingProveedor }] = useLazyQuery(GET_PROVEEDOR, {
     onCompleted: (data) => {
@@ -118,6 +119,7 @@ function InscripcionFactura() {
       setProveedorNombre('');
     }
   }, [formData.nit, buscarProveedor]);
+
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -156,9 +158,11 @@ function InscripcionFactura() {
       );
       setPersonasFiltradas(filtradas);
       setMostrarSugerencias(filtradas.length > 0);
+      setPersonaActivaIndex(filtradas.length > 0 ? 0 : -1);
     } else {
       setPersonasFiltradas([]);
       setMostrarSugerencias(false);
+      setPersonaActivaIndex(-1);
     }
   };
 
@@ -166,6 +170,60 @@ function InscripcionFactura() {
     setFormData(prev => ({ ...prev, entregadaA: nombre }));
     setMostrarSugerencias(false);
     setPersonasFiltradas([]);
+    setPersonaActivaIndex(-1);
+  };
+
+  const scrollPersonaActiva = (index) => {
+    const container = personaSuggestionsListRef.current;
+    const activeItem = personaSuggestionRefs.current[index];
+
+    if (!container || !activeItem) return;
+
+    const itemTop = activeItem.offsetTop;
+    const itemBottom = itemTop + activeItem.offsetHeight;
+    const visibleTop = container.scrollTop;
+    const visibleBottom = visibleTop + container.clientHeight;
+
+    if (itemTop < visibleTop) {
+      container.scrollTop = itemTop;
+    } else if (itemBottom > visibleBottom) {
+      container.scrollTop = itemBottom - container.clientHeight;
+    }
+  };
+
+  const handleEntregadaAKeyDown = (e) => {
+    if (!mostrarSugerencias || personasFiltradas.length === 0) return;
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      const nextIndex = (personaActivaIndex + 1) % personasFiltradas.length;
+      setPersonaActivaIndex(nextIndex);
+      setTimeout(() => scrollPersonaActiva(nextIndex), 0);
+      return;
+    }
+
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      const nextIndex = personaActivaIndex <= 0 ? personasFiltradas.length - 1 : personaActivaIndex - 1;
+      setPersonaActivaIndex(nextIndex);
+      setTimeout(() => scrollPersonaActiva(nextIndex), 0);
+      return;
+    }
+
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const personaSeleccionada = personasFiltradas[personaActivaIndex >= 0 ? personaActivaIndex : 0];
+      if (personaSeleccionada) {
+        seleccionarPersona(personaSeleccionada.nombre);
+      }
+      return;
+    }
+
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      setMostrarSugerencias(false);
+      setPersonaActivaIndex(-1);
+    }
   };
 
   const handleFilesChange = (files) => {
@@ -182,6 +240,7 @@ function InscripcionFactura() {
 
   const limpiarFormulario = () => {
     setFormData({
+      numeroControl: '',
       cia: '',
       nit: '',
       numeroFactura: '',
@@ -213,6 +272,7 @@ function InscripcionFactura() {
 
     try {
       const input = {
+        numeroControl: parseInt(formData.numeroControl, 10),
         cia: formData.cia,
         nit: formData.nit,
         numeroFactura: formData.numeroFactura,
@@ -265,14 +325,18 @@ function InscripcionFactura() {
           <div className="inscripcion-form-grid">
           {/* Fila 1 */}
           <div className="inscripcion-form-group">
-            <label className="inscripcion-label">No. de Control</label>
+            <label className="inscripcion-label inscripcion-label-required">No. de Control</label>
             <input
-              type="text"
-              value={numeroControlData?.proximoNumeroControl || 'Cargando...'}
+              type="number"
+              name="numeroControl"
+              value={formData.numeroControl}
+              onChange={handleChange}
               className="inscripcion-input"
-              disabled
+              min="1"
+              step="1"
+              required
             />
-            <p className="inscripcion-info-text">Se asigna automáticamente</p>
+            <p className="inscripcion-info-text">Digita el consecutivo oficial del Excel</p>
           </div>
 
           <div className="inscripcion-form-group">
@@ -362,6 +426,7 @@ function InscripcionFactura() {
               onChange={handleChange}
               required
               id="fechaFactura"
+              allowManualInput
             />
           </div>
 
@@ -383,27 +448,31 @@ function InscripcionFactura() {
               name="entregadaA"
               value={formData.entregadaA}
               onChange={handleEntregadaAChange}
+              onKeyDown={handleEntregadaAKeyDown}
               onFocus={() => {
                 if (formData.entregadaA && personasData?.personas) {
                   const filtradas = personasData.personas.filter(persona =>
                     buscarPorPalabras(persona.nombre, formData.entregadaA)
                   );
                   setPersonasFiltradas(filtradas);
-                  setMostrarSugerencias(filtradas.length > 0);
+      setMostrarSugerencias(filtradas.length > 0);
+      setPersonaActivaIndex(filtradas.length > 0 ? 0 : -1);
                 }
               }}
-              onBlur={() => setTimeout(() => setMostrarSugerencias(false), 200)}
+              onBlur={() => setTimeout(() => { setMostrarSugerencias(false); setPersonaActivaIndex(-1); }, 200)}
               className="inscripcion-input"
               placeholder="Escriba para buscar..."
               autoComplete="off"
             />
             {mostrarSugerencias && personasFiltradas.length > 0 && (
-              <div className="inscripcion-suggestions">
-                {personasFiltradas.map(persona => (
+              <div className="inscripcion-suggestions" ref={personaSuggestionsListRef}>
+                {personasFiltradas.map((persona, index) => (
                   <div
                     key={persona.id}
+                    ref={(element) => { personaSuggestionRefs.current[index] = element; }}
+                    onMouseEnter={() => setPersonaActivaIndex(index)}
                     onClick={() => seleccionarPersona(persona.nombre)}
-                    className="inscripcion-suggestion-item"
+                    className={`inscripcion-suggestion-item ${index === personaActivaIndex ? 'active' : ''}`}
                   >
                     {persona.nombre}
                   </div>
@@ -479,3 +548,7 @@ function InscripcionFactura() {
 }
 
 export default InscripcionFactura;
+
+
+
+

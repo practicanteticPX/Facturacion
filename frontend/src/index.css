@@ -2,6 +2,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;600;700&display=swap');
 
 /* OVERRIDE TOTAL - Aplicar Google Sans a ABSOLUTAMENTE TODO con !important */
+html {
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+}
+
 * {
   margin: 0;
   padding: 0;

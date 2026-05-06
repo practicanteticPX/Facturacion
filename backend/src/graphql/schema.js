@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+﻿import gql from 'graphql-tag';
 
 export const typeDefs = gql`
   scalar Upload
@@ -50,6 +50,7 @@ export const typeDefs = gql`
   }
 
   input CrearFacturaInput {
+    numeroControl: Int!
     cia: String!
     nit: String!
     numeroFactura: String!
@@ -122,3 +123,4 @@ export const typeDefs = gql`
     actualizarFactura(numeroControl: Int!, input: ActualizarFacturaInput!): Factura!
   }
 `;
+

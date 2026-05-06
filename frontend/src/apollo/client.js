@@ -1,39 +1,26 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 
 /**
- * Construye la URL del backend GraphQL de forma dinámica
- * Prioridad:
- * 1. Variable de entorno REACT_APP_GRAPHQL_URL (si está definida)
- * 2. Detectar automáticamente desde window.location
- *
- * IMPORTANTE: Por defecto usa HTTP para el backend, incluso si el frontend está en HTTPS
- * Para usar HTTPS en el backend, define REACT_APP_GRAPHQL_URL con https://
+ * Construye la URL del backend GraphQL.
+ * En produccion debe usar el mismo dominio HTTPS para evitar contenido no seguro.
  */
+const PRODUCTION_GRAPHQL_URL = 'https://facturacion.prexxa.com/graphql';
+
 const getGraphQLUrl = () => {
-  // Si hay variable de entorno, usarla
-  if (process.env.REACT_APP_GRAPHQL_URL) {
-    return process.env.REACT_APP_GRAPHQL_URL;
-  }
-
-  // Detectar automáticamente basado en la URL actual del navegador
   if (typeof window !== 'undefined') {
-    const hostname = window.location.hostname; // dominio o IP
-    const backendPort = '4001'; // Puerto del backend
+    if (window.location.hostname === 'localhost') {
+      return process.env.REACT_APP_GRAPHQL_URL || 'http://localhost:4001/graphql';
+    }
 
-    // SIEMPRE usar HTTP para el backend (a menos que esté configurado con variable de entorno)
-    // Esto evita errores de mixed content cuando el frontend está en HTTPS
-    const protocol = 'http:';
-
-    return `${protocol}//${hostname}:${backendPort}/graphql`;
+    return PRODUCTION_GRAPHQL_URL;
   }
 
-  // Fallback por defecto (solo si no hay window, por ejemplo en SSR)
-  return 'http://localhost:4001/graphql';
+  return PRODUCTION_GRAPHQL_URL;
 };
 
 const GRAPHQL_URL = getGraphQLUrl();
 
-console.log('🔗 Apollo Client conectándose a:', GRAPHQL_URL);
+console.log('Apollo Client conectándose a:', GRAPHQL_URL);
 
 const client = new ApolloClient({
   uri: GRAPHQL_URL,
@@ -107,3 +94,4 @@ export const executeMutationWithFile = async (mutation, variables) => {
 };
 
 export default client;
+

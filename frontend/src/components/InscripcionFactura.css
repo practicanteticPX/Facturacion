@@ -214,8 +214,10 @@
   font-size: 0.9375rem;
 }
 
-.inscripcion-suggestion-item:hover {
-  background-color: #f9fafb;
+.inscripcion-suggestion-item:hover,
+.inscripcion-suggestion-item.active {
+  background-color: #eef2ff;
+  color: #1d4ed8;
 }
 
 .inscripcion-suggestion-item:last-child {

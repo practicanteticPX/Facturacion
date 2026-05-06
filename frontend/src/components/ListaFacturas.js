@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import { GET_FACTURAS, GET_COMPANIAS } from '../apollo/queries';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Button } from './ui/button';
 import { Label } from './ui/label';
 import './ListaFacturas.css';
 
 /**
  * ListaFacturas Component
- * Muestra una tabla con todas las facturas y permite filtrarlas
+ * Muestra una tabla con todas las facturas y permite filtrarlas.
  */
 function ListaFacturas() {
   const navigate = useNavigate();
@@ -24,6 +23,11 @@ function ListaFacturas() {
     numeroControl: ''
   });
   const [page, setPage] = useState(1);
+  const [ciaSelectOpen, setCiaSelectOpen] = useState(false);
+  const [ciaActiveIndex, setCiaActiveIndex] = useState(0);
+  const ciaSelectRef = useRef(null);
+  const ciaOptionsListRef = useRef(null);
+  const ciaOptionRefs = useRef([]);
   const pageSize = 100;
 
   const { data: companiasData } = useQuery(GET_COMPANIAS);
@@ -40,6 +44,33 @@ function ListaFacturas() {
   });
 
   const totalFacturas = data?.facturas?.total || 0;
+  const companiaOptions = [
+    { value: '', label: 'Todas las compañías' },
+    ...(companiasData?.companias || []).map(cia => ({ value: cia, label: cia }))
+  ];
+  const selectedCiaIndex = Math.max(
+    0,
+    companiaOptions.findIndex(option => option.value === filtrosInputs.cia)
+  );
+  const selectedCiaLabel = companiaOptions[selectedCiaIndex]?.label || 'Todas las compañías';
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (ciaSelectRef.current && !ciaSelectRef.current.contains(event.target)) {
+        setCiaSelectOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    if (ciaSelectOpen) {
+      setCiaActiveIndex(selectedCiaIndex);
+      setTimeout(() => scrollCiaOptionIntoView(selectedCiaIndex), 0);
+    }
+  }, [ciaSelectOpen, selectedCiaIndex]);
 
   const handleFiltroChange = (e) => {
     const { name, value } = e.target;
@@ -64,11 +95,88 @@ function ListaFacturas() {
     const filtrosVacios = { cia: '', nit: '', numeroControl: '' };
     setFiltrosInputs(filtrosVacios);
     setFiltrosAplicados(filtrosVacios);
+    setCiaActiveIndex(0);
+    setCiaSelectOpen(false);
     setPage(1);
   };
 
   const irAPagina = (nuevaPagina) => {
     setPage(nuevaPagina);
+  };
+
+  const seleccionarCompania = (option) => {
+    setFiltrosInputs(prev => ({ ...prev, cia: option.value }));
+    setCiaSelectOpen(false);
+  };
+
+  const scrollCiaOptionIntoView = (index) => {
+    const container = ciaOptionsListRef.current;
+    const activeItem = ciaOptionRefs.current[index];
+
+    if (!container || !activeItem) return;
+
+    const itemTop = activeItem.offsetTop;
+    const itemBottom = itemTop + activeItem.offsetHeight;
+    const visibleTop = container.scrollTop;
+    const visibleBottom = visibleTop + container.clientHeight;
+
+    if (itemTop < visibleTop) {
+      container.scrollTop = itemTop;
+    } else if (itemBottom > visibleBottom) {
+      container.scrollTop = itemBottom - container.clientHeight;
+    }
+  };
+
+  const moverCompaniaActiva = (direction) => {
+    const totalOptions = companiaOptions.length;
+    if (totalOptions === 0) return;
+
+    const nextIndex = (ciaActiveIndex + direction + totalOptions) % totalOptions;
+    setCiaActiveIndex(nextIndex);
+    setTimeout(() => scrollCiaOptionIntoView(nextIndex), 0);
+  };
+
+  const handleCiaSelectKeyDown = (e) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (!ciaSelectOpen) {
+        setCiaSelectOpen(true);
+        return;
+      }
+      moverCompaniaActiva(1);
+      return;
+    }
+
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (!ciaSelectOpen) {
+        setCiaSelectOpen(true);
+        return;
+      }
+      moverCompaniaActiva(-1);
+      return;
+    }
+
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (!ciaSelectOpen) {
+        setCiaSelectOpen(true);
+        return;
+      }
+      seleccionarCompania(companiaOptions[ciaActiveIndex]);
+      return;
+    }
+
+    if (e.key === ' ' || e.key === 'Spacebar') {
+      e.preventDefault();
+      setCiaSelectOpen(prev => !prev);
+      return;
+    }
+
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      setCiaSelectOpen(false);
+    }
   };
 
   if (loading) return <div className="lista-loading">Cargando facturas...</div>;
@@ -89,20 +197,59 @@ function ListaFacturas() {
         <div className="lista-form-grid">
           <div className="lista-form-group">
             <Label>Compañía</Label>
-            <Select
-              value={filtrosInputs.cia || 'all'}
-              onValueChange={(value) => setFiltrosInputs(prev => ({ ...prev, cia: value === 'all' ? '' : value }))}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Todas las compañías" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Todas las compañías</SelectItem>
-                {companiasData?.companias?.map(cia => (
-                  <SelectItem key={cia} value={cia}>{cia}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <div className="lista-keyboard-select" ref={ciaSelectRef}>
+              <button
+                type="button"
+                className="lista-keyboard-select-trigger"
+                onClick={() => setCiaSelectOpen(prev => !prev)}
+                onKeyDown={handleCiaSelectKeyDown}
+                aria-haspopup="listbox"
+                aria-expanded={ciaSelectOpen}
+              >
+                <span>{selectedCiaLabel}</span>
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="lista-keyboard-select-icon"
+                >
+                  <path
+                    d="M2.5 4.5L6 8L9.5 4.5"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+              {ciaSelectOpen && (
+                <div
+                  className="lista-keyboard-select-content"
+                  role="listbox"
+                  ref={ciaOptionsListRef}
+                >
+                  {companiaOptions.map((option, index) => (
+                    <button
+                      type="button"
+                      key={option.value || 'all'}
+                      ref={(element) => { ciaOptionRefs.current[index] = element; }}
+                      className={`lista-keyboard-select-item ${index === ciaActiveIndex ? 'active' : ''} ${option.value === filtrosInputs.cia ? 'selected' : ''}`}
+                      onMouseEnter={() => setCiaActiveIndex(index)}
+                      onClick={() => seleccionarCompania(option)}
+                      role="option"
+                      aria-selected={option.value === filtrosInputs.cia}
+                    >
+                      <span className="lista-keyboard-select-check">
+                        {option.value === filtrosInputs.cia ? '✓' : ''}
+                      </span>
+                      <span>{option.label}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="lista-form-group">

@@ -66,6 +66,15 @@ input, select, textarea {
   font-weight: 500 !important;
 }
 
+input:focus,
+select:focus,
+textarea:focus,
+.date-picker-input:focus {
+  border-color: #4F46E5 !important;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12) !important;
+  outline: none !important;
+}
+
 /* Aplicar Google Sans a TODOS los elementos con máxima prioridad */
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Google Sans', sans-serif !important;

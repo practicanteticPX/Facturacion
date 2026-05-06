@@ -41,6 +41,8 @@ export function DatePicker({
   id,
   disabled = false,
   allowManualInput = false,
+  disableBrowserAutocomplete = false,
+  autoComplete,
   ...props
 }) {
   const [open, setOpen] = React.useState(false)
@@ -150,10 +152,14 @@ export function DatePicker({
     />
   )
 
+  const manualInputId = disableBrowserAutocomplete ? `${id || name}-manual-entry` : id
+  const manualInputName = disableBrowserAutocomplete ? `${id || name}_manual_entry` : name
+  const manualAutoComplete = disableBrowserAutocomplete ? 'new-password' : (autoComplete || 'off')
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '100%' }}>
       {label && (
-        <Label htmlFor={id} style={{ paddingLeft: '4px' }}>
+        <Label htmlFor={allowManualInput ? manualInputId : id} style={{ paddingLeft: '4px' }}>
           {label}
           {required && <span style={{ color: '#ef4444', marginLeft: '4px' }}>*</span>}
         </Label>
@@ -162,14 +168,19 @@ export function DatePicker({
       {allowManualInput ? (
         <div style={{ position: 'relative', width: '100%' }}>
           <input
-            id={id}
-            name={name}
+            id={manualInputId}
+            name={manualInputName}
+            className="date-picker-input"
             value={manualValue}
             onChange={handleManualChange}
             onBlur={handleManualBlur}
             placeholder="DD/MM/AAAA"
             disabled={disabled}
             required={required}
+            autoComplete={manualAutoComplete}
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck="false"
             inputMode="numeric"
             pattern="\d{2}/\d{2}/\d{4}"
             style={{
@@ -224,6 +235,7 @@ export function DatePicker({
             <Button
               variant="outline"
               id={id}
+              className="date-picker-trigger"
               disabled={disabled}
               style={{
                 width: '100%',

@@ -136,7 +136,7 @@ function CausacionFactura() {
         </div>
       )}
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} autoComplete="off">
         <div className="causacion-section">
           <h3 className="causacion-section-title">Información de Causación</h3>
           <div className="causacion-form-grid">
@@ -147,6 +147,8 @@ function CausacionFactura() {
                 value={formData.fechaRecepcionCausacion}
                 onChange={handleChange}
                 id="fechaRecepcionCausacion"
+                allowManualInput
+                disableBrowserAutocomplete
               />
             </div>
 
@@ -176,6 +178,8 @@ function CausacionFactura() {
                 value={formData.fechaRevisionCausacion}
                 onChange={handleChange}
                 id="fechaRevisionCausacion"
+                allowManualInput
+                disableBrowserAutocomplete
               />
             </div>
 
@@ -183,10 +187,15 @@ function CausacionFactura() {
               <Label>No. Causación</Label>
               <input
                 type="text"
-                name="numeroCausacion"
+                name="causacionReferenciaInterna"
+                id="causacionReferenciaInterna"
                 value={formData.numeroCausacion}
-                onChange={handleChange}
+                onChange={(e) => handleChange({ target: { name: 'numeroCausacion', value: e.target.value } })}
                 className="causacion-input"
+                autoComplete="new-password"
+                autoCorrect="off"
+                autoCapitalize="off"
+                spellCheck="false"
               />
             </div>
 
@@ -197,6 +206,8 @@ function CausacionFactura() {
                 value={formData.fechaCausacion}
                 onChange={handleChange}
                 id="fechaCausacion"
+                allowManualInput
+                disableBrowserAutocomplete
               />
             </div>
 

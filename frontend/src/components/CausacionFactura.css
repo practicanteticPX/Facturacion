@@ -105,8 +105,8 @@
 
 .causacion-input:focus {
   outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  border-color: #4F46E5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
 }
 
 .causacion-input:disabled {
@@ -129,4 +129,17 @@
 
 .causacion-button-group .button-default:hover {
   background-color: #4338CA;
+}
+
+.causacion-button-group .button-outline {
+  background-color: #ffffff;
+  color: #0f172a;
+  border: 1px solid #e2e8f0;
+}
+
+.causacion-button-group .button-outline:hover {
+  background-color: #f8fafc;
+  border-color: #cbd5e1;
+  color: #0f172a;
+  box-shadow: none;
 }

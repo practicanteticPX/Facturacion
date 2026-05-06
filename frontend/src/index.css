@@ -3,8 +3,23 @@
 
 /* OVERRIDE TOTAL - Aplicar Google Sans a ABSOLUTAMENTE TODO con !important */
 html {
-  overflow-y: scroll;
+  overflow-y: scroll !important;
   scrollbar-gutter: stable;
+  width: 100%;
+}
+
+body {
+  width: 100%;
+}
+
+body[data-scroll-locked] {
+  margin-right: 0 !important;
+  padding-right: 0 !important;
+  overflow-y: scroll !important;
+}
+
+#root {
+  width: 100%;
 }
 
 * {

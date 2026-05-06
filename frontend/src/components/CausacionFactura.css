@@ -121,3 +121,12 @@
   margin-top: 2rem;
   justify-content: flex-end;
 }
+
+.causacion-button-group .button-default {
+  background-color: #4F46E5;
+  color: white;
+}
+
+.causacion-button-group .button-default:hover {
+  background-color: #4338CA;
+}

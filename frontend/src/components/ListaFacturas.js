@@ -13,13 +13,11 @@ import './ListaFacturas.css';
  */
 function ListaFacturas() {
   const navigate = useNavigate();
-  // Filtros que el usuario está escribiendo (no aplicados aún)
   const [filtrosInputs, setFiltrosInputs] = useState({
     cia: '',
     nit: '',
     numeroControl: ''
   });
-  // Filtros realmente aplicados en la búsqueda
   const [filtrosAplicados, setFiltrosAplicados] = useState({
     cia: '',
     nit: '',
@@ -29,7 +27,7 @@ function ListaFacturas() {
   const pageSize = 100;
 
   const { data: companiasData } = useQuery(GET_COMPANIAS);
-  const { data, loading, error, refetch } = useQuery(GET_FACTURAS, {
+  const { data, loading, error } = useQuery(GET_FACTURAS, {
     variables: {
       filtros: {
         ...(filtrosAplicados.cia && { cia: filtrosAplicados.cia }),
@@ -40,6 +38,8 @@ function ListaFacturas() {
       }
     }
   });
+
+  const totalFacturas = data?.facturas?.total || 0;
 
   const handleFiltroChange = (e) => {
     const { name, value } = e.target;
@@ -56,9 +56,8 @@ function ListaFacturas() {
   };
 
   const aplicarFiltros = () => {
-    // Aplicar los filtros escritos por el usuario
     setFiltrosAplicados(filtrosInputs);
-    setPage(1); // Resetear a la primera página al aplicar filtros
+    setPage(1);
   };
 
   const limpiarFiltros = () => {
@@ -70,11 +69,6 @@ function ListaFacturas() {
 
   const irAPagina = (nuevaPagina) => {
     setPage(nuevaPagina);
-  };
-
-  const formatearFecha = (fecha) => {
-    if (!fecha) return '-';
-    return new Date(fecha).toLocaleDateString('es-CO');
   };
 
   if (loading) return <div className="lista-loading">Cargando facturas...</div>;
@@ -89,21 +83,21 @@ function ListaFacturas() {
 
       <div className="lista-filters-card">
         <div className="lista-filters-header">
-          <h3 className="lista-section-title">Filtros de búsqueda</h3>
+          <h3 className="lista-section-title">Filtros</h3>
         </div>
 
         <div className="lista-form-grid">
           <div className="lista-form-group">
             <Label>Compañía</Label>
             <Select
-              value={filtrosInputs.cia || "all"}
-              onValueChange={(value) => setFiltrosInputs(prev => ({ ...prev, cia: value === "all" ? "" : value }))}
+              value={filtrosInputs.cia || 'all'}
+              onValueChange={(value) => setFiltrosInputs(prev => ({ ...prev, cia: value === 'all' ? '' : value }))}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Todas las compañías" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">Todas</SelectItem>
+                <SelectItem value="all">Todas las compañías</SelectItem>
                 {companiasData?.companias?.map(cia => (
                   <SelectItem key={cia} value={cia}>{cia}</SelectItem>
                 ))}
@@ -133,83 +127,81 @@ function ListaFacturas() {
               onChange={handleFiltroChange}
               onKeyPress={handleKeyPress}
               className="lista-input"
-              placeholder="Ej: 2024001"
+              placeholder="Ej: 26415"
             />
           </div>
         </div>
 
-        <div className="lista-button-group">
-          <Button onClick={aplicarFiltros} variant="default">
-            Aplicar Filtros
-          </Button>
-          <Button onClick={limpiarFiltros} variant="outline">
-            Limpiar
-          </Button>
+        <div className="lista-filters-footer">
+          <p className="lista-info-text">
+            <span>{totalFacturas}</span> {totalFacturas === 1 ? 'factura encontrada' : 'facturas encontradas'}
+          </p>
+          <div className="lista-button-group">
+            <Button onClick={limpiarFiltros} variant="outline">
+              Limpiar
+            </Button>
+            <Button onClick={aplicarFiltros} variant="default">
+              Aplicar filtros
+            </Button>
+          </div>
         </div>
       </div>
 
       <div className="lista-table-section">
-        <div className="lista-table-header">
-          <p className="lista-info-text">
-            {data?.facturas?.total || 0} {data?.facturas?.total === 1 ? 'factura encontrada' : 'facturas encontradas'}
-            {data?.facturas?.total > 0 && ` (Mostrando ${((data?.facturas?.page - 1) * data?.facturas?.pageSize) + 1}-${Math.min(data?.facturas?.page * data?.facturas?.pageSize, data?.facturas?.total)})`}
-          </p>
-        </div>
         <div className="lista-table-container">
           <table className="lista-table">
-          <thead>
-            <tr>
-              <th>Nº Control</th>
-              <th>Cia</th>
-              <th>Proveedor</th>
-              <th>No. Factura</th>
-              <th>Entregada a</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data?.facturas?.facturas?.length === 0 ? (
+            <thead>
               <tr>
-                <td colSpan="6" className="lista-table-empty">
-                  No se encontraron facturas
-                </td>
+                <th>No. Control</th>
+                <th>Cia</th>
+                <th>Proveedor</th>
+                <th>No. Factura</th>
+                <th>Entregada a</th>
+                <th>Acciones</th>
               </tr>
-            ) : (
-              data?.facturas?.facturas?.map(factura => (
-                <tr key={factura.numeroControl}>
-                  <td>{factura.numeroControl}</td>
-                  <td>{factura.cia}</td>
-                  <td>{factura.proveedor}</td>
-                  <td>{factura.numeroFactura}</td>
-                  <td>{factura.entregadaA || '-'}</td>
-                  <td>
-                    <div className="lista-table-actions">
-                      <Button
-                        onClick={() => navigate(`/facturas/${factura.numeroControl}`)}
-                        variant="ghost"
-                        size="sm"
-                        title={factura.enProceso ? 'Ver factura (solo lectura)' : 'Editar factura'}
-                      >
-                        {factura.enProceso ? 'Ver' : 'Editar'}
-                      </Button>
-                      <Button
-                        onClick={() => navigate(`/facturas/${factura.numeroControl}/causacion`)}
-                        variant="outline"
-                        size="sm"
-                      >
-                        Causar
-                      </Button>
-                    </div>
+            </thead>
+            <tbody>
+              {data?.facturas?.facturas?.length === 0 ? (
+                <tr>
+                  <td colSpan="6" className="lista-table-empty">
+                    No se encontraron facturas
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : (
+                data?.facturas?.facturas?.map(factura => (
+                  <tr key={factura.numeroControl}>
+                    <td>{factura.numeroControl}</td>
+                    <td>{factura.cia}</td>
+                    <td>{factura.proveedor}</td>
+                    <td>{factura.numeroFactura}</td>
+                    <td>{factura.entregadaA || '-'}</td>
+                    <td>
+                      <div className="lista-table-actions">
+                        <Button
+                          onClick={() => navigate(`/facturas/${factura.numeroControl}`)}
+                          variant="ghost"
+                          size="sm"
+                          title={factura.enProceso ? 'Ver factura (solo lectura)' : 'Editar factura'}
+                        >
+                          {factura.enProceso ? 'Ver' : 'Editar'}
+                        </Button>
+                        <Button
+                          onClick={() => navigate(`/facturas/${factura.numeroControl}/causacion`)}
+                          variant="outline"
+                          size="sm"
+                        >
+                          Causar
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
         </div>
 
-        {/* Controles de Paginación */}
-        {data?.facturas?.total > pageSize && (
+        {totalFacturas > pageSize && (
           <div className="lista-pagination">
             <Button
               onClick={() => irAPagina(page - 1)}
@@ -220,7 +212,7 @@ function ListaFacturas() {
               Anterior
             </Button>
             <span className="lista-pagination-info">
-              Página {page} de {Math.ceil(data?.facturas?.total / pageSize)}
+              Página {page} de {Math.ceil(totalFacturas / pageSize)}
             </span>
             <Button
               onClick={() => irAPagina(page + 1)}

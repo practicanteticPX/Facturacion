@@ -44,6 +44,11 @@
   gap: 0.125rem;
 }
 
+.file-upload-icon {
+  color: #9ca3af;
+  margin-bottom: 0.25rem;
+}
+
 .file-upload-title {
   font-size: 0.8125rem;
   font-weight: 500;
@@ -186,4 +191,3 @@
 .file-upload-item-remove:active {
   transform: scale(0.95);
 }
-

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useQuery, useLazyQuery } from '@apollo/client';
-import { useNavigate } from 'react-router-dom';
 import {
   CREAR_FACTURA,
   GET_PERSONAS,
@@ -59,8 +58,6 @@ const formatearMensajeError = (mensajeOriginal = '') => {
  * Formulario para crear nuevas facturas en el sistema
  */
 function InscripcionFactura() {
-  const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     numeroControl: '',
     cia: '',
@@ -83,6 +80,7 @@ function InscripcionFactura() {
   const personaSuggestionRefs = useRef([]);
   const personaSuggestionsListRef = useRef(null);
   const [archivosAdjuntos, setArchivosAdjuntos] = useState([]);
+  const [uploadResetKey, setUploadResetKey] = useState(0);
 
   const { data: personasData } = useQuery(GET_PERSONAS);
   const { data: companiasData } = useQuery(GET_COMPANIAS);
@@ -257,6 +255,7 @@ function InscripcionFactura() {
     setMostrarSugerencias(false);
     setPersonasFiltradas([]);
     setArchivosAdjuntos([]);
+    setUploadResetKey(prev => prev + 1);
   };
 
   const handleSubmit = async (e) => {
@@ -292,10 +291,8 @@ function InscripcionFactura() {
 
       await executeMutationWithFile(CREAR_FACTURA, variables);
 
+      limpiarFormulario();
       setMensaje({ tipo: 'success', texto: 'Factura creada exitosamente' });
-      setTimeout(() => {
-        navigate('/facturas');
-      }, 1500);
     } catch (error) {
       console.error('Error creando factura:', error);
       setMensaje({ tipo: 'error', texto: formatearMensajeError(error.message) });
@@ -312,7 +309,7 @@ function InscripcionFactura() {
 
   return (
     <div className="inscripcion-card">
-      <h2 className="inscripcion-title">Inscripción de Nueva Factura</h2>
+      <h2 className="inscripcion-title">Registro de Factura</h2>
 
       {mensaje.texto && (
         <div className={`inscripcion-alert inscripcion-alert-${mensaje.tipo}`}>
@@ -323,6 +320,7 @@ function InscripcionFactura() {
       <form onSubmit={handleSubmit} onKeyDown={handleKeyDown} className="inscripcion-form">
         <div className="inscripcion-form-container">
           <div className="inscripcion-form-grid">
+          <h3 className="inscripcion-section-title">Información General</h3>
           {/* Fila 1 */}
           <div className="inscripcion-form-group">
             <label className="inscripcion-label inscripcion-label-required">No. de Control</label>
@@ -357,7 +355,7 @@ function InscripcionFactura() {
             </Select>
           </div>
 
-          <div className="inscripcion-form-group inscripcion-form-group-span-2">
+          <div className="inscripcion-form-group">
             <label className="inscripcion-label">Compañía + NIT</label>
             <input
               type="text"
@@ -394,7 +392,7 @@ function InscripcionFactura() {
             <p className="inscripcion-info-text">Código del proveedor</p>
           </div>
 
-          <div className="inscripcion-form-group inscripcion-form-group-span-2">
+          <div className="inscripcion-form-group">
             <label className="inscripcion-label">Proveedor</label>
             <input
               type="text"
@@ -406,6 +404,7 @@ function InscripcionFactura() {
           </div>
 
           {/* Fila 3 */}
+          <h3 className="inscripcion-section-title">Detalles de Factura</h3>
           <div className="inscripcion-form-group">
             <DatePicker
               label="Fecha Radicado"
@@ -439,46 +438,6 @@ function InscripcionFactura() {
               id="fechaEntrega"
               disabled={true}
             />
-          </div>
-
-          <div className="inscripcion-form-group">
-            <label className="inscripcion-label">Entregada a</label>
-            <input
-              type="text"
-              name="entregadaA"
-              value={formData.entregadaA}
-              onChange={handleEntregadaAChange}
-              onKeyDown={handleEntregadaAKeyDown}
-              onFocus={() => {
-                if (formData.entregadaA && personasData?.personas) {
-                  const filtradas = personasData.personas.filter(persona =>
-                    buscarPorPalabras(persona.nombre, formData.entregadaA)
-                  );
-                  setPersonasFiltradas(filtradas);
-      setMostrarSugerencias(filtradas.length > 0);
-      setPersonaActivaIndex(filtradas.length > 0 ? 0 : -1);
-                }
-              }}
-              onBlur={() => setTimeout(() => { setMostrarSugerencias(false); setPersonaActivaIndex(-1); }, 200)}
-              className="inscripcion-input"
-              placeholder="Escriba para buscar..."
-              autoComplete="off"
-            />
-            {mostrarSugerencias && personasFiltradas.length > 0 && (
-              <div className="inscripcion-suggestions" ref={personaSuggestionsListRef}>
-                {personasFiltradas.map((persona, index) => (
-                  <div
-                    key={persona.id}
-                    ref={(element) => { personaSuggestionRefs.current[index] = element; }}
-                    onMouseEnter={() => setPersonaActivaIndex(index)}
-                    onClick={() => seleccionarPersona(persona.nombre)}
-                    className={`inscripcion-suggestion-item ${index === personaActivaIndex ? 'active' : ''}`}
-                  >
-                    {persona.nombre}
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
 
           {/* Fila 4 */}
@@ -515,8 +474,48 @@ function InscripcionFactura() {
           </div>
 
           <div className="inscripcion-form-group">
-            <label className="inscripcion-label inscripcion-label-required">Adjuntar Factura</label>
+            <label className="inscripcion-label">Entregada a</label>
+            <input
+              type="text"
+              name="entregadaA"
+              value={formData.entregadaA}
+              onChange={handleEntregadaAChange}
+              onKeyDown={handleEntregadaAKeyDown}
+              onFocus={() => {
+                if (formData.entregadaA && personasData?.personas) {
+                  const filtradas = personasData.personas.filter(persona =>
+                    buscarPorPalabras(persona.nombre, formData.entregadaA)
+                  );
+                  setPersonasFiltradas(filtradas);
+                  setMostrarSugerencias(filtradas.length > 0);
+                  setPersonaActivaIndex(filtradas.length > 0 ? 0 : -1);
+                }
+              }}
+              onBlur={() => setTimeout(() => { setMostrarSugerencias(false); setPersonaActivaIndex(-1); }, 200)}
+              className="inscripcion-input"
+              placeholder="Escriba para buscar..."
+              autoComplete="off"
+            />
+            {mostrarSugerencias && personasFiltradas.length > 0 && (
+              <div className="inscripcion-suggestions" ref={personaSuggestionsListRef}>
+                {personasFiltradas.map((persona, index) => (
+                  <div
+                    key={persona.id}
+                    ref={(element) => { personaSuggestionRefs.current[index] = element; }}
+                    onMouseEnter={() => setPersonaActivaIndex(index)}
+                    onClick={() => seleccionarPersona(persona.nombre)}
+                    className={`inscripcion-suggestion-item ${index === personaActivaIndex ? 'active' : ''}`}
+                  >
+                    {persona.nombre}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="inscripcion-form-group inscripcion-upload-group">
             <FileUpload
+              key={uploadResetKey}
               onFilesChange={handleFilesChange}
               acceptedTypes=".pdf"
               maxSizeMB={10}
@@ -528,18 +527,18 @@ function InscripcionFactura() {
 
         <div className="inscripcion-button-group">
           <Button
-            type="button"
-            onClick={limpiarFormulario}
-            variant="outline"
-          >
-            Cancelar
-          </Button>
-          <Button
             type="submit"
             variant="default"
             disabled={loadingCrear}
           >
             {loadingCrear ? 'Creando...' : 'Crear Factura'}
+          </Button>
+          <Button
+            type="button"
+            onClick={limpiarFormulario}
+            variant="outline"
+          >
+            Cancelar
           </Button>
         </div>
       </form>

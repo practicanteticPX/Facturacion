@@ -5,18 +5,19 @@
 
 .inscripcion-card {
   background: white;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
-  padding: 2.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+  padding: 2rem 2.25rem;
   margin: 0 auto;
 }
 
 .inscripcion-title {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
   color: #0f172a;
   font-weight: 700;
-  letter-spacing: -0.025em;
+  letter-spacing: 0;
 }
 
 .inscripcion-alert {
@@ -45,15 +46,24 @@
 .inscripcion-form-container {
   background: #f8fafc;
   border-radius: 12px;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
+  padding: 2rem 2.25rem;
+  margin-bottom: 0.75rem;
   border: 1px solid #e2e8f0;
 }
 
 .inscripcion-form-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem 1.25rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem 1.5rem;
+}
+
+.inscripcion-section-title {
+  grid-column: 1 / -1;
+  color: #0f172a;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  margin: 0.5rem 0 0.125rem;
 }
 
 @media (max-width: 1200px) {
@@ -80,10 +90,10 @@
 
 .inscripcion-label {
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.45rem;
   font-weight: 600;
-  color: #1a1a1a;
-  font-size: 0.875rem;
+  color: #334155;
+  font-size: 0.75rem;
 }
 
 .inscripcion-label-required::after {
@@ -94,14 +104,40 @@
 .inscripcion-input,
 .inscripcion-select {
   width: 100%;
-  padding: 0.625rem 0.75rem;
+  height: 38px;
+  padding: 0 0.75rem;
   border: 1px solid #d1d5db;
   border-radius: 6px;
-  font-size: 0.9375rem;
+  font-size: 0.75rem;
   box-sizing: border-box;
   transition: all 0.15s ease;
   background-color: white;
   color: #1a1a1a;
+}
+
+.inscripcion-form-group .select-trigger,
+.inscripcion-form-group .button {
+  min-height: 38px;
+  height: 38px !important;
+  padding: 0 0.75rem;
+  border-color: #d1d5db;
+  border-radius: 6px;
+  font-size: 0.75rem;
+}
+
+.inscripcion-form-group input[id^="fecha"] {
+  height: 38px !important;
+  padding: 0 2rem 0 0.75rem !important;
+  border-color: #d1d5db !important;
+  font-size: 0.75rem !important;
+}
+
+.inscripcion-form-group button[aria-label="Abrir calendario"] {
+  top: 19px !important;
+}
+
+.inscripcion-form-group .select-trigger {
+  width: 100%;
 }
 
 .inscripcion-input::placeholder {
@@ -145,16 +181,73 @@
 
 .inscripcion-info-text {
   color: #6b7280;
-  font-size: 0.8125rem;
-  margin-top: 0.375rem;
+  font-size: 0.7rem;
+  margin-top: 0.35rem;
   font-weight: 400;
 }
 
 .inscripcion-button-group {
   display: flex;
-  gap: 1rem;
-  margin-top: 0;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
   justify-content: flex-end;
+}
+
+.inscripcion-button-group button[type="submit"] {
+  background-color: #4F46E5;
+  color: #ffffff;
+}
+
+.inscripcion-button-group button[type="submit"]:hover {
+  background-color: #4338CA;
+}
+
+.inscripcion-button-group button[type="button"] {
+  background-color: #ffffff;
+  color: #0f172a;
+  border: 1px solid #e2e8f0;
+}
+
+.inscripcion-button-group button[type="button"]:hover {
+  background-color: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.inscripcion-upload-group {
+  grid-column: 1 / -1;
+  margin-top: 0.5rem;
+}
+
+.inscripcion-upload-group .file-upload-container {
+  min-height: 96px;
+}
+
+.inscripcion-upload-group .file-upload-list-wrapper {
+  min-height: 0;
+  margin-top: 0;
+}
+
+.inscripcion-upload-group .file-upload-dropzone {
+  min-height: 96px;
+  height: 96px;
+  border-color: #4F46E5;
+  border-radius: 10px;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.inscripcion-upload-group .file-upload-icon {
+  color: #4F46E5;
+}
+
+.inscripcion-upload-group .file-upload-title {
+  color: #4F46E5;
+  font-size: 0.75rem;
+}
+
+.inscripcion-upload-group .file-upload-subtitle {
+  color: #64748b;
+  font-size: 0.7rem;
 }
 
 .inscripcion-btn {

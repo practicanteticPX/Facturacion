@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { FileText } from 'lucide-react';
 import './FileUpload.css';
 
 /**
@@ -135,6 +136,7 @@ function FileUpload({ onFilesChange, acceptedTypes = '*', maxSizeMB = 10, multip
         />
 
         <div className="file-upload-text">
+          <FileText className="file-upload-icon" size={24} strokeWidth={1.8} />
           <span className="file-upload-title">Adjuntar Factura</span>
           <span className="file-upload-subtitle">PDF (Máx. 10MB)</span>
         </div>

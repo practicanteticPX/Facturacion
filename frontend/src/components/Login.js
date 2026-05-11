@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation, gql } from '@apollo/client';
 import './Login.css';
-import logoPrexxa from '../assets/Prexxa.png';
+import facturacionLogo from '../assets/facturacion.png';
 
 const LOGIN_MUTATION = gql`
   mutation Login($input: LoginInput!) {
@@ -18,11 +18,6 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
-/**
- * Login Component
- * @param {Object} props
- * @param {Function} props.onLoginSuccess - Callback ejecutado al autenticarse exitosamente
- */
 function Login({ onLoginSuccess }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -41,9 +36,9 @@ function Login({ onLoginSuccess }) {
         }
       }
     },
-    onError: (error) => {
-      console.error('Error en login:', error);
-      setError(error.message.replace('Error: ', '') || 'Error al iniciar sesión');
+    onError: (loginError) => {
+      console.error('Error en login:', loginError);
+      setError(loginError.message.replace('Error: ', '') || 'Error al iniciar sesión');
       setPassword('');
     }
   });
@@ -71,90 +66,89 @@ function Login({ onLoginSuccess }) {
     }
   };
 
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+    if (error) setError('');
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+    if (error) setError('');
+  };
+
   return (
     <div className="login-container">
-      <div className="login-content">
-        <div className="login-card">
-          <div className="login-logo">
-            <img src={logoPrexxa} alt="Prexxa" />
+      <div className="login-card">
+        <div className="login-header">
+          <div className="logo-container">
+            <img src={facturacionLogo} alt="Facturación" className="logo-image" />
           </div>
-          <form onSubmit={handleSubmit} className="login-form">
-            <div className="login-form-group">
-              <label htmlFor="username">Usuario</label>
-              <div className="login-input-wrapper">
-                <input
-                  type="text"
-                  id="username"
-                  className="login-input"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="Usuario"
-                  disabled={loading}
-                  autoComplete="username"
-                  autoFocus
-                />
-              </div>
+        </div>
+
+        <form onSubmit={handleSubmit} className="login-form">
+          {error && (
+            <div className="error-message">
+              <span>{error}</span>
             </div>
+          )}
 
-            <div className="login-form-group">
-              <label htmlFor="password">Contraseña</label>
-              <div className="login-input-wrapper">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  id="password"
-                  className="login-input"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Contraseña"
-                  disabled={loading}
-                  autoComplete="current-password"
-                />
-                <button
-                  type="button"
-                  className="login-password-toggle"
-                  onClick={() => setShowPassword(!showPassword)}
-                  tabIndex={-1}
-                >
-                  {showPassword ? (
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-                      <line x1="1" y1="1" x2="23" y2="23"></line>
-                    </svg>
-                  ) : (
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                      <circle cx="12" cy="12" r="3"></circle>
-                    </svg>
-                  )}
-                </button>
-              </div>
-            </div>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            value={username}
+            onChange={handleUsernameChange}
+            placeholder="Usuario"
+            disabled={loading}
+            required
+            autoComplete="username"
+            autoFocus
+            className="form-input"
+          />
 
-            {error && (
-              <div className="login-error-message">
-                <svg viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                </svg>
-                {error}
-              </div>
-            )}
-
-            <button
-              type="submit"
-              className="login-submit-button"
+          <div className="input-wrapper">
+            <input
+              type={showPassword ? 'text' : 'password'}
+              id="password"
+              name="password"
+              value={password}
+              onChange={handlePasswordChange}
+              placeholder="Contraseña"
               disabled={loading}
+              required
+              autoComplete="current-password"
+              className="form-input"
+            />
+            <button
+              type="button"
+              className="password-toggle"
+              onClick={() => setShowPassword(!showPassword)}
+              aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
             >
-              {loading ? (
-                <>
-                  <div className="login-button-spinner"></div>
-                  Iniciando sesión...
-                </>
+              {showPassword ? (
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
               ) : (
-                'Iniciar Sesión'
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
               )}
             </button>
-          </form>
-        </div>
+          </div>
+
+          <button type="submit" className="submit-button" disabled={loading}>
+            {loading ? (
+              <>
+                <div className="login-button-spinner"></div>
+                Iniciando sesión...
+              </>
+            ) : (
+              'Iniciar Sesión'
+            )}
+          </button>
+        </form>
       </div>
     </div>
   );

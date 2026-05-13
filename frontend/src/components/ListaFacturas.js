@@ -332,13 +332,6 @@ function ListaFacturas() {
                         >
                           {factura.enProceso ? 'Ver' : 'Editar'}
                         </Button>
-                        <Button
-                          onClick={() => navigate(`/facturas/${factura.numeroControl}/causacion`)}
-                          variant="outline"
-                          size="sm"
-                        >
-                          Causar
-                        </Button>
                       </div>
                     </td>
                   </tr>

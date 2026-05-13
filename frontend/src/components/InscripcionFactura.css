@@ -53,8 +53,22 @@
 
 .inscripcion-form-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: 1.25rem 1.5rem;
+}
+
+.inscripcion-field-cia,
+.inscripcion-field-control {
+  grid-column: span 2;
+}
+
+.inscripcion-field-nit,
+.inscripcion-field-factura {
+  grid-column: span 4;
+}
+
+.inscripcion-field-autocomplete {
+  grid-column: span 6;
 }
 
 .inscripcion-section-title {
@@ -68,7 +82,15 @@
 
 @media (max-width: 1200px) {
   .inscripcion-form-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .inscripcion-field-cia,
+  .inscripcion-field-control,
+  .inscripcion-field-nit,
+  .inscripcion-field-factura,
+  .inscripcion-field-autocomplete {
+    grid-column: span 1;
   }
 }
 
@@ -82,6 +104,21 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  grid-column: span 4;
+}
+
+.inscripcion-form-group.inscripcion-field-cia,
+.inscripcion-form-group.inscripcion-field-control {
+  grid-column: span 2;
+}
+
+.inscripcion-form-group.inscripcion-field-nit,
+.inscripcion-form-group.inscripcion-field-factura {
+  grid-column: span 4;
+}
+
+.inscripcion-form-group.inscripcion-field-autocomplete {
+  grid-column: span 6;
 }
 
 .inscripcion-form-group-span-2 {

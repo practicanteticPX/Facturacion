@@ -322,22 +322,7 @@ function InscripcionFactura() {
           <div className="inscripcion-form-grid">
           <h3 className="inscripcion-section-title">Información General</h3>
           {/* Fila 1 */}
-          <div className="inscripcion-form-group">
-            <label className="inscripcion-label inscripcion-label-required">No. de Control</label>
-            <input
-              type="number"
-              name="numeroControl"
-              value={formData.numeroControl}
-              onChange={handleChange}
-              className="inscripcion-input"
-              min="1"
-              step="1"
-              required
-            />
-            <p className="inscripcion-info-text">Digita el consecutivo oficial del Excel</p>
-          </div>
-
-          <div className="inscripcion-form-group">
+          <div className="inscripcion-form-group inscripcion-field-cia">
             <label className="inscripcion-label inscripcion-label-required">Cia</label>
             <Select
               value={formData.cia}
@@ -355,31 +340,22 @@ function InscripcionFactura() {
             </Select>
           </div>
 
-          <div className="inscripcion-form-group">
-            <label className="inscripcion-label">Compañía + NIT</label>
+          <div className="inscripcion-form-group inscripcion-field-control">
+            <label className="inscripcion-label inscripcion-label-required">No. de Control</label>
             <input
-              type="text"
-              value={ciaNit}
-              className="inscripcion-input"
-              disabled
-            />
-            <p className="inscripcion-info-text">Se genera automáticamente</p>
-          </div>
-
-          {/* Fila 2 */}
-          <div className="inscripcion-form-group">
-            <label className="inscripcion-label inscripcion-label-required">No. Factura</label>
-            <input
-              type="text"
-              name="numeroFactura"
-              value={formData.numeroFactura}
+              type="number"
+              name="numeroControl"
+              value={formData.numeroControl}
               onChange={handleChange}
               className="inscripcion-input"
+              min="1"
+              step="1"
               required
             />
+            <p className="inscripcion-info-text">Consecutivo oficial del Excel</p>
           </div>
 
-          <div className="inscripcion-form-group">
+          <div className="inscripcion-form-group inscripcion-field-nit">
             <label className="inscripcion-label inscripcion-label-required">NIT</label>
             <input
               type="text"
@@ -392,7 +368,31 @@ function InscripcionFactura() {
             <p className="inscripcion-info-text">Código del proveedor</p>
           </div>
 
-          <div className="inscripcion-form-group">
+          <div className="inscripcion-form-group inscripcion-field-factura">
+            <label className="inscripcion-label inscripcion-label-required">No. Factura</label>
+            <input
+              type="text"
+              name="numeroFactura"
+              value={formData.numeroFactura}
+              onChange={handleChange}
+              className="inscripcion-input"
+              required
+            />
+          </div>
+
+          {/* Fila 2 */}
+          <div className="inscripcion-form-group inscripcion-field-autocomplete">
+            <label className="inscripcion-label">Compañía + NIT</label>
+            <input
+              type="text"
+              value={ciaNit}
+              className="inscripcion-input"
+              disabled
+            />
+            <p className="inscripcion-info-text">Se genera automáticamente</p>
+          </div>
+
+          <div className="inscripcion-form-group inscripcion-field-autocomplete">
             <label className="inscripcion-label">Proveedor</label>
             <input
               type="text"
@@ -547,6 +547,7 @@ function InscripcionFactura() {
 }
 
 export default InscripcionFactura;
+
 
 
 

@@ -33,29 +33,30 @@ model Compania {
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model Factura {
-  numeroControl           Int       @id(map: "t_facturas_pkey") @default(autoincrement()) @map("numero_control")
-  cia                     String?   @db.VarChar(2)
-  ciaNit                  String?   @map("cia_nit") @db.VarChar(50)
-  nit                     String?   @db.VarChar(50)
-  proveedor               String?   @db.VarChar(100)
-  numeroFactura           String?   @map("numero_factura") @db.VarChar(50)
-  fechaRadicado           DateTime? @map("fecha_radicado") @db.Date
-  fechaFactura            DateTime? @map("fecha_factura") @db.Date
-  facturaCredito          Boolean?  @map("factura_credito")
-  acuseReciboSCI          Boolean?  @map("acuse_recibo_sci")
-  entregadaA              String?   @map("entregada_a") @db.VarChar(50)
-  fechaEntrega            DateTime? @map("fecha_entrega") @db.Date
-  fechaRecepcionCausacion DateTime? @map("fecha_recepcion_causacion") @db.Date
-  recibidaPor             String?   @map("recibida_por") @db.VarChar(50)
-  fechaRevisionCausacion  DateTime? @map("fecha_revision_causacion") @db.Date
-  numeroCausacion         String?   @map("numero_causacion") @db.VarChar(50)
-  fechaCausacion          DateTime? @map("fecha_causacion") @db.Date
-  observaciones           String?   @db.VarChar(50)
-  creadoEn                DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
-  actualizadoEn           DateTime? @default(now()) @map("updated_at") @db.Timestamptz(6)
-  enProceso               Boolean?  @default(false) @map("en_proceso")
-  finalizado              Boolean?  @default(false) @map("finalizado")
-  causado                 Boolean?  @default(false) @map("causado")
+  numeroControl          Int       @id(map: "t_facturas_pkey") @default(autoincrement()) @map("numero_control")
+  cia                    String?   @db.VarChar(2)
+  ciaNit                 String?   @map("cia_nit") @db.VarChar(50)
+  nit                    String?   @db.VarChar(50)
+  proveedor              String?   @db.VarChar(100)
+  numeroFactura          String?   @map("numero_factura") @db.VarChar(50)
+  fechaRadicado          DateTime? @map("fecha_radicado") @db.Date
+  fechaFactura           DateTime? @map("fecha_factura") @db.Date
+  facturaCredito         Boolean?  @map("factura_credito")
+  acuseReciboSCI         Boolean?  @map("acuse_recibo_sci")
+  entregadaA             String?   @map("entregada_a") @db.VarChar(50)
+  fechaEntrega           DateTime? @map("fecha_entrega") @db.Date
+  numeroCausacion        String?   @map("numero_causacion") @db.VarChar(50)
+  fechaCausacion         DateTime? @map("fecha_causacion") @db.Date
+  observaciones          String?   @db.VarChar(500)
+  observacionesCausacion String?   @map("observaciones_causacion") @db.VarChar(500)
+  causadoPor             String?   @map("causado_por") @db.VarChar(100)
+  rechazada              Boolean?  @default(false) @map("rechazada")
+  corregida              Boolean?  @default(false) @map("corregida")
+  creadoEn               DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
+  actualizadoEn          DateTime? @default(now()) @map("updated_at") @db.Timestamptz(6)
+  enProceso              Boolean?  @default(false) @map("en_proceso")
+  finalizado             Boolean?  @default(false) @map("finalizado")
+  causado                Boolean?  @default(false) @map("causado")
 
   @@index([cia], map: "idx_facturas_cia")
   @@index([nit], map: "idx_facturas_nit")

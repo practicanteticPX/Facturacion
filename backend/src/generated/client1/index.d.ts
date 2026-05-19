@@ -2038,12 +2038,13 @@ export namespace Prisma {
     acuseReciboSCI: boolean | null
     entregadaA: string | null
     fechaEntrega: Date | null
-    fechaRecepcionCausacion: Date | null
-    recibidaPor: string | null
-    fechaRevisionCausacion: Date | null
     numeroCausacion: string | null
     fechaCausacion: Date | null
     observaciones: string | null
+    observacionesCausacion: string | null
+    causadoPor: string | null
+    rechazada: boolean | null
+    corregida: boolean | null
     creadoEn: Date | null
     actualizadoEn: Date | null
     enProceso: boolean | null
@@ -2064,12 +2065,13 @@ export namespace Prisma {
     acuseReciboSCI: boolean | null
     entregadaA: string | null
     fechaEntrega: Date | null
-    fechaRecepcionCausacion: Date | null
-    recibidaPor: string | null
-    fechaRevisionCausacion: Date | null
     numeroCausacion: string | null
     fechaCausacion: Date | null
     observaciones: string | null
+    observacionesCausacion: string | null
+    causadoPor: string | null
+    rechazada: boolean | null
+    corregida: boolean | null
     creadoEn: Date | null
     actualizadoEn: Date | null
     enProceso: boolean | null
@@ -2090,12 +2092,13 @@ export namespace Prisma {
     acuseReciboSCI: number
     entregadaA: number
     fechaEntrega: number
-    fechaRecepcionCausacion: number
-    recibidaPor: number
-    fechaRevisionCausacion: number
     numeroCausacion: number
     fechaCausacion: number
     observaciones: number
+    observacionesCausacion: number
+    causadoPor: number
+    rechazada: number
+    corregida: number
     creadoEn: number
     actualizadoEn: number
     enProceso: number
@@ -2126,12 +2129,13 @@ export namespace Prisma {
     acuseReciboSCI?: true
     entregadaA?: true
     fechaEntrega?: true
-    fechaRecepcionCausacion?: true
-    recibidaPor?: true
-    fechaRevisionCausacion?: true
     numeroCausacion?: true
     fechaCausacion?: true
     observaciones?: true
+    observacionesCausacion?: true
+    causadoPor?: true
+    rechazada?: true
+    corregida?: true
     creadoEn?: true
     actualizadoEn?: true
     enProceso?: true
@@ -2152,12 +2156,13 @@ export namespace Prisma {
     acuseReciboSCI?: true
     entregadaA?: true
     fechaEntrega?: true
-    fechaRecepcionCausacion?: true
-    recibidaPor?: true
-    fechaRevisionCausacion?: true
     numeroCausacion?: true
     fechaCausacion?: true
     observaciones?: true
+    observacionesCausacion?: true
+    causadoPor?: true
+    rechazada?: true
+    corregida?: true
     creadoEn?: true
     actualizadoEn?: true
     enProceso?: true
@@ -2178,12 +2183,13 @@ export namespace Prisma {
     acuseReciboSCI?: true
     entregadaA?: true
     fechaEntrega?: true
-    fechaRecepcionCausacion?: true
-    recibidaPor?: true
-    fechaRevisionCausacion?: true
     numeroCausacion?: true
     fechaCausacion?: true
     observaciones?: true
+    observacionesCausacion?: true
+    causadoPor?: true
+    rechazada?: true
+    corregida?: true
     creadoEn?: true
     actualizadoEn?: true
     enProceso?: true
@@ -2291,12 +2297,13 @@ export namespace Prisma {
     acuseReciboSCI: boolean | null
     entregadaA: string | null
     fechaEntrega: Date | null
-    fechaRecepcionCausacion: Date | null
-    recibidaPor: string | null
-    fechaRevisionCausacion: Date | null
     numeroCausacion: string | null
     fechaCausacion: Date | null
     observaciones: string | null
+    observacionesCausacion: string | null
+    causadoPor: string | null
+    rechazada: boolean | null
+    corregida: boolean | null
     creadoEn: Date | null
     actualizadoEn: Date | null
     enProceso: boolean | null
@@ -2336,12 +2343,13 @@ export namespace Prisma {
     acuseReciboSCI?: boolean
     entregadaA?: boolean
     fechaEntrega?: boolean
-    fechaRecepcionCausacion?: boolean
-    recibidaPor?: boolean
-    fechaRevisionCausacion?: boolean
     numeroCausacion?: boolean
     fechaCausacion?: boolean
     observaciones?: boolean
+    observacionesCausacion?: boolean
+    causadoPor?: boolean
+    rechazada?: boolean
+    corregida?: boolean
     creadoEn?: boolean
     actualizadoEn?: boolean
     enProceso?: boolean
@@ -2362,12 +2370,13 @@ export namespace Prisma {
     acuseReciboSCI?: boolean
     entregadaA?: boolean
     fechaEntrega?: boolean
-    fechaRecepcionCausacion?: boolean
-    recibidaPor?: boolean
-    fechaRevisionCausacion?: boolean
     numeroCausacion?: boolean
     fechaCausacion?: boolean
     observaciones?: boolean
+    observacionesCausacion?: boolean
+    causadoPor?: boolean
+    rechazada?: boolean
+    corregida?: boolean
     creadoEn?: boolean
     actualizadoEn?: boolean
     enProceso?: boolean
@@ -2388,12 +2397,13 @@ export namespace Prisma {
     acuseReciboSCI?: boolean
     entregadaA?: boolean
     fechaEntrega?: boolean
-    fechaRecepcionCausacion?: boolean
-    recibidaPor?: boolean
-    fechaRevisionCausacion?: boolean
     numeroCausacion?: boolean
     fechaCausacion?: boolean
     observaciones?: boolean
+    observacionesCausacion?: boolean
+    causadoPor?: boolean
+    rechazada?: boolean
+    corregida?: boolean
     creadoEn?: boolean
     actualizadoEn?: boolean
     enProceso?: boolean
@@ -2418,12 +2428,13 @@ export namespace Prisma {
       acuseReciboSCI: boolean | null
       entregadaA: string | null
       fechaEntrega: Date | null
-      fechaRecepcionCausacion: Date | null
-      recibidaPor: string | null
-      fechaRevisionCausacion: Date | null
       numeroCausacion: string | null
       fechaCausacion: Date | null
       observaciones: string | null
+      observacionesCausacion: string | null
+      causadoPor: string | null
+      rechazada: boolean | null
+      corregida: boolean | null
       creadoEn: Date | null
       actualizadoEn: Date | null
       enProceso: boolean | null
@@ -2834,12 +2845,13 @@ export namespace Prisma {
     readonly acuseReciboSCI: FieldRef<"Factura", 'Boolean'>
     readonly entregadaA: FieldRef<"Factura", 'String'>
     readonly fechaEntrega: FieldRef<"Factura", 'DateTime'>
-    readonly fechaRecepcionCausacion: FieldRef<"Factura", 'DateTime'>
-    readonly recibidaPor: FieldRef<"Factura", 'String'>
-    readonly fechaRevisionCausacion: FieldRef<"Factura", 'DateTime'>
     readonly numeroCausacion: FieldRef<"Factura", 'String'>
     readonly fechaCausacion: FieldRef<"Factura", 'DateTime'>
     readonly observaciones: FieldRef<"Factura", 'String'>
+    readonly observacionesCausacion: FieldRef<"Factura", 'String'>
+    readonly causadoPor: FieldRef<"Factura", 'String'>
+    readonly rechazada: FieldRef<"Factura", 'Boolean'>
+    readonly corregida: FieldRef<"Factura", 'Boolean'>
     readonly creadoEn: FieldRef<"Factura", 'DateTime'>
     readonly actualizadoEn: FieldRef<"Factura", 'DateTime'>
     readonly enProceso: FieldRef<"Factura", 'Boolean'>
@@ -4958,12 +4970,13 @@ export namespace Prisma {
     acuseReciboSCI: 'acuseReciboSCI',
     entregadaA: 'entregadaA',
     fechaEntrega: 'fechaEntrega',
-    fechaRecepcionCausacion: 'fechaRecepcionCausacion',
-    recibidaPor: 'recibidaPor',
-    fechaRevisionCausacion: 'fechaRevisionCausacion',
     numeroCausacion: 'numeroCausacion',
     fechaCausacion: 'fechaCausacion',
     observaciones: 'observaciones',
+    observacionesCausacion: 'observacionesCausacion',
+    causadoPor: 'causadoPor',
+    rechazada: 'rechazada',
+    corregida: 'corregida',
     creadoEn: 'creadoEn',
     actualizadoEn: 'actualizadoEn',
     enProceso: 'enProceso',
@@ -5153,12 +5166,13 @@ export namespace Prisma {
     acuseReciboSCI?: BoolNullableFilter<"Factura"> | boolean | null
     entregadaA?: StringNullableFilter<"Factura"> | string | null
     fechaEntrega?: DateTimeNullableFilter<"Factura"> | Date | string | null
-    fechaRecepcionCausacion?: DateTimeNullableFilter<"Factura"> | Date | string | null
-    recibidaPor?: StringNullableFilter<"Factura"> | string | null
-    fechaRevisionCausacion?: DateTimeNullableFilter<"Factura"> | Date | string | null
     numeroCausacion?: StringNullableFilter<"Factura"> | string | null
     fechaCausacion?: DateTimeNullableFilter<"Factura"> | Date | string | null
     observaciones?: StringNullableFilter<"Factura"> | string | null
+    observacionesCausacion?: StringNullableFilter<"Factura"> | string | null
+    causadoPor?: StringNullableFilter<"Factura"> | string | null
+    rechazada?: BoolNullableFilter<"Factura"> | boolean | null
+    corregida?: BoolNullableFilter<"Factura"> | boolean | null
     creadoEn?: DateTimeNullableFilter<"Factura"> | Date | string | null
     actualizadoEn?: DateTimeNullableFilter<"Factura"> | Date | string | null
     enProceso?: BoolNullableFilter<"Factura"> | boolean | null
@@ -5179,12 +5193,13 @@ export namespace Prisma {
     acuseReciboSCI?: SortOrderInput | SortOrder
     entregadaA?: SortOrderInput | SortOrder
     fechaEntrega?: SortOrderInput | SortOrder
-    fechaRecepcionCausacion?: SortOrderInput | SortOrder
-    recibidaPor?: SortOrderInput | SortOrder
-    fechaRevisionCausacion?: SortOrderInput | SortOrder
     numeroCausacion?: SortOrderInput | SortOrder
     fechaCausacion?: SortOrderInput | SortOrder
     observaciones?: SortOrderInput | SortOrder
+    observacionesCausacion?: SortOrderInput | SortOrder
+    causadoPor?: SortOrderInput | SortOrder
+    rechazada?: SortOrderInput | SortOrder
+    corregida?: SortOrderInput | SortOrder
     creadoEn?: SortOrderInput | SortOrder
     actualizadoEn?: SortOrderInput | SortOrder
     enProceso?: SortOrderInput | SortOrder
@@ -5208,12 +5223,13 @@ export namespace Prisma {
     acuseReciboSCI?: BoolNullableFilter<"Factura"> | boolean | null
     entregadaA?: StringNullableFilter<"Factura"> | string | null
     fechaEntrega?: DateTimeNullableFilter<"Factura"> | Date | string | null
-    fechaRecepcionCausacion?: DateTimeNullableFilter<"Factura"> | Date | string | null
-    recibidaPor?: StringNullableFilter<"Factura"> | string | null
-    fechaRevisionCausacion?: DateTimeNullableFilter<"Factura"> | Date | string | null
     numeroCausacion?: StringNullableFilter<"Factura"> | string | null
     fechaCausacion?: DateTimeNullableFilter<"Factura"> | Date | string | null
     observaciones?: StringNullableFilter<"Factura"> | string | null
+    observacionesCausacion?: StringNullableFilter<"Factura"> | string | null
+    causadoPor?: StringNullableFilter<"Factura"> | string | null
+    rechazada?: BoolNullableFilter<"Factura"> | boolean | null
+    corregida?: BoolNullableFilter<"Factura"> | boolean | null
     creadoEn?: DateTimeNullableFilter<"Factura"> | Date | string | null
     actualizadoEn?: DateTimeNullableFilter<"Factura"> | Date | string | null
     enProceso?: BoolNullableFilter<"Factura"> | boolean | null
@@ -5234,12 +5250,13 @@ export namespace Prisma {
     acuseReciboSCI?: SortOrderInput | SortOrder
     entregadaA?: SortOrderInput | SortOrder
     fechaEntrega?: SortOrderInput | SortOrder
-    fechaRecepcionCausacion?: SortOrderInput | SortOrder
-    recibidaPor?: SortOrderInput | SortOrder
-    fechaRevisionCausacion?: SortOrderInput | SortOrder
     numeroCausacion?: SortOrderInput | SortOrder
     fechaCausacion?: SortOrderInput | SortOrder
     observaciones?: SortOrderInput | SortOrder
+    observacionesCausacion?: SortOrderInput | SortOrder
+    causadoPor?: SortOrderInput | SortOrder
+    rechazada?: SortOrderInput | SortOrder
+    corregida?: SortOrderInput | SortOrder
     creadoEn?: SortOrderInput | SortOrder
     actualizadoEn?: SortOrderInput | SortOrder
     enProceso?: SortOrderInput | SortOrder
@@ -5268,12 +5285,13 @@ export namespace Prisma {
     acuseReciboSCI?: BoolNullableWithAggregatesFilter<"Factura"> | boolean | null
     entregadaA?: StringNullableWithAggregatesFilter<"Factura"> | string | null
     fechaEntrega?: DateTimeNullableWithAggregatesFilter<"Factura"> | Date | string | null
-    fechaRecepcionCausacion?: DateTimeNullableWithAggregatesFilter<"Factura"> | Date | string | null
-    recibidaPor?: StringNullableWithAggregatesFilter<"Factura"> | string | null
-    fechaRevisionCausacion?: DateTimeNullableWithAggregatesFilter<"Factura"> | Date | string | null
     numeroCausacion?: StringNullableWithAggregatesFilter<"Factura"> | string | null
     fechaCausacion?: DateTimeNullableWithAggregatesFilter<"Factura"> | Date | string | null
     observaciones?: StringNullableWithAggregatesFilter<"Factura"> | string | null
+    observacionesCausacion?: StringNullableWithAggregatesFilter<"Factura"> | string | null
+    causadoPor?: StringNullableWithAggregatesFilter<"Factura"> | string | null
+    rechazada?: BoolNullableWithAggregatesFilter<"Factura"> | boolean | null
+    corregida?: BoolNullableWithAggregatesFilter<"Factura"> | boolean | null
     creadoEn?: DateTimeNullableWithAggregatesFilter<"Factura"> | Date | string | null
     actualizadoEn?: DateTimeNullableWithAggregatesFilter<"Factura"> | Date | string | null
     enProceso?: BoolNullableWithAggregatesFilter<"Factura"> | boolean | null
@@ -5432,12 +5450,13 @@ export namespace Prisma {
     acuseReciboSCI?: boolean | null
     entregadaA?: string | null
     fechaEntrega?: Date | string | null
-    fechaRecepcionCausacion?: Date | string | null
-    recibidaPor?: string | null
-    fechaRevisionCausacion?: Date | string | null
     numeroCausacion?: string | null
     fechaCausacion?: Date | string | null
     observaciones?: string | null
+    observacionesCausacion?: string | null
+    causadoPor?: string | null
+    rechazada?: boolean | null
+    corregida?: boolean | null
     creadoEn?: Date | string | null
     actualizadoEn?: Date | string | null
     enProceso?: boolean | null
@@ -5458,12 +5477,13 @@ export namespace Prisma {
     acuseReciboSCI?: boolean | null
     entregadaA?: string | null
     fechaEntrega?: Date | string | null
-    fechaRecepcionCausacion?: Date | string | null
-    recibidaPor?: string | null
-    fechaRevisionCausacion?: Date | string | null
     numeroCausacion?: string | null
     fechaCausacion?: Date | string | null
     observaciones?: string | null
+    observacionesCausacion?: string | null
+    causadoPor?: string | null
+    rechazada?: boolean | null
+    corregida?: boolean | null
     creadoEn?: Date | string | null
     actualizadoEn?: Date | string | null
     enProceso?: boolean | null
@@ -5483,12 +5503,13 @@ export namespace Prisma {
     acuseReciboSCI?: NullableBoolFieldUpdateOperationsInput | boolean | null
     entregadaA?: NullableStringFieldUpdateOperationsInput | string | null
     fechaEntrega?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    fechaRecepcionCausacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    recibidaPor?: NullableStringFieldUpdateOperationsInput | string | null
-    fechaRevisionCausacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     numeroCausacion?: NullableStringFieldUpdateOperationsInput | string | null
     fechaCausacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesCausacion?: NullableStringFieldUpdateOperationsInput | string | null
+    causadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    rechazada?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    corregida?: NullableBoolFieldUpdateOperationsInput | boolean | null
     creadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     actualizadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     enProceso?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -5509,12 +5530,13 @@ export namespace Prisma {
     acuseReciboSCI?: NullableBoolFieldUpdateOperationsInput | boolean | null
     entregadaA?: NullableStringFieldUpdateOperationsInput | string | null
     fechaEntrega?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    fechaRecepcionCausacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    recibidaPor?: NullableStringFieldUpdateOperationsInput | string | null
-    fechaRevisionCausacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     numeroCausacion?: NullableStringFieldUpdateOperationsInput | string | null
     fechaCausacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesCausacion?: NullableStringFieldUpdateOperationsInput | string | null
+    causadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    rechazada?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    corregida?: NullableBoolFieldUpdateOperationsInput | boolean | null
     creadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     actualizadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     enProceso?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -5535,12 +5557,13 @@ export namespace Prisma {
     acuseReciboSCI?: boolean | null
     entregadaA?: string | null
     fechaEntrega?: Date | string | null
-    fechaRecepcionCausacion?: Date | string | null
-    recibidaPor?: string | null
-    fechaRevisionCausacion?: Date | string | null
     numeroCausacion?: string | null
     fechaCausacion?: Date | string | null
     observaciones?: string | null
+    observacionesCausacion?: string | null
+    causadoPor?: string | null
+    rechazada?: boolean | null
+    corregida?: boolean | null
     creadoEn?: Date | string | null
     actualizadoEn?: Date | string | null
     enProceso?: boolean | null
@@ -5560,12 +5583,13 @@ export namespace Prisma {
     acuseReciboSCI?: NullableBoolFieldUpdateOperationsInput | boolean | null
     entregadaA?: NullableStringFieldUpdateOperationsInput | string | null
     fechaEntrega?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    fechaRecepcionCausacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    recibidaPor?: NullableStringFieldUpdateOperationsInput | string | null
-    fechaRevisionCausacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     numeroCausacion?: NullableStringFieldUpdateOperationsInput | string | null
     fechaCausacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesCausacion?: NullableStringFieldUpdateOperationsInput | string | null
+    causadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    rechazada?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    corregida?: NullableBoolFieldUpdateOperationsInput | boolean | null
     creadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     actualizadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     enProceso?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -5586,12 +5610,13 @@ export namespace Prisma {
     acuseReciboSCI?: NullableBoolFieldUpdateOperationsInput | boolean | null
     entregadaA?: NullableStringFieldUpdateOperationsInput | string | null
     fechaEntrega?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    fechaRecepcionCausacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    recibidaPor?: NullableStringFieldUpdateOperationsInput | string | null
-    fechaRevisionCausacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     numeroCausacion?: NullableStringFieldUpdateOperationsInput | string | null
     fechaCausacion?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    observacionesCausacion?: NullableStringFieldUpdateOperationsInput | string | null
+    causadoPor?: NullableStringFieldUpdateOperationsInput | string | null
+    rechazada?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    corregida?: NullableBoolFieldUpdateOperationsInput | boolean | null
     creadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     actualizadoEn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     enProceso?: NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -5807,12 +5832,13 @@ export namespace Prisma {
     acuseReciboSCI?: SortOrder
     entregadaA?: SortOrder
     fechaEntrega?: SortOrder
-    fechaRecepcionCausacion?: SortOrder
-    recibidaPor?: SortOrder
-    fechaRevisionCausacion?: SortOrder
     numeroCausacion?: SortOrder
     fechaCausacion?: SortOrder
     observaciones?: SortOrder
+    observacionesCausacion?: SortOrder
+    causadoPor?: SortOrder
+    rechazada?: SortOrder
+    corregida?: SortOrder
     creadoEn?: SortOrder
     actualizadoEn?: SortOrder
     enProceso?: SortOrder
@@ -5837,12 +5863,13 @@ export namespace Prisma {
     acuseReciboSCI?: SortOrder
     entregadaA?: SortOrder
     fechaEntrega?: SortOrder
-    fechaRecepcionCausacion?: SortOrder
-    recibidaPor?: SortOrder
-    fechaRevisionCausacion?: SortOrder
     numeroCausacion?: SortOrder
     fechaCausacion?: SortOrder
     observaciones?: SortOrder
+    observacionesCausacion?: SortOrder
+    causadoPor?: SortOrder
+    rechazada?: SortOrder
+    corregida?: SortOrder
     creadoEn?: SortOrder
     actualizadoEn?: SortOrder
     enProceso?: SortOrder
@@ -5863,12 +5890,13 @@ export namespace Prisma {
     acuseReciboSCI?: SortOrder
     entregadaA?: SortOrder
     fechaEntrega?: SortOrder
-    fechaRecepcionCausacion?: SortOrder
-    recibidaPor?: SortOrder
-    fechaRevisionCausacion?: SortOrder
     numeroCausacion?: SortOrder
     fechaCausacion?: SortOrder
     observaciones?: SortOrder
+    observacionesCausacion?: SortOrder
+    causadoPor?: SortOrder
+    rechazada?: SortOrder
+    corregida?: SortOrder
     creadoEn?: SortOrder
     actualizadoEn?: SortOrder
     enProceso?: SortOrder

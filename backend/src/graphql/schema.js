@@ -16,12 +16,13 @@ export const typeDefs = gql`
     acuseReciboSCI: Boolean
     entregadaA: String
     fechaEntrega: String
-    fechaRecepcionCausacion: String
-    recibidaPor: String
-    fechaRevisionCausacion: String
     numeroCausacion: String
     fechaCausacion: String
     observaciones: String
+    observacionesCausacion: String
+    causadoPor: String
+    rechazada: Boolean
+    corregida: Boolean
     creadoEn: String
     actualizadoEn: String
     enProceso: Boolean
@@ -72,9 +73,6 @@ export const typeDefs = gql`
     acuseReciboSCI: Boolean
     entregadaA: String
     fechaEntrega: String
-    fechaRecepcionCausacion: String
-    recibidaPor: String
-    fechaRevisionCausacion: String
     numeroCausacion: String
     fechaCausacion: String
     observaciones: String

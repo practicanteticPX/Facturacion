@@ -1,4 +1,4 @@
-import { prismaServ } from '../config/database.js';
+﻿import { prismaServ } from '../config/database.js';
 import proveedorService from './proveedorService.js';
 import personaService from './personaService.js';
 import companiaService from './companiaService.js';
@@ -14,9 +14,9 @@ const FACTURA_SELECT = {
   numeroControl: true, cia: true, ciaNit: true, nit: true, proveedor: true,
   numeroFactura: true, fechaRadicado: true, fechaFactura: true,
   facturaCredito: true, acuseReciboSCI: true, entregadaA: true,
-  fechaEntrega: true, fechaRecepcionCausacion: true, recibidaPor: true,
-  fechaRevisionCausacion: true, numeroCausacion: true, fechaCausacion: true,
-  observaciones: true, enProceso: true, finalizado: true, causado: true,
+  fechaEntrega: true, numeroCausacion: true, fechaCausacion: true,
+  observaciones: true, observacionesCausacion: true, causadoPor: true,
+  enProceso: true, finalizado: true, causado: true, rechazada: true, corregida: true,
 };
 
 class FacturaService {
@@ -217,40 +217,6 @@ class FacturaService {
         !datos.entregadaA ? 'No hay destinatario' : 'No aplica'
       );
       return await this.obtenerFacturaCompleta(factura.numeroControl);
-
-      // Enviar correo si hay destinatario. El adjunto es opcional.
-      console.log('ðŸ“§ Verificando envÃ­o de correo...');
-      console.log('ðŸ“§ EntregadaA:', datos.entregadaA);
-      console.log('ðŸ“§ Archivo:', archivo ? `SÃ (${archivo.filename})` : 'NO');
-
-      if (datos.entregadaA) {
-        try {
-          console.log('ðŸ“§ Obteniendo correo de:', datos.entregadaA);
-          const correoDestinatario = await personaService.obtenerCorreoPorNombre(datos.entregadaA);
-          console.log('ðŸ“§ Correo obtenido:', correoDestinatario);
-
-          console.log('ðŸ“§ Enviando correo...');
-          await emailService.enviarCorreoFactura({
-            to: correoDestinatario,
-            numeroControl: nuevoNumeroControl,
-            numeroFactura: datos.numeroFactura,
-            proveedor: nombreProveedor,
-            archivo: archivo
-          });
-
-          console.log(`âœ… Correo de factura enviado exitosamente a ${correoDestinatario}`);
-        } catch (emailError) {
-          console.error('âŒ Error al enviar correo de factura (factura creada exitosamente):', emailError);
-          console.error('âŒ Stack trace:', emailError.stack);
-          // No lanzamos el error para que la factura se cree aunque falle el correo
-        }
-      } else {
-        console.log('âš ï¸ No se enviarÃ¡ correo:',
-          'No hay destinatario'
-        );
-      }
-
-      return await this.obtenerFacturaCompleta(factura.numeroControl);
     } catch (error) {
       console.error('Error creando factura:', error);
       throw error;
@@ -377,7 +343,6 @@ class FacturaService {
       const camposPermitidos = [
         'cia', 'nit', 'numeroFactura', 'fechaRadicado', 'fechaFactura',
         'facturaCredito', 'acuseReciboSCI', 'entregadaA', 'fechaEntrega',
-        'fechaRecepcionCausacion', 'recibidaPor', 'fechaRevisionCausacion',
         'numeroCausacion', 'fechaCausacion', 'observaciones'
       ];
 

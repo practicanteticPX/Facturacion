@@ -5,7 +5,6 @@ import {
   GET_FACTURA,
   ACTUALIZAR_FACTURA,
   GET_COMPANIAS,
-  GET_PERSONAS,
   GET_PROVEEDOR,
   GET_FACTURAS
 } from '../apollo/queries';
@@ -67,22 +66,26 @@ function EditarFactura() {
   const [ciaNit, setCiaNit] = useState('');
   const [mensaje, setMensaje] = useState({ tipo: '', texto: '' });
   const [enProceso, setEnProceso] = useState(false);
+  const [rechazada, setRechazada] = useState(false);
 
   const { data: companiasData } = useQuery(GET_COMPANIAS);
-  const { data: personasData } = useQuery(GET_PERSONAS);
-
   const { data: facturaData, loading: loadingFactura } = useQuery(GET_FACTURA, {
     variables: { numeroControl: parseInt(id) },
     onCompleted: (data) => {
       if (data?.factura) {
         const factura = data.factura;
 
-        // Verificar si la factura está en proceso (solo lectura)
         if (factura.enProceso) {
           setEnProceso(true);
           setMensaje({
             tipo: 'info',
             texto: 'Esta factura está en proceso y solo se puede visualizar (modo solo lectura)'
+          });
+        } else if (factura.rechazada) {
+          setRechazada(true);
+          setMensaje({
+            tipo: 'warning',
+            texto: 'Esta factura fue rechazada. Solo puede editar No. Factura y Fecha Factura.'
           });
         }
 
@@ -172,12 +175,20 @@ function EditarFactura() {
     try {
       const input = {};
 
-      // Excluir numeroControl porque es un parámetro separado en la mutation
-      Object.keys(formData).forEach(key => {
-        if (key !== 'numeroControl' && formData[key] !== '' && formData[key] !== null && formData[key] !== undefined) {
-          input[key] = formData[key];
-        }
-      });
+      if (rechazada) {
+        // En modo corrección solo se permiten modificar número y fecha de factura
+        ['numeroFactura', 'fechaFactura'].forEach(key => {
+          if (formData[key] !== '' && formData[key] !== null && formData[key] !== undefined) {
+            input[key] = formData[key];
+          }
+        });
+      } else {
+        Object.keys(formData).forEach(key => {
+          if (key !== 'numeroControl' && formData[key] !== '' && formData[key] !== null && formData[key] !== undefined) {
+            input[key] = formData[key];
+          }
+        });
+      }
 
       await actualizarFactura({
         variables: {
@@ -224,7 +235,7 @@ function EditarFactura() {
                 value={formData.cia}
                 onValueChange={(value) => handleChange({ target: { name: 'cia', value } })}
                 required
-                disabled={enProceso}
+                disabled={enProceso || rechazada}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Seleccione" />
@@ -259,6 +270,7 @@ function EditarFactura() {
                 required
                 disabled={enProceso}
               />
+              {rechazada && <span style={{fontSize:'11px',color:'#D97706',marginTop:'2px',display:'block'}}>Editable (factura rechazada)</span>}
             </div>
 
             <div className="editar-form-group">
@@ -270,7 +282,7 @@ function EditarFactura() {
                 onChange={handleChange}
                 className="editar-input"
                 required
-                disabled={enProceso}
+                disabled={enProceso || rechazada}
               />
             </div>
 
@@ -305,8 +317,9 @@ function EditarFactura() {
                 onChange={handleChange}
                 required
                 id="fechaFactura"
-                disabled
+                disabled={!rechazada}
               />
+              {rechazada && <span style={{fontSize:'11px',color:'#D97706',marginTop:'2px',display:'block'}}>Editable (factura rechazada)</span>}
             </div>
 
             <div className="editar-form-group">
@@ -322,22 +335,13 @@ function EditarFactura() {
 
             <div className="editar-form-group">
               <label className="editar-label">Entregada a</label>
-              <Select
-                value={formData.entregadaA}
-                onValueChange={(value) => handleChange({ target: { name: 'entregadaA', value } })}
+              <input
+                className="editar-input"
+                type="text"
+                value={formData.entregadaA || ''}
+                readOnly
                 disabled
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Seleccione una persona" />
-                </SelectTrigger>
-                <SelectContent>
-                  {personasData?.personas?.map(persona => (
-                    <SelectItem key={persona.id} value={persona.nombre}>
-                      {persona.nombre}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              />
             </div>
 
             {/* Fila 4: Factura a Crédito | Acuse Recibo SCI | ¿Legaliza anticipo? | (vacío) */}
@@ -346,7 +350,7 @@ function EditarFactura() {
               <Select
                 value={formData.facturaCredito ? 'Si' : 'No'}
                 onValueChange={(value) => handleChange({ target: { name: 'facturaCredito', value } })}
-                disabled={enProceso}
+                disabled={enProceso || rechazada}
               >
                 <SelectTrigger>
                   <SelectValue />
@@ -363,7 +367,7 @@ function EditarFactura() {
               <Select
                 value={formData.acuseReciboSCI ? 'Si' : 'No'}
                 onValueChange={(value) => handleChange({ target: { name: 'acuseReciboSCI', value } })}
-                disabled={enProceso}
+                disabled={enProceso || rechazada}
               >
                 <SelectTrigger>
                   <SelectValue />
@@ -393,6 +397,7 @@ function EditarFactura() {
             type="submit"
             variant="default"
             disabled={loadingActualizar || enProceso}
+            style={rechazada ? { backgroundColor: '#D97706', borderColor: '#D97706' } : {}}
           >
             {loadingActualizar ? 'Guardando...' : 'Guardar Cambios'}
           </Button>

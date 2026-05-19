@@ -16,17 +16,18 @@ export const GET_FACTURAS = gql`
         acuseReciboSCI
         entregadaA
         fechaEntrega
-        fechaRecepcionCausacion
-        recibidaPor
-        fechaRevisionCausacion
         numeroCausacion
         fechaCausacion
         observaciones
+        observacionesCausacion
+        causadoPor
         creadoEn
         actualizadoEn
         enProceso
         finalizado
         causado
+        rechazada
+        corregida
       }
       total
       page
@@ -51,12 +52,11 @@ export const GET_FACTURA = gql`
       acuseReciboSCI
       entregadaA
       fechaEntrega
-      fechaRecepcionCausacion
-      recibidaPor
-      fechaRevisionCausacion
       numeroCausacion
       fechaCausacion
       observaciones
+      observacionesCausacion
+      causadoPor
       creadoEn
       actualizadoEn
       enProceso
@@ -146,9 +146,6 @@ export const ACTUALIZAR_FACTURA = gql`
       acuseReciboSCI
       entregadaA
       fechaEntrega
-      fechaRecepcionCausacion
-      recibidaPor
-      fechaRevisionCausacion
       numeroCausacion
       fechaCausacion
       observaciones

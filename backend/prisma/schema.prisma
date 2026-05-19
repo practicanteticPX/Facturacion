@@ -45,12 +45,13 @@ model Factura {
   acuseReciboSCI          Boolean?  @map("acuse_recibo_sci")
   entregadaA              String?   @map("entregada_a") @db.VarChar(50)
   fechaEntrega            DateTime? @map("fecha_entrega") @db.Date
-  fechaRecepcionCausacion DateTime? @map("fecha_recepcion_causacion") @db.Date
-  recibidaPor             String?   @map("recibida_por") @db.VarChar(50)
-  fechaRevisionCausacion  DateTime? @map("fecha_revision_causacion") @db.Date
   numeroCausacion         String?   @map("numero_causacion") @db.VarChar(50)
   fechaCausacion          DateTime? @map("fecha_causacion") @db.Date
-  observaciones           String?   @db.VarChar(50)
+  observaciones           String?   @db.VarChar(500)
+  observacionesCausacion  String?   @map("observaciones_causacion") @db.VarChar(500)
+  causadoPor              String?   @map("causado_por") @db.VarChar(100)
+  rechazada               Boolean?  @default(false) @map("rechazada")
+  corregida               Boolean?  @default(false) @map("corregida")
   creadoEn                DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
   actualizadoEn           DateTime? @default(now()) @map("updated_at") @db.Timestamptz(6)
   enProceso               Boolean?  @default(false) @map("en_proceso")
